@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net7.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<RootNamespace>Keithley.Dmm7510.Digitizer</RootNamespace>
+		<LangVersion>latest</LangVersion>
+
+    <!-- Display name -->
+    <ApplicationTitle>keithley.Dmm7510.Digitizer</ApplicationTitle>
+
+    <!-- App Identifier -->
+    <ApplicationId>com.keithley.Dmm7510.Digitizer</ApplicationId>
+
+    <!-- Versions -->
+    <ApplicationDisplayVersion>1.0.8354</ApplicationDisplayVersion>
+    <ApplicationVersion>1</ApplicationVersion>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <ProjectReference Include="..\..\libs\Keihtley.Dmm7510\Keithley.Dmm7510.csproj" />
+	</ItemGroup>
+
+  
+	<ItemGroup>
+	  <Compile Update="Resources.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Resources.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+</Project>

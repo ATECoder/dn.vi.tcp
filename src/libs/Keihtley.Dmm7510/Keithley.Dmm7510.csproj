@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<RootNamespace>Keithley.Dmm7510</RootNamespace>
+		<LangVersion>latest</LangVersion>
+
+    <!-- Display name -->
+    <ApplicationTitle>keithley.Dmm7510</ApplicationTitle>
+
+    <!-- App Identifier -->
+    <ApplicationId>com.keithley.Dmm7510</ApplicationId>
+
+    <!-- Versions -->
+    <ApplicationDisplayVersion>1.0.8354</ApplicationDisplayVersion>
+    <ApplicationVersion>1</ApplicationVersion>
+
+  </PropertyGroup>
+
+</Project>
