@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Keithley.Tcp</RootNamespace>
+
+    <LangVersion>latest</LangVersion>
+
+    <!-- Display name -->
+    <ApplicationTitle>keithley.Tcp</ApplicationTitle>
+
+    <!-- App Identifier -->
+    <ApplicationId>com.keithley.Tcp</ApplicationId>
+
+    <!-- Versions -->
+    <ApplicationDisplayVersion>1.0.8355</ApplicationDisplayVersion>
+    <ApplicationVersion>1</ApplicationVersion>
+
+  </PropertyGroup>
+
+</Project>

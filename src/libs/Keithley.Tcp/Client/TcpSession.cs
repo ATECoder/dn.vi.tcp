@@ -1,8 +1,11 @@
 using System;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Runtime.CompilerServices;
 
-namespace Keithley.Dmm7510.Device;
+namespace Keithley.Tcp.Client;
 
 /// <summary>   A TCP session. </summary>
 /// <remarks>   2022-11-14. </remarks>
@@ -151,15 +154,40 @@ public partial class TcpSession : IDisposable
 
     #region " SYNCHRONOUS I/O "
 
+    /// <summary>
+    /// Get a value indicating if data was received from the network and is available to be read.
+    /// </summary>
+    /// <remarks>   2022-11-15. </remarks>
+    /// <returns>   True if data is available; otherwise, false . </returns>
+    public bool DataAvailable()
+    {
+        return this._netStream.DataAvailable;
+    }
+
+    /// <summary>   Query if data was received from the network and is available to be read. </summary>
+    /// <remarks>   2022-11-04. </remarks>
+    /// <returns>   True if data is available; otherwise, false . </returns>
+    public bool DataAvailable( TimeSpan timeout )
+    {
+        DateTime endTime = DateTime.Now.Add( timeout );
+        while ( DateTime.Now < endTime && this.DataAvailable() )
+        {
+        }
+        return this.DataAvailable();
+    }
+
     /// <summary>   Writes a line. </summary>
     /// <remarks>   2022-11-14. </remarks>
     /// <param name="command">  The command. </param>
     /// <returns>   The number of sent characters. </returns>
     public int WriteLine( string command )
     {
-        byte[] buffer = Encoding.ASCII.GetBytes( $"{command}{this.WriteTermination}" );
-        this._netStream.Write( buffer, 0, buffer.Length );
-        return buffer.Length;
+        var task = this.SendAsync( command, this.CancellationToken );
+        task.Wait();
+        return task.Result;
+        // byte[] buffer = Encoding.ASCII.GetBytes( $"{command}{this.WriteTermination}" );
+        // this._netStream.Write( buffer, 0, buffer.Length );
+        // return buffer.Length;
     }
 
     /// <summary>   Reads. </summary>
@@ -221,6 +249,59 @@ public partial class TcpSession : IDisposable
     #endregion
 
     #region " ASYNCHRONOUS I/O "
+
+    /// <summary>   Gets the cancellation token. </summary>
+    /// <value> The cancellation token. </value>
+    public CancellationToken CancellationToken { get; } = new CancellationToken();
+
+    /// <summary>   Query if data was received from the network and is available to be read. </summary>
+    /// <remarks>   2022-11-04. </remarks>
+    /// <param name="timeout">  The timeout. </param>
+    /// <returns>   True if data is available; otherwise, false . </returns>
+    public async Task<bool> DataAvailableAsync( TimeSpan timeout )
+    {
+        return await Task<bool>.Run( () => this.DataAvailable( timeout ) );
+    }
+
+    /// <summary>   Receive asynchronously until no characters are available in the stream. </summary>
+    /// <remarks>   2022-11-15. </remarks>
+    /// <param name="byteCount">    Number of bytes. </param>
+    /// <param name="ct">           A token that allows processing to be canceled. </param>
+    /// <returns>   A string. </returns>
+    public async Task<string> ReceiveAsyncUntil( int byteCount, CancellationToken ct )
+    {
+        StringBuilder sb = new();
+        while ( this._netStream.DataAvailable )
+        {
+            var buffer = new byte[byteCount];
+            int bytesAvailable = await this._netStream.ReadAsync( buffer, 0, byteCount, ct );
+            if ( bytesAvailable > 0 ) _ = sb.Append( Encoding.ASCII.GetString( buffer, 0, bytesAvailable ) );
+        }
+        return sb.ToString();
+    }
+
+    /// <summary>   Sends a message asynchronously reading any existing data into the orphan . </summary>
+    /// <remarks>   2022-11-15. </remarks>
+    /// <param name="message">  The message. </param>
+    /// <param name="ct">       A token that allows processing to be canceled. </param>
+    /// <returns>   The send. </returns>
+    public async Task<int> SendAsync( string message, CancellationToken ct )
+    {
+        if ( string.IsNullOrEmpty( message ) ) return 0;
+
+        // read any data already in the stream.
+        this.Orphan = this._netStream.DataAvailable ? await this.ReceiveAsyncUntil( 2048, ct ) : string.Empty;
+
+        byte[] buffer = Encoding.ASCII.GetBytes( $"{message}{this.WriteTermination}" );
+        await this._netStream.WriteAsync( buffer, 0, buffer.Length, ct );
+        this._netStream.Flush();
+        return buffer.Length;
+    }
+
+    /// <summary>   Gets the last leftover response. </summary>
+    /// <value> Any leftover message in the stream. </value>
+    public string Orphan { get; private set; }
+
 
     #endregion
 }

@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 
+using Keithley.Tcp.Client;
+
 namespace Keithley.Dmm7510.Device;
 
 public partial class DMM7510 : IDisposable
