@@ -9,17 +9,13 @@ namespace Keithley.Dmm7510.Device;
 public partial class TcpSession : IDisposable
 {
 
-    private readonly int _portNumber = 5025;
-    private TcpClient _tcpClient = null;
-    private NetworkStream _netStream = null;
-
     /// <summary>   Constructor. </summary>
     /// <remarks>   2022-11-14. </remarks>
     /// <param name="iPAddress">    Zero-based index of the p address. </param>
     /// <param name="portNumber">   (Optional) The port number. </param>
     public TcpSession( string iPAddress, int portNumber = 5025 )
     {
-        this._portNumber = portNumber;
+        this.PortNumber = portNumber;
         this.IPAddress = iPAddress;
     }
 
@@ -50,19 +46,39 @@ public partial class TcpSession : IDisposable
         }
     }
 
+    #region " TCP Client and Stream "
+
+    private TcpClient _tcpClient = null;
+    private NetworkStream _netStream = null;
+
+    /// <summary>   Gets or sets the port number. </summary>
+    /// <value> The port number. </value>
+    public int PortNumber { get; private set; }
+
     /// <summary>   Gets or sets the IP address. </summary>
     /// <value> The IP address. </value>
     public string IPAddress { get; private set; }
 
     /// <summary>   Gets or sets the receive timeout. </summary>
+    /// <remarks> Default value = 0 ms.</remarks>
     /// <value> The receive timeout. </value>
-    public int ReceiveTimeout
+    public TimeSpan ReceiveTimeout
     {
-        get => this._tcpClient.ReceiveTimeout;
-        set => this._tcpClient.ReceiveTimeout = value;
+        get => TimeSpan.FromMilliseconds( this._tcpClient.ReceiveTimeout );
+        set => this._tcpClient.ReceiveTimeout = value.Milliseconds;
+    }
+
+    /// <summary>   Gets or sets the send timeout. </summary>
+    /// <remarks> Default value = 0 ms.</remarks>
+    /// <value> The send timeout. </value>
+    public TimeSpan SendTimeout
+    {
+        get => TimeSpan.FromMilliseconds( this._tcpClient.SendTimeout );
+        set => this._tcpClient.SendTimeout = value.Milliseconds;
     }
 
     /// <summary>   Gets or sets the size of the receive buffer. </summary>
+    /// <remarks> Default value = 65536 </remarks>
     /// <value> The size of the receive buffer. </value>
     public int ReceiveBufferSize
     {
@@ -74,7 +90,7 @@ public partial class TcpSession : IDisposable
     /// <remarks>   2022-11-14. </remarks>
     public void Connect()
     {
-        this._tcpClient = new TcpClient( this.IPAddress, this._portNumber );
+        this._tcpClient = new TcpClient( this.IPAddress, this.PortNumber );
         this._netStream = this._tcpClient.GetStream();
     }
 
@@ -119,16 +135,31 @@ public partial class TcpSession : IDisposable
         this._netStream.Flush();
     }
 
+    #endregion
+
+    #region " I/O "
+
+    /// <summary>   Gets or sets the read termination. </summary>
+    /// <value> The read termination. </value>
+    public string ReadTermination { get; set; } = "\n";
+
+    /// <summary>   Gets or sets the write termination. </summary>
+    /// <value> The write termination. </value>
+    public string WriteTermination { get; set; } = "\n";
+
+    #endregion
+
+    #region " SYNCHRONOUS I/O "
+
     /// <summary>   Writes a line. </summary>
     /// <remarks>   2022-11-14. </remarks>
     /// <param name="command">  The command. </param>
-    /// <returns>   An int. </returns>
+    /// <returns>   The number of sent characters. </returns>
     public int WriteLine( string command )
     {
-        byte[] buffer = Encoding.ASCII.GetBytes( command + "\r\n;" );
+        byte[] buffer = Encoding.ASCII.GetBytes( $"{command}{this.WriteTermination}" );
         this._netStream.Write( buffer, 0, buffer.Length );
-        Array.Clear( buffer, 0, buffer.Length );
-        return 0;
+        return buffer.Length;
     }
 
     /// <summary>   Reads. </summary>
@@ -187,4 +218,9 @@ public partial class TcpSession : IDisposable
         return 0;
     }
 
+    #endregion
+
+    #region " ASYNCHRONOUS I/O "
+
+    #endregion
 }

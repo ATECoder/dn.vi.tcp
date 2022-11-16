@@ -37,7 +37,7 @@ public partial class DMM7510 : IDisposable
     {
         Console.WriteLine( "Connected to instrument......" );
         this._tcpSession.Connect(echoIdentity, ref identity);
-        this._tcpSession.ReceiveTimeout = 20000;
+        this._tcpSession.ReceiveTimeout = TimeSpan.FromMilliseconds( 20000 );
         this._tcpSession.ReceiveBufferSize = 35565;
     }
 
