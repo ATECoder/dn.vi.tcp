@@ -2,7 +2,7 @@ using System.Diagnostics;
 
 using Keithley.Dmm7510.Device;
 
-namespace Keithley.Dmm7510.Digitizer.UI;
+namespace Keithley.Dmm7510.Digitizer.Views;
 
 public partial class Form1 : Form
 {
@@ -63,7 +63,7 @@ public partial class Form1 : Form
 		// was 30 per minutes. this is per second./ 
 		int bufferSize = Convert.ToInt32( this.sampleRateNumeric.Value) / 2 ; 
 		Stopwatch stopWatch = new ();
-		int bytesRcvCnt = 8192;      // Size the receive buffer so that data is not lost/clipped
+		// int bytesRcvCnt = 8192;      // Size the receive buffer so that data is not lost/clipped
 		int chunkSize = 249;         // presently the value for max allowable packet size - do we bother making this scalable?
 		int savedReadingsCount = 0;
 
@@ -81,8 +81,8 @@ public partial class Form1 : Form
         int unitFunc1 = this.unitsLabel.Text.Contains( 'V' ) ? 0 : 1;
 
         // Instantiate the DMM7510 objects...
-        DMM7510 unit1 = new DMM7510( this.ipAddressTextBox.Text, Convert.ToInt32( this.sampleRateNumeric.Value), unitFunc1,
-                                    Convert.ToSingle( this.rangeComboBox.Text), bufferSize);
+        DMM7510 unit1 = new ( this.ipAddressTextBox.Text, Convert.ToInt32( this.sampleRateNumeric.Value), unitFunc1,
+                                     Convert.ToSingle( this.rangeComboBox.Text), bufferSize);
 
 		// Establish network connection to the instruments...
 		string rcvBuffer = "";
@@ -97,8 +97,8 @@ public partial class Form1 : Form
 
 		Thread t1 = new (() =>
 		{
-			unit1.ExtractBufferData( this.folderNameTextBox.Text, "UNIT1", "defbuffer1", bufferSize, bytesRcvCnt,
-                chunkSize, ref stopWatch, Convert.ToInt32( this.durationNumeric.Value), ref savedReadingsCount);
+			unit1.ExtractBufferData( this.folderNameTextBox.Text, "UNIT1", "defbuffer1", bufferSize, 
+                                     chunkSize, ref stopWatch, Convert.ToInt32( this.durationNumeric.Value), ref savedReadingsCount);
 		});
 
 		t1.Start();

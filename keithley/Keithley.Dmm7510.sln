@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "~items", "~items", "{E0C815
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Keithley.Tcp", "libs\Keithley.Tcp\Keithley.Tcp.csproj", "{9719CCCE-20E2-4E88-933A-2422FAAB2496}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Keithley.Tcp.MSTest", "libs\Keithley.Tcp.MSTest\Keithley.Tcp.MSTest.csproj", "{018CC430-73F6-47CA-BE97-FFA22EE2D5E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{9719CCCE-20E2-4E88-933A-2422FAAB2496}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9719CCCE-20E2-4E88-933A-2422FAAB2496}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9719CCCE-20E2-4E88-933A-2422FAAB2496}.Release|Any CPU.Build.0 = Release|Any CPU
+		{018CC430-73F6-47CA-BE97-FFA22EE2D5E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{018CC430-73F6-47CA-BE97-FFA22EE2D5E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{018CC430-73F6-47CA-BE97-FFA22EE2D5E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{018CC430-73F6-47CA-BE97-FFA22EE2D5E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

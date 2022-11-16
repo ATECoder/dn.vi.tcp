@@ -38,7 +38,7 @@ public partial class DMM7510 : IDisposable
     public void Connect( bool echoIdentity, ref string identity )
     {
         Console.WriteLine( "Connected to instrument......" );
-        this._tcpSession.Connect(echoIdentity, ref identity);
+        this._tcpSession.Connect(echoIdentity, "*IDN?", ref identity, true);
         this._tcpSession.ReceiveTimeout = TimeSpan.FromMilliseconds( 20000 );
         this._tcpSession.ReceiveBufferSize = 35565;
     }
@@ -98,12 +98,12 @@ public partial class DMM7510 : IDisposable
     /// <param name="bufferName">           Name of the buffer. </param>
     /// <param name="bufferSize">           Size of the buffer. </param>
     /// <param name="bytesRcvCnt">          Number of bytes receives. </param>
-    /// <param name="chunkSize">            Size of the chunk. </param>
+    /// <param name="chunkSize">            Size of the chunk of single precision values. </param>
     /// <param name="stopWatch">            [in,out] The stop watch. </param>
     /// <param name="duration">             The duration in seconds. </param>
     /// <param name="savedReadingsCount">   [in,out] Number of saved readings. </param>
 	public void ExtractBufferData(string filePath, string unitId, String bufferName, int bufferSize,
-        int bytesRcvCnt, int chunkSize, ref Stopwatch stopWatch, int duration, ref int savedReadingsCount)
+                                  int chunkSize, ref Stopwatch stopWatch, int duration, ref int savedReadingsCount)
 	{
         int startIndex = 1;
 		int endIndex = chunkSize;
@@ -131,7 +131,7 @@ public partial class DMM7510 : IDisposable
                     // read last buffer index
                     // use END because plain old ACT? tops off at bufferSize when full
                     queryCommand = ":TRACe:ACTual:END? \"" + bufferName + "\"";     
-                    _ = this._tcpSession.QueryLine( queryCommand, 256, ref queryReply );
+                    _ = this._tcpSession.QueryLine( queryCommand, 256, ref queryReply, true );
                     this._tcpSession.Flush();
 
                     int readingBufferIndex = Convert.ToInt32( queryReply );
@@ -152,7 +152,8 @@ public partial class DMM7510 : IDisposable
 
             queryReply = "";
             queryCommand = ":TRAC:DATA? " + Convert.ToString( startIndex ) + ", " + Convert.ToString( endIndex ) + ", \"" + bufferName + "\"";
-            _ = this._tcpSession.QueryLine( queryCommand, bytesRcvCnt, ref readingAmounts );
+            // _ = this._tcpSession.QueryLine( queryCommand, 2, bytesRcvCnt, ref readingAmounts );
+            _ = this._tcpSession.QueryLine( queryCommand, 2, chunkSize, ref readingAmounts );
             this._tcpSession.Flush();
 
             // Generate the file name based on the system timestamp...

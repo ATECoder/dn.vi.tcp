@@ -1,4 +1,4 @@
-namespace Keithley.Dmm7510.Digitizer.UI;
+namespace Keithley.Dmm7510.Digitizer.Views;
 
 partial class Form1
 {
