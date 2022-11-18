@@ -5,7 +5,7 @@ using Keithley.Tcp.Client;
 namespace Keithley.Tcp.MSTest;
 
 [TestClass]
-public class TcpSessionTests
+public class TcpSessionEchoServerAsyncTests
 {
 
     [ClassInitialize]
@@ -19,7 +19,8 @@ public class TcpSessionTests
             _server = new TcpEchoServer( _ipv4Address!, _portNumber!.Value );
             _server.PropertyChanged += OnServerPropertyChanged;
             Console.WriteLine( $"{nameof( TcpEchoServer )} is {_server.Listening:'running';'limbo';'idle'}" );
-            _listenTask = _server.ListenAsync();
+            // start listening.
+            _server.Start();
         }
         catch ( Exception ex )
         {
@@ -39,8 +40,8 @@ public class TcpSessionTests
         {
             if ( _server.Listening)
             {
+                // stop listening.
                 _server.Stop();
-                _ = (_listenTask?.Wait( 100 ));
             }
             _server = null;
         }
@@ -50,7 +51,6 @@ public class TcpSessionTests
     private static readonly int? _portNumber = 13000;
 
     private static TcpEchoServer? _server;
-    private static Task? _listenTask;
 
     private static void OnServerPropertyChanged( object? sender, PropertyChangedEventArgs args )
     {

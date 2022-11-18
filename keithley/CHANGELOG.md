@@ -4,6 +4,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [0.1.8357] - 2022-11-17
 * Add TCP server for testing without an instrument.
+* Add termination functionality to the TCP server. 
 
 ## [0.1.8356] - 2022-11-16
 * Add asynchronous methods and unit tests.

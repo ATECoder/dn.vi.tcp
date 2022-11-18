@@ -23,7 +23,7 @@ public class Dmm7510Tests
         {
             repeatCount--;
             string respnonse = string.Empty;
-            session.QueryLine( command, 1024 , ref respnonse, trimEnd ); 
+            _ = session.QueryLine( command, 1024, ref respnonse, trimEnd ); 
             Assert.AreEqual( identity, respnonse, $"@count = {count - repeatCount}" );
         }
     }
