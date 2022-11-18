@@ -3,9 +3,6 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
-using System.Runtime.CompilerServices;
-using System.Linq.Expressions;
-using System.Diagnostics;
 
 namespace Keithley.Tcp.Client;
 
@@ -16,12 +13,12 @@ public partial class TcpSession : IDisposable
 
     /// <summary>   Constructor. </summary>
     /// <remarks>   2022-11-14. </remarks>
-    /// <param name="iPAddress">    Zero-based index of the p address. </param>
+    /// <param name="ipv4Address">  IPv4 Address in string format. </param>
     /// <param name="portNumber">   (Optional) The port number. </param>
-    public TcpSession( string iPAddress, int portNumber = 5025 )
+    public TcpSession( string ipv4Address, int portNumber = 5025 )
     {
         this.PortNumber = portNumber;
-        this.IPAddress = iPAddress;
+        this.IPv4Address = ipv4Address;
     }
 
     /// <summary>
@@ -60,9 +57,9 @@ public partial class TcpSession : IDisposable
     /// <value> The port number. </value>
     public int PortNumber { get; private set; }
 
-    /// <summary>   Gets or sets the IP address. </summary>
+    /// <summary>   Gets or sets the IPv4 address. </summary>
     /// <value> The IP address. </value>
-    public string IPAddress { get; private set; }
+    public string IPv4Address { get; private set; }
 
     /// <summary>   Gets or sets the receive timeout. </summary>
     /// <remarks> Default value = 0 ms.</remarks>
@@ -95,7 +92,7 @@ public partial class TcpSession : IDisposable
     /// <remarks>   2022-11-14. </remarks>
     public void Connect()
     {
-        this._tcpClient = new TcpClient( this.IPAddress, this.PortNumber );
+        this._tcpClient = new TcpClient( this.IPv4Address, this.PortNumber );
         // notices that the Tcp Client is connected to the end point at this point
         // even though the .Connect command was not issued.
         this._netStream = this._tcpClient.GetStream();
@@ -107,7 +104,7 @@ public partial class TcpSession : IDisposable
     public IAsyncResult BeginConnect()
     {
         this._tcpClient = new TcpClient( );
-        return  this._tcpClient.BeginConnect( this.IPAddress, this.PortNumber, this.OnConnected, null );
+        return  this._tcpClient.BeginConnect( this.IPv4Address, this.PortNumber, this.OnConnected, null );
     }
 
     /// <summary>   Await connect. </summary>

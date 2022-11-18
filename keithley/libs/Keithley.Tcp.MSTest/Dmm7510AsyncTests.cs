@@ -36,11 +36,12 @@ public class Dmm7510AsyncTests
 
     /// <summary>   Assert identity should query. </summary>
     /// <remarks>   2022-11-16. </remarks>
-    /// <param name="ipAddress">    The IP address. </param>
+    /// <param name="ipv4Address">  The IPv4 address. </param>
+    /// <param name="readDelay">    The read delay. </param>
     /// <param name="repeatCount">  Number of repeats. </param>
-    private static void AssertIdentityShouldQuery( string ipAddress, TimeSpan readDelay, int repeatCount )
+    private static void AssertIdentityShouldQuery( string ipv4Address, TimeSpan readDelay, int repeatCount )
     {
-        using TcpSession session = new ( ipAddress );
+        using TcpSession session = new ( ipv4Address );
         string identity = string.Empty;
         string command = "*IDN?";
         bool trimEnd = true;
@@ -60,10 +61,10 @@ public class Dmm7510AsyncTests
     [TestMethod]
     public void IdentityShouldQuery()
     {
-        string ipAddress = "192.168.0.144";
+        string ipv4Address = "192.168.0.144";
         int count = 42;
         TimeSpan readDelay = TimeSpan.FromMilliseconds( 0 );
-        AssertIdentityShouldQuery(ipAddress, readDelay, count );
+        AssertIdentityShouldQuery(ipv4Address, readDelay, count );
     }
 
     /// <summary>   (Unit Test Method) session TCP client should begin connect. </summary>
@@ -71,13 +72,13 @@ public class Dmm7510AsyncTests
     [TestMethod]
     public void SessionTcpClientShouldBeginConnect()
     {
-        string ipAddress = "192.168.0.144";
+        string ipv4Address = "192.168.0.144";
         TimeSpan timeout = TimeSpan.FromMilliseconds( 100 );
-        using TcpSession session = new( ipAddress );
+        using TcpSession session = new( ipv4Address );
         Stopwatch sw = Stopwatch.StartNew();
         IAsyncResult asyncResult = session.BeginConnect();
         bool success = session.AwaitConnect( asyncResult, TimeSpan.FromMilliseconds( 100 ) );
-        Assert.IsTrue( success , $"connected to {ipAddress} failed after {timeout.TotalMilliseconds:0}ms");
+        Assert.IsTrue( success , $"connected to {ipv4Address} failed after {timeout.TotalMilliseconds:0}ms");
         sw.Stop();
         Console.WriteLine(
             $"Connected in {sw.ElapsedTicks}/{TimeSpan.TicksPerMillisecond} {((double)sw.ElapsedTicks / TimeSpan.TicksPerMillisecond):0.0}ms" );

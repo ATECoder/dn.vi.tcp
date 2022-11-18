@@ -13,7 +13,7 @@
     <ApplicationId>com.keithley.Tcp</ApplicationId>
 
     <!-- Versions -->
-    <ApplicationDisplayVersion>1.0.8356</ApplicationDisplayVersion>
+    <ApplicationDisplayVersion>1.0.8357</ApplicationDisplayVersion>
     <ApplicationVersion>1</ApplicationVersion>
 
   </PropertyGroup>

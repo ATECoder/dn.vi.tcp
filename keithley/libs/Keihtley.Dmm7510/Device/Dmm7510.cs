@@ -12,10 +12,10 @@ public partial class DMM7510 : IDisposable
 
     private readonly TcpSession _tcpSession;
 
-	public DMM7510(string ipAddress, int sampleRate, int measurementFunction,
+	public DMM7510(string ipv4Address, int sampleRate, int measurementFunction,
         Single measurementRange, int bufferSize)
 	{
-        this._tcpSession = new TcpSession( ipAddress );
+        this._tcpSession = new TcpSession( ipv4Address );
         this.SampleRate = sampleRate;
 		this.MeasurementFunction = measurementFunction == 0 ? "VOLT" : "CURR";
         this.MeasurementRange = measurementRange;

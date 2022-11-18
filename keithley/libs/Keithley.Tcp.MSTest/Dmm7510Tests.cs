@@ -8,11 +8,11 @@ public class Dmm7510Tests
 
     /// <summary>   Assert identity should query. </summary>
     /// <remarks>   2022-11-16. </remarks>
-    /// <param name="ipAddress">    The IP address. </param>
+    /// <param name="ipv4Address">  The IPv4 address. </param>
     /// <param name="repeatCount">  Number of repeats. </param>
-    private void AssertIdentityShouldQuery( string ipAddress, int repeatCount )
+    private void AssertIdentityShouldQuery( string ipv4Address, int repeatCount )
     {
-        using TcpSession session = new ( ipAddress );
+        using TcpSession session = new ( ipv4Address );
         string identity = string.Empty;
         string command = "*IDN?";
         bool trimEnd = true;
@@ -33,8 +33,8 @@ public class Dmm7510Tests
     [TestMethod]
     public void IdentityShouldQuery()
     {
-        string ipAddress = "192.168.0.144";
+        string ipv4Address = "192.168.0.144";
         int count = 42;
-        this.AssertIdentityShouldQuery(ipAddress, count );
+        this.AssertIdentityShouldQuery(ipv4Address, count );
     }
 }
