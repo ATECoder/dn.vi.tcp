@@ -1,3 +1,3 @@
 CommitID,LocalRepoName,TargetDirectory
-76fb1cf60bcc6a898b62b442acfbc7f16de74f29,ide,libraries\vs\core
-f83f73681f18973364abf3796c23393742de9478,tcp,lib\vs\vi
+eae62dcd88eafd73ad78aa31076ddc4eabb70390,ide,libraries\vs\core
+b8de92eb9bfa6f4f50f1193a12f3086366f3a7ce,tcp,lib\vs\vi
