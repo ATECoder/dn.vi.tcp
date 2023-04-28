@@ -34,7 +34,7 @@ This, I hope, will evolve to implementing VXI-11 and HiSlip protocols hopefully 
 
 #### Status
 
-isr.VI.Lite encountered delay issues. Code received from Keithley, which uses the same TCP client API encountered no such issues when using the synchronous API of the TCP client.
+cc.isr.VI.Lite encountered delay issues. Code received from Keithley, which uses the same TCP client API encountered no such issues when using the synchronous API of the TCP client.
 
 Taking advantage of the Keithley code, I aim at separating the instrument-specific (e.g., DMM) functions from then TCP client API. Thereafter, I will try to restore the Asynchronous calls aiming to identify the source of the delay issues.
 
