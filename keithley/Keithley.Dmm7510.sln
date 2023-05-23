@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Keithley.Dmm7510", "libs\Keihtley.Dmm7510\Keithley.Dmm7510.csproj", "{78A38D8B-12FD-4679-8F66-16135BF732F5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Keithley.Dmm7510.Digitizer", "apps\Keithley.Dmm7510.Digitizer\Keithley.Dmm7510.Digitizer.csproj", "{0E2658F4-CC47-4FDE-8BCA-0A30E468D6A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Keithley.Dmm7510.Digitizer", "scpi.7510\keithley.dmm7510.digitizer.demo\Keithley.Dmm7510.Digitizer.csproj", "{0E2658F4-CC47-4FDE-8BCA-0A30E468D6A3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "~items", "~items", "{E0C815C2-F588-4370-A334-AB9199F0A3ED}"
 	ProjectSection(SolutionItems) = preProject
@@ -15,11 +15,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "~items", "~items", "{E0C815
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Keithley.Tcp", "libs\Keithley.Tcp\Keithley.Tcp.csproj", "{9719CCCE-20E2-4E88-933A-2422FAAB2496}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Keithley.Tcp", "scpi\keithley.tcp\Keithley.Tcp.csproj", "{9719CCCE-20E2-4E88-933A-2422FAAB2496}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Keithley.Tcp.MSTest", "libs\Keithley.Tcp.MSTest\Keithley.Tcp.MSTest.csproj", "{018CC430-73F6-47CA-BE97-FFA22EE2D5E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Keithley.Tcp.MSTest", "scpi\keithley.tcp.MSTest\Keithley.Tcp.MSTest.csproj", "{018CC430-73F6-47CA-BE97-FFA22EE2D5E7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcpEchoServer", "apps\TcpEchoServer\TcpEchoServer.csproj", "{6CA53029-6947-4DA8-9826-9FC18B3FB373}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcpEchoServer", "..\..\..\src\tcp\tcp.echo.server\TcpEchoServer.csproj", "{6CA53029-6947-4DA8-9826-9FC18B3FB373}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
