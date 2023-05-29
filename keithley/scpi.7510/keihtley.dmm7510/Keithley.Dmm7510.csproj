@@ -4,11 +4,7 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<RootNamespace>Keithley.Dmm7510</RootNamespace>
 		<LangVersion>latest</LangVersion>
-
-    <!-- Display name -->
     <ApplicationTitle>keithley.Dmm7510</ApplicationTitle>
-
-    <!-- App Identifier -->
     <ApplicationId>com.keithley.Dmm7510</ApplicationId>
 
     <!-- Versions -->

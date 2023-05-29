@@ -8,11 +8,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<RootNamespace>Keithley.Dmm7510.Digitizer</RootNamespace>
 		<LangVersion>latest</LangVersion>
-
-    <!-- Display name -->
     <ApplicationTitle>keithley.Dmm7510.Digitizer</ApplicationTitle>
-
-    <!-- App Identifier -->
     <ApplicationId>com.keithley.Dmm7510.Digitizer</ApplicationId>
 
     <!-- Versions -->

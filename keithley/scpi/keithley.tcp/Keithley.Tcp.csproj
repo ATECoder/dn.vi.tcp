@@ -6,11 +6,7 @@
     <RootNamespace>Keithley.Tcp</RootNamespace>
 
     <LangVersion>latest</LangVersion>
-
-    <!-- Display name -->
     <ApplicationTitle>keithley.Tcp</ApplicationTitle>
-
-    <!-- App Identifier -->
     <ApplicationId>com.keithley.Tcp</ApplicationId>
 
     <!-- Versions -->
