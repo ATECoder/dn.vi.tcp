@@ -8,13 +8,17 @@ namespace Keithley.Tcp.MSTest;
 public class TcpSessionTests
 {
 
-    [ClassInitialize]
-    public static void InitializeFixture( TestContext testContext )
+    /// <summary> Initializes the test class before running the first test. </summary>
+    /// <param name="testContext"> Gets or sets the test context which provides information about
+    /// and functionality for the current test run. </param>
+    /// <remarks>Use ClassInitialize to run code before running the first test in the class</remarks>
+    [ClassInitialize()]
+    public static void InitializeTestClass( TestContext testContext )
     {
         try
         {
             System.Diagnostics.Debug.WriteLine( $"{context.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType?.Name} Tester" );
-            _classTestContext = context;
+            _classTestContext = testContext;
             System.Diagnostics.Debug.WriteLine( $"{_classTestContext.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType?.Name} Tester" );
             _server = new TcpEchoServer( _ipv4Address!, _portNumber!.Value );
             _server.PropertyChanged += OnServerPropertyChanged;
@@ -23,8 +27,20 @@ public class TcpSessionTests
         }
         catch ( Exception ex )
         {
-            Console.WriteLine( ex.ToString() );
-            CleanupFixture();
+            if ( Logger is null )
+                Console.WriteLine( $"Failed initializing the test class: {ex}" );
+            else
+                Logger.LogMemberError( "Failed initializing the test class:", ex );
+
+            // cleanup to meet strong guarantees
+
+            try
+            {
+                CleanupTestClass();
+            }
+            finally
+            {
+            }
         }
     }
 
@@ -37,8 +53,10 @@ public class TcpSessionTests
 
     private static TestContext? _classTestContext;
 
-    [ClassCleanup]
-    public static void CleanupFixture()
+    /// <summary> Cleans up the test class after all tests in the class have run. </summary>
+    /// <remarks> Use <see cref="CleanupTestClass"/> to run code after all tests in the class have run. </remarks>
+    [ClassCleanup()]
+    public static void CleanupTestClass()
     {
         if ( _server is not null )
         {
