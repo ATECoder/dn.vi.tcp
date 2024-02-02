@@ -10,7 +10,7 @@ public class Dmm7510Tests
     /// <remarks>   2022-11-16. </remarks>
     /// <param name="ipv4Address">  The IPv4 address. </param>
     /// <param name="repeatCount">  Number of repeats. </param>
-    private void AssertIdentityShouldQuery( string ipv4Address, int repeatCount )
+    private static void AssertIdentityShouldQuery( string ipv4Address, int repeatCount )
     {
         using TcpSession session = new ( ipv4Address );
         string identity = string.Empty;
@@ -22,9 +22,9 @@ public class Dmm7510Tests
         while ( repeatCount > 0 )
         {
             repeatCount--;
-            string respnonse = string.Empty;
-            _ = session.QueryLine( command, 1024, ref respnonse, trimEnd ); 
-            Assert.AreEqual( identity, respnonse, $"@count = {count - repeatCount}" );
+            string response = string.Empty;
+            _ = session.QueryLine( command, 1024, ref response, trimEnd ); 
+            Assert.AreEqual( identity, response, $"@count = {count - repeatCount}" );
         }
     }
 
@@ -35,6 +35,6 @@ public class Dmm7510Tests
     {
         string ipv4Address = "192.168.0.144";
         int count = 42;
-        this.AssertIdentityShouldQuery(ipv4Address, count );
+        Dmm7510Tests.AssertIdentityShouldQuery( ipv4Address, count );
     }
 }

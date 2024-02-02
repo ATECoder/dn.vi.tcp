@@ -17,7 +17,7 @@ public class TcpSessionTests
     {
         try
         {
-            System.Diagnostics.Debug.WriteLine( $"{context.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType?.Name} Tester" );
+            System.Diagnostics.Debug.WriteLine( $"{testContext.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType?.Name} Tester" );
             _classTestContext = testContext;
             System.Diagnostics.Debug.WriteLine( $"{_classTestContext.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType?.Name} Tester" );
             _server = new TcpEchoServer( _ipv4Address!, _portNumber!.Value );
@@ -27,10 +27,7 @@ public class TcpSessionTests
         }
         catch ( Exception ex )
         {
-            if ( Logger is null )
-                Console.WriteLine( $"Failed initializing the test class: {ex}" );
-            else
-                Logger.LogMemberError( "Failed initializing the test class:", ex );
+            Console.WriteLine( $"Failed initializing the test class: {ex}" );
 
             // cleanup to meet strong guarantees
 
@@ -110,9 +107,9 @@ public class TcpSessionTests
         while ( repeatCount > 0 )
         {
             repeatCount--;
-            string respnonse = string.Empty;
-            _ = session.QueryLine( command, 1024 , ref respnonse, trimEnd ); 
-            Assert.AreEqual( identity, respnonse, $"@count = {count - repeatCount}" );
+            string response = string.Empty;
+            _ = session.QueryLine( command, 1024 , ref response, trimEnd ); 
+            Assert.AreEqual( identity, response, $"@count = {count - repeatCount}" );
         }
     }
 

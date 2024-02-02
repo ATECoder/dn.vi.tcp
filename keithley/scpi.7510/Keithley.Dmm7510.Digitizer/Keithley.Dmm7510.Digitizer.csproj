@@ -17,8 +17,8 @@
 
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\libs\Keihtley.Dmm7510\Keithley.Dmm7510.csproj" />
+    <ItemGroup>
+      <ProjectReference Include="..\keihtley.dmm7510\Keithley.Dmm7510.csproj" />
     </ItemGroup>
 
   

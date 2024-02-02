@@ -14,7 +14,7 @@
   </PropertyGroup>
 
     <ItemGroup>
-    <ProjectReference Include="..\Keithley.Tcp\Keithley.Tcp.csproj" />
+      <ProjectReference Include="..\..\scpi\keithley.tcp\Keithley.Tcp.csproj" />
     </ItemGroup>
 
 </Project>
