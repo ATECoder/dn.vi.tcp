@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    
     <TargetFramework>netstandard2.0</TargetFramework>
     <OutputType>Library</OutputType>
     <LangVersion>latest</LangVersion>
@@ -9,10 +10,10 @@
     <Nullable>enable</Nullable>
 
     <!-- Assembly Info -->
-    <RootNamespace>cc.isr.Tcp</RootNamespace>
-    <AssemblyName>cc.isr.Tcp.Client</AssemblyName>
-    <ApplicationTitle>cc.isr.Tcp.Client</ApplicationTitle>
-    <ApplicationId>cc.isr.Tcp.Client</ApplicationId>
+    <RootNamespace>cc.isr.Tcp.Tsp</RootNamespace>
+    <AssemblyName>cc.isr.Tcp.Tsp.Device</AssemblyName>
+    <ApplicationTitle>cc.isr.Tcp.Tsp.Device</ApplicationTitle>
+    <ApplicationId>cc.isr.Tcp.Tsp.Device</ApplicationId>
 
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
@@ -31,9 +32,9 @@
 
     <!-- NuGet -->
     <IsPackable>true</IsPackable>
-    <PackageId>cc.isr.Tcp.Client</PackageId>
-    <Description>A pure C# implementation of TCP communication for LXI instruments.</Description>
-    <PackageTags>TCP, LXI</PackageTags>
+    <PackageId>cc.isr.Tcp.Tsp.Device</PackageId>
+    <Description>A pure C# implementation of TCP Test Script Software communication.</Description>
+    <PackageTags>TCP, TSP</PackageTags>
     <PackageOutputPath>C:\my\nuget</PackageOutputPath>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
@@ -42,6 +43,10 @@
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
 
   </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\tcp\tcp.client\cc.isr.Tcp.Client.csproj" />
+    </ItemGroup>
 
   <ItemGroup>
     <None Include="readme.md" Pack="true" PackagePath="" />

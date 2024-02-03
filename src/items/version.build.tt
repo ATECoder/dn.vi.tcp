@@ -15,7 +15,7 @@
 </Project>
 <#+
     int Major = 1;
-    int Minor = 0;
+    int Minor = 2;
     int BuildNumber = (int)Math.Floor((DateTime.UtcNow - new DateTime(2000,1,1)).TotalDays);
     int RevisionNumber = (int)((DateTime.UtcNow - DateTime.UtcNow.Date).TotalSeconds / 2);
 #>

@@ -2,7 +2,7 @@
 All notable changes to these libraries will be documented in this file in a format based on [Keep a Change log]
 
 ## [1.2.8798] - 2023-02-02 Preview 202304
-* Update toe .NET 8.0.
+* Update to .NET 8.0.
 
 ## [1.1.8535] - 2023-05-15 Preview 202304
 * Use cc.isr.Json.AppSettings.ViewModels project for settings I/O.

@@ -1,25 +1,16 @@
-using System;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
 
-namespace Keithley.Tcp.Client;
+namespace cc.isr.Tcp.Client;
 
 /// <summary>   A TCP session. </summary>
 /// <remarks>   2022-11-14. </remarks>
-public partial class TcpSession : IDisposable
+/// <remarks>   Constructor. </remarks>
+/// <remarks>   2022-11-14. </remarks>
+/// <param name="ipv4Address">  IPv4 Address in string format. </param>
+/// <param name="portNumber">   (Optional) The port number. </param>
+public partial class TcpSession(string ipv4Address, int portNumber = 5025) : IDisposable
 {
-
-    /// <summary>   Constructor. </summary>
-    /// <remarks>   2022-11-14. </remarks>
-    /// <param name="ipv4Address">  IPv4 Address in string format. </param>
-    /// <param name="portNumber">   (Optional) The port number. </param>
-    public TcpSession( string ipv4Address, int portNumber = 5025 )
-    {
-        this.PortNumber = portNumber;
-        this.IPv4Address = ipv4Address;
-    }
 
     /// <summary>
     /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged
@@ -50,24 +41,30 @@ public partial class TcpSession : IDisposable
 
     #region " tcp client and stream "
 
-    private TcpClient _tcpClient = null;
-    private NetworkStream _netStream = null;
+    private TcpClient? _tcpClient = null;
+    private NetworkStream? _netStream = null;
 
     /// <summary>   Gets or sets the port number. </summary>
     /// <value> The port number. </value>
-    public int PortNumber { get; private set; }
+    public int PortNumber { get; private set; } = portNumber;
 
     /// <summary>   Gets or sets the IPv4 address. </summary>
     /// <value> The IP address. </value>
-    public string IPv4Address { get; private set; }
+    public string IPv4Address { get; private set; } = ipv4Address;
 
     /// <summary>   Gets or sets the receive timeout. </summary>
     /// <remarks> Default value = 0 ms.</remarks>
     /// <value> The receive timeout. </value>
     public TimeSpan ReceiveTimeout
     {
-        get => TimeSpan.FromMilliseconds( this._tcpClient.ReceiveTimeout );
-        set => this._tcpClient.ReceiveTimeout = value.Milliseconds;
+        get => TimeSpan.FromMilliseconds(this._tcpClient?.ReceiveTimeout ?? 0);
+        set
+        {
+            if (this._tcpClient != null)
+            {
+                this._tcpClient.ReceiveTimeout = value.Milliseconds;
+            }
+        }
     }
 
     /// <summary>   Gets or sets the send timeout. </summary>
@@ -75,8 +72,13 @@ public partial class TcpSession : IDisposable
     /// <value> The send timeout. </value>
     public TimeSpan SendTimeout
     {
-        get => TimeSpan.FromMilliseconds( this._tcpClient.SendTimeout );
-        set => this._tcpClient.SendTimeout = value.Milliseconds;
+        get => TimeSpan.FromMilliseconds( this._tcpClient?.SendTimeout ?? 0) ;
+        set
+        {
+            if ( this._tcpClient != null ) {
+                this._tcpClient.SendTimeout = value.Milliseconds;
+            }
+        }
     }
 
     /// <summary>   Gets or sets the size of the receive buffer. </summary>
@@ -84,8 +86,14 @@ public partial class TcpSession : IDisposable
     /// <value> The size of the receive buffer. </value>
     public int ReceiveBufferSize
     {
-        get => this._tcpClient.ReceiveBufferSize;
-        set => this._tcpClient.ReceiveBufferSize = value;
+        get => this._tcpClient?.ReceiveBufferSize ?? 0;
+        set 
+        {
+            if (this._tcpClient != null)
+            {
+                this._tcpClient.ReceiveBufferSize = value;
+            }
+        }
     }
 
     /// <summary>   Opens a new session. </summary>
@@ -117,8 +125,8 @@ public partial class TcpSession : IDisposable
         var success = asyncResult.AsyncWaitHandle.WaitOne( timeout );
         if ( !success )
         {
-            this._tcpClient.Close();
-            this._tcpClient.EndConnect( asyncResult );
+            this._tcpClient?.Close();
+            this._tcpClient?.EndConnect( asyncResult );
         }
         return success;
     }
@@ -130,7 +138,7 @@ public partial class TcpSession : IDisposable
     {
         if ( asyncResult.IsCompleted )
         {
-            this._netStream = this._tcpClient.GetStream();
+            this._netStream = this._tcpClient?.GetStream();
         }
     }
 
@@ -173,15 +181,15 @@ public partial class TcpSession : IDisposable
     /// <remarks>   2022-11-14. </remarks>
     public void Disconnect()
     {
-        this._netStream.Close();
-        this._tcpClient.Close();
+        this._netStream?.Close();
+        this._tcpClient?.Close();
     }
 
     /// <summary>   Flushes the TCP Stream. </summary>
     /// <remarks>   2022-11-14. </remarks>
     public void Flush()
     {
-        this._netStream.Flush();
+        this._netStream?.Flush();
     }
 
     #endregion
@@ -221,7 +229,7 @@ public partial class TcpSession : IDisposable
     /// <returns>   True if data is available; otherwise, false . </returns>
     public bool DataAvailable()
     {
-        return this._netStream.DataAvailable;
+        return this._netStream?.DataAvailable ?? false;
     }
 
     /// <summary>
@@ -248,7 +256,7 @@ public partial class TcpSession : IDisposable
     {
         if ( string.IsNullOrEmpty( message ) ) return 0;
         byte[] buffer = Encoding.ASCII.GetBytes( message );
-        this._netStream.Write( buffer, 0, buffer.Length );
+        this._netStream?.Write( buffer, 0, buffer.Length );
         return buffer.Length;
     }
 
@@ -270,7 +278,7 @@ public partial class TcpSession : IDisposable
     public int Read( int byteCount, ref string reply, bool trimEnd )
     {
         byte[] buffer = new byte[byteCount];
-        int receivedCount = this._netStream.Read( buffer, 0, byteCount );
+        int receivedCount = this._netStream?.Read( buffer, 0, byteCount ) ?? 0;
         reply = this.BuildReply(buffer, receivedCount, trimEnd);    
         return receivedCount;
     }
@@ -312,7 +320,7 @@ public partial class TcpSession : IDisposable
     public int Read( int offset, int count, ref float[] values )
     {
         byte[] buffer = new byte[count * 4 + offset + 1];
-        int receivedCount = this._netStream.Read( buffer, 0, buffer.Length );
+        int receivedCount = this._netStream?.Read( buffer, 0, buffer.Length ) ?? 0;
         // Need to convert to the byte array into single
         Buffer.BlockCopy( buffer, offset, values, 0, values.Length * 4 );
         return receivedCount;
@@ -372,7 +380,7 @@ public partial class TcpSession : IDisposable
     public async Task<string> ReadWhileAvailableAsync( int byteCount, bool trimEnd, CancellationToken ct )
     {
         StringBuilder sb = new();
-        while ( this._netStream.DataAvailable )
+        while ( this._netStream?.DataAvailable ?? false)
         {
             var buffer = new byte[byteCount];
             int receivedCount = await this._netStream.ReadAsync( buffer, 0, byteCount, ct );
@@ -396,7 +404,8 @@ public partial class TcpSession : IDisposable
     public async Task<string> ReadAsync( int byteCount, bool trimEnd, CancellationToken ct )
     {
         var buffer = new byte[byteCount];
-        int receivedCount = await this._netStream.ReadAsync( buffer, 0, byteCount, ct );
+
+        int receivedCount = (this._netStream != null) ? await this._netStream.ReadAsync(buffer, 0, byteCount, ct) : 0;
         return  this.BuildReply( buffer, receivedCount, trimEnd );
     }
 
@@ -410,12 +419,12 @@ public partial class TcpSession : IDisposable
         if ( string.IsNullOrEmpty( message ) ) return 0;
 
         // read any data already in the stream.
-        this.Orphan = this._netStream.DataAvailable
+        this.Orphan = this._netStream?.DataAvailable ?? false
             ? await this.ReadWhileAvailableAsync( 2048, false, ct )
             : string.Empty;
 
         byte[] buffer = Encoding.ASCII.GetBytes( message );
-        await this._netStream.WriteAsync( buffer, 0, buffer.Length, ct );
+        await (this._netStream?.WriteAsync( buffer, 0, buffer.Length, ct ) ?? Task.CompletedTask);
         return buffer.Length;
     }
 
@@ -470,7 +479,7 @@ public partial class TcpSession : IDisposable
 
     /// <summary>   Gets the last leftover response. </summary>
     /// <value> Any leftover message in the stream. </value>
-    public string Orphan { get; private set; }
+    public string Orphan { get; private set; } = string.Empty;
 
 
     #endregion
