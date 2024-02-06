@@ -1,8 +1,6 @@
 using System.ComponentModel;
 
-using Keithley.Tcp.Client;
-
-namespace Keithley.Tcp.MSTest;
+namespace cc.isr.Tcp.Client.MSTest;
 
 [TestClass]
 public class TcpSessionTests

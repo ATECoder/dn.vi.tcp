@@ -1,6 +1,6 @@
 ### About
 
-[ISR's Tcp] is a control and communication library for LXI-based instruments. 
+[ISR's Tcp Tsp Device] is a control and communication library for LXI-based Test Scipt Processing (TSP) instruments. 
 
 #### History
 
@@ -8,11 +8,11 @@
 
 #### How to Use
 
-For information on using [ISR's Tcp] see the repository [ISR's Tcp] projects.
+For information on using [ISR's Tcp Tsp Device] see the repository [ISR's Tcp Tsp Device] projects.
 
 #### Feedback
 
-[ISR's Tcp] is released as open source under the MIT license.
+[ISR's Tcp Tsp Device] is released as open source under the MIT license.
 Bug reports and contributions are welcome at the [ISR's Tcp] repository.
 
-[ISR's Tcp]: https://github.com/ATECoder/dn.vi.tcp
+[ISR's Tcp Tsp Device]: https://github.com/ATECoder/dn.vi.tcp/tsp/tsp.device

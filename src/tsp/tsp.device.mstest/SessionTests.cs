@@ -1,10 +1,20 @@
-using Keithley.Tcp.Client;
+using cc.isr.Tcp.Client;
 
-namespace Keithley.Tcp.MSTest;
+namespace cc.isr.Tcp.Tsp.Device.MSTest;
 
+/// <summary>   (Unit Test Class) a session tests. </summary>
+/// <remarks>   2024-02-05. </remarks>
 [TestClass]
-public class Dmm7510Tests
+public class SessionTests
 {
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
+    private const string K7510IPAddress = "192.168.0.144";
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
+    private const string K2600IPAddress = "192.168.0.150";
+
+    private const string IPAddress = K2600IPAddress;
 
     /// <summary>   Assert identity should query. </summary>
     /// <remarks>   2022-11-16. </remarks>
@@ -33,8 +43,8 @@ public class Dmm7510Tests
     [TestMethod]
     public void IdentityShouldQuery()
     {
-        string ipv4Address = "192.168.0.144";
+        string ipv4Address = IPAddress;
         int count = 42;
-        Dmm7510Tests.AssertIdentityShouldQuery( ipv4Address, count );
+        SessionTests.AssertIdentityShouldQuery( ipv4Address, count );
     }
 }

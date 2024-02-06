@@ -1,4 +1,4 @@
-namespace cc.isr.Tcp.Tsp.K2600.Ohm.Views;
+namespace cc.isr.Tcp.Tsp.K7510.Digitizer.Views;
 
 partial class Form1
 {
@@ -68,7 +68,7 @@ partial class Form1
         // 
         // keithleyPictureBox
         // 
-        this.keithleyPictureBox.Image = global::cc.isr.Tcp.Tsp.K2600.Resources.KeithleyLogo;
+        this.keithleyPictureBox.Image = global::cc.isr.Tcp.Tsp.K7510.Resources.KeithleyLogo;
         this.keithleyPictureBox.Location = new System.Drawing.Point( 322, 9 );
         this.keithleyPictureBox.Margin = new System.Windows.Forms.Padding( 4, 3, 4, 3 );
         this.keithleyPictureBox.Name = "keithleyPictureBox";
@@ -78,7 +78,7 @@ partial class Form1
         // 
         // tekPictureBox
         // 
-        this.tekPictureBox.Image = global::cc.isr.Tcp.Tsp.K2600.Resources.TektronixLogo;
+        this.tekPictureBox.Image = global::cc.isr.Tcp.Tsp.K7510.Resources.TektronixLogo;
         this.tekPictureBox.Location = new System.Drawing.Point( 14, 8 );
         this.tekPictureBox.Margin = new System.Windows.Forms.Padding( 4, 3, 4, 3 );
         this.tekPictureBox.Name = "tekPictureBox";
@@ -222,7 +222,7 @@ partial class Form1
         this.digitizeCurrentOption.Name = "digitizeCurrentOption";
         this.digitizeCurrentOption.Size = new System.Drawing.Size( 107, 19 );
         this.digitizeCurrentOption.TabIndex = 8;
-        this.digitizeCurrentOption.Text = "Digitize CurrentLevel";
+        this.digitizeCurrentOption.Text = "Digitize Current";
         this.digitizeCurrentOption.UseVisualStyleBackColor = true;
         this.digitizeCurrentOption.CheckedChanged += new System.EventHandler( this.DigitizeCurrentOption_CheckedChanged );
         // 
@@ -234,7 +234,7 @@ partial class Form1
         this.digitizeVoltageOption.Name = "digitizeVoltageOption";
         this.digitizeVoltageOption.Size = new System.Drawing.Size( 106, 19 );
         this.digitizeVoltageOption.TabIndex = 7;
-        this.digitizeVoltageOption.Text = "Digitize VoltageLevel";
+        this.digitizeVoltageOption.Text = "Digitize Voltage";
         this.digitizeVoltageOption.UseVisualStyleBackColor = true;
         this.digitizeVoltageOption.CheckedChanged += new System.EventHandler( this.DigitizeVoltageOption_CheckedChanged );
         // 

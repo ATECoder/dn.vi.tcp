@@ -1,12 +1,22 @@
 using System.Diagnostics;
 
-using Keithley.Tcp.Client;
+using cc.isr.Tcp.Client;
 
-namespace Keithley.Tcp.MSTest;
+namespace cc.isr.Tcp.Tsp.Device.MSTest;
 
+/// <summary>   (Unit Test Class) a session asynchronous tests. </summary>
+/// <remarks>   2024-02-05. </remarks>
 [TestClass]
-public class Dmm7510AsyncTests
+public class SessionAsyncTests
 {
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
+    private const string K7510IPAddress = "192.168.0.144";
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
+    private const string K2600IPAddress = "192.168.0.150";
+
+    private const string IPAddress = K2600IPAddress;
 
     /// <summary>   Writes a line. </summary>
     /// <remarks>   2022-11-16. </remarks>
@@ -61,7 +71,7 @@ public class Dmm7510AsyncTests
     [TestMethod]
     public void IdentityShouldQuery()
     {
-        string ipv4Address = "192.168.0.144";
+        string ipv4Address = IPAddress;
         int count = 42;
         TimeSpan readDelay = TimeSpan.FromMilliseconds( 0 );
         AssertIdentityShouldQuery(ipv4Address, readDelay, count );
@@ -72,7 +82,7 @@ public class Dmm7510AsyncTests
     [TestMethod]
     public void SessionTcpClientShouldBeginConnect()
     {
-        string ipv4Address = "192.168.0.144";
+        string ipv4Address = IPAddress;
         TimeSpan timeout = TimeSpan.FromMilliseconds( 100 );
         using TcpSession session = new( ipv4Address );
         Stopwatch sw = Stopwatch.StartNew();

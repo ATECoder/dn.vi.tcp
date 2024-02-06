@@ -1,7 +1,7 @@
 using System.Net.Sockets;
 using System.Net;
 
-namespace Keithley.Tcp.MSTest;
+namespace cc.isr.Tcp.Client.MSTest;
 
 
 /// <summary>   A TCP echo server. </summary>

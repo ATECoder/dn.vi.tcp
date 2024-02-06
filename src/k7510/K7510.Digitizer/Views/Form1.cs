@@ -2,7 +2,7 @@ using System.Diagnostics;
 
 using cc.isr.Tcp.Tsp.Device;
 
-namespace cc.isr.Tcp.Tsp.K2600.Ohm.Views;
+namespace cc.isr.Tcp.Tsp.K7510.Digitizer.Views;
 
 public partial class Form1 : Form
 {
@@ -30,7 +30,7 @@ public partial class Form1 : Form
 
 	private void DigitizeVoltageOption_CheckedChanged(object sender, EventArgs e)
 	{
-        string[] rangeItems = ["0.1", "1", "10", "100", "1000"];
+		string[] rangeItems = { "0.1", "1", "10", "100", "1000" };
         this.rangeComboBox.Items.Clear();
         this.rangeComboBox.Items.AddRange(rangeItems);
         this.rangeComboBox.SelectedIndex = 2;
@@ -39,7 +39,7 @@ public partial class Form1 : Form
 
 	private void DigitizeCurrentOption_CheckedChanged(object sender, EventArgs e)
 	{
-		string[] rangeItems = ["10e-6", "100e-6", "1e-3", "10e-3", "100e-3", "1"];
+		string[] rangeItems = { "10e-6", "100e-6", "1e-3", "10e-3", "100e-3", "1"};
         this.rangeComboBox.Items.Clear();
         this.rangeComboBox.Items.AddRange(rangeItems);
         this.rangeComboBox.SelectedIndex = 4;

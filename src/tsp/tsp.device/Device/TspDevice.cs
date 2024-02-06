@@ -1,27 +1,33 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading;
+using cc.isr.Tcp.Client;
 
-using Keithley.Tcp.Client;
+namespace cc.isr.Tcp.Tsp.Device;
 
-namespace Keithley.Dmm7510.Device;
-
-public partial class DMM7510 : IDisposable
+/// <summary>   A TSP Device. </summary>
+/// <remarks>   2024-02-05. </remarks>
+public partial class TspDevice : IDisposable
 {
 
-    private readonly TcpSession _tcpSession;
+    #region " Construction and Cleanup "
 
-	public DMM7510(string ipv4Address, int sampleRate, int measurementFunction,
-        Single measurementRange, int bufferSize)
+    /// <summary>   Constructor. </summary>
+    /// <remarks>   2024-02-05. </remarks>
+    /// <param name="ipv4Address">          The IPv4 address. </param>
+	public TspDevice(string ipv4Address)
 	{
-        this._tcpSession = new TcpSession( ipv4Address );
-        this.SampleRate = sampleRate;
-		this.MeasurementFunction = measurementFunction == 0 ? "VOLT" : "CURR";
-        this.MeasurementRange = measurementRange;
-		this.BufferSize = bufferSize;
+        this.Session = new TcpSession( ipv4Address  );
 	}
 
+    /// <summary>
+    /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged
+    /// resources.
+    /// </summary>
+    /// <remarks>   2024-02-05. </remarks>
     public void Dispose()
     {
         this.Dispose( true );
@@ -31,171 +37,264 @@ public partial class DMM7510 : IDisposable
     {
         if ( disposing )
         {
-            this._tcpSession?.Dispose();
+            this.Session?.Dispose();
         }
     }
 
+    #endregion
+
+    #region " TCP Session "
+
+    /// <summary>   Gets or sets the session. </summary>
+    /// <value> The session. </value>
+    public TcpSession Session { get; private set; }
+
+    /// <summary>   Connects. </summary>
+    /// <remarks>   2024-02-05. </remarks>
+    /// <param name="echoIdentity"> True to echo identity. </param>
+    /// <param name="identity">     [in,out] The identity. </param>
     public void Connect( bool echoIdentity, ref string identity )
     {
         Console.WriteLine( "Connected to instrument......" );
-        this._tcpSession.Connect(echoIdentity, "*IDN?", ref identity, true);
-        this._tcpSession.ReceiveTimeout = TimeSpan.FromMilliseconds( 20000 );
-        this._tcpSession.ReceiveBufferSize = 35565;
+        this.Session.Connect(echoIdentity, "*IDN?", ref identity, true);
+        this.Session.ReceiveTimeout = TimeSpan.FromMilliseconds( 3000 );
+        this.Session.ReceiveBufferSize = 35565;
     }
 
+    /// <summary>   Disconnects this object. </summary>
+    /// <remarks>   2024-02-05. </remarks>
     public void Disconnect()
     {
-        this._tcpSession.Disconnect();  
+        this.Session.Disconnect();  
     }
 
-    public int SampleRate { get; private set; }
-    public string MeasurementFunction { get; private set; }
-    public Single MeasurementRange { get; private set; }
+    #endregion
 
-    public int BufferSize { get; private set; }
+    #region " Settings "
 
-    public bool IsBufferRollover { get; private set; }
+    /// <summary>   Gets the aperture in power line cycles. </summary>
+    /// <value> The aperture. </value>
+    public double Aperture { get; set; } = 1;
 
-	public void Setup_Buffers()
-	{
-        _ = this._tcpSession.WriteLine( "*RST" );
-        _ = this._tcpSession.WriteLine( "TRAC:CLE \"defbuffer1\"" );
-        _ = this._tcpSession.WriteLine( "TRAC:POIN " + Convert.ToString( this.BufferSize ) + ", \"defbuffer1\"" );
-        _ = this._tcpSession.WriteLine( "TRAC:FILL:MODE CONT, \"defbuffer1\"" );
-        _ = this._tcpSession.WriteLine( "*WAI" );
-		Thread.Sleep(100);
-	}
+    /// <summary>   Gets the current level to source or limit in Amperes. </summary>
+    /// <value> The current. </value>
+    public double CurrentLevel { get; set; } = 0.01;
 
-	public void Setup_DMM()
-	{
-        // Do setup...
-        _ = this._tcpSession.WriteLine( ":SENS:DIG:FUNC \"" + this.MeasurementFunction + "\"" );
-        _ = this._tcpSession.WriteLine( ":DIG:" + this.MeasurementFunction + ":RANG " + Convert.ToString( this.MeasurementRange ) );
-        _ = this._tcpSession.WriteLine( ":SENS:DIG:" + this.MeasurementFunction + ":SRAT " + Convert.ToString( this.SampleRate ) );
-        _ = this._tcpSession.WriteLine( ":SENS:DIG:COUNt " + Convert.ToString( this.BufferSize ) );
-        _ = this._tcpSession.WriteLine( ":SENS:DIG:" + this.MeasurementFunction + ":APER 5e-6" );        // was 1e-6
-        _ = this._tcpSession.WriteLine( ":FORM:DATA SRE" );                                 // for single precision
-	}
+    /// <summary>   Gets the voltage to source or limit in volts. </summary>
+    /// <value> The voltage. </value>
+    public double VoltageLevel { get; set; } = 0.1;
 
-	public void Setup_Digitizing(int captureMinutes)
-	{
-        _ = this._tcpSession.WriteLine( ":TRIGger:LOAD \"EMPTY\"" );
-        _ = this._tcpSession.WriteLine( ":TRIGger:BLOCk:DIGitize 1, \"defbuffer1\", " + Convert.ToString( this.BufferSize ) );
-        _ = this._tcpSession.WriteLine( ":TRIGger:BLOCk:BRANch:COUNter 2, " + Convert.ToString( captureMinutes * 2 ) + ", 1" );
-	}
+    /// <summary>   Gets the source function, e.g., current or voltage source. </summary>
+    /// <value> The source function. </value>
+    public string SourceFunction { get; set; } = "VOLT";
 
-	public void Trigger_DMM()
-	{
-        // Do Trigger...
-        _ = this._tcpSession.WriteLine( "INIT" );
-	}
+    /// <summary>   Gets or sets the source-measure unit. </summary>
+    /// <value> The smu. </value>
+    public string SMU { get; set; } = "_G.smua";
+
+    /// <summary>   Gets a value indicating whether the automatic range is used. </summary>
+    /// <value> True if automatic range, false if not. </value>
+    public bool AutoRange { get; set; } = true;
+
+    #endregion
+
+    #region " Readings " 
+
+    /// <summary>   Gets or sets the current reading. </summary>
+    /// <value> The current reading. </value>
+    public string CurrentReading { get; private set; } = string.Empty;
+
+    /// <summary>   Gets or sets the voltage reading. </summary>
+    /// <value> The voltage reading. </value>
+    public string VoltageReading { get; private set; } = string.Empty;
 
 
-    /// <summary>   Extracts the buffer data. </summary>
-    /// <remarks>   This needs to be fixed for seconds duration and lower sample rates. </remarks>
-    /// <param name="filePath">             Full pathname of the file. </param>
-    /// <param name="unitId">               Identifier for the unit. </param>
-    /// <param name="bufferName">           Name of the buffer. </param>
-    /// <param name="bufferSize">           Size of the buffer. </param>
-    /// <param name="bytesRcvCnt">          Number of bytes receives. </param>
-    /// <param name="chunkSize">            Size of the chunk of single precision values. </param>
-    /// <param name="stopWatch">            [in,out] The stop watch. </param>
-    /// <param name="duration">             The duration in seconds. </param>
-    /// <param name="savedReadingsCount">   [in,out] Number of saved readings. </param>
-	public void ExtractBufferData(string filePath, string unitId, String bufferName, int bufferSize,
-                                  int chunkSize, ref Stopwatch stopWatch, int duration, ref int savedReadingsCount)
-	{
-        int startIndex = 1;
-		int endIndex = chunkSize;
-		int totalReadings = 0;
-        float[] readingAmounts = new float[chunkSize];
-		string timeStamp = DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss");
-		string fileName = "DMM7510_StreamDigitized_" + unitId + "_" + timeStamp + ".csv";
-        string fullFileName = Path.Combine( filePath, fileName );
-        int lastCount = 0 ;
-        int previousReadingBufferIndex = 0;
-        int k = 0;
-        bool doPoll = true;
-        this.IsBufferRollover = false;
-        string queryReply = "";
-        int huh;
-        do
+    /// <summary>   Gets or sets the current Value. </summary>
+    /// <value> The current Value. </value>
+    public double CurrentValue { get; private set; } = default;
+
+    /// <summary>   Gets or sets the voltage Value. </summary>
+    /// <value> The voltage Value. </value>
+    public double VoltageValue { get; private set; } = default;
+
+    /// <summary>   Gets or sets the calculated resistance. </summary>
+    /// <value> The resistance. </value>
+    public double? Resistance { get; private set; } = default;
+
+    #endregion
+
+    #region " Query Device " 
+
+    /// <summary>   Queries device information. </summary>
+    /// <remarks>   2024-02-05. </remarks>
+    /// <param name="request">   The requested information. </param>
+    /// <returns>   The device information. </returns>
+    public string QueryDeviceInfo( string request )
+    {
+        string reply = string.Empty;
+        _ = this.Session.QueryLine($"_G.print({request})", 1024, ref reply, true);
+        return reply;
+    }
+
+    #endregion
+
+    #region " Basic operations " 
+
+    /// <summary>   Resets the known state. </summary>
+    /// <remarks>   2024-02-05. </remarks>
+    public void ResetKnownState()
+    {
+
+        this.ClearReadings();
+
+        // turn off prompts and error messages
+        _ = this.Session.WriteLine($"_G.localnode.showerrors=0");
+        _ = this.Session.WriteLine($"_G.localnode.prompts=0");
+
+        _ = this.Session.WriteLine("_G.reset() _G.waitcomplete() _G.print([[1]])");
+        Thread.Sleep(100);
+
+        string reply = string.Empty;
+        _ = this.Session.Read(1024, ref reply, true);
+
+        if ( reply != "1") 
+            throw new ExternalException( $"Failed resetting know state; *OPC returned '{reply}' rather than '1'." );
+
+    }
+
+    #endregion
+
+    #region " Configure and Measure Ohm " 
+
+    /// <summary>   Clears the readings. </summary>
+    /// <remarks>   2024-02-05. </remarks>
+    public void ClearReadings()
+    {
+        this.CurrentReading = string.Empty;
+        this.VoltageReading = string.Empty; 
+        this.VoltageValue = default;
+        this.CurrentValue = default;
+        this.Resistance = default;  
+    }
+
+    /// <summary>   Configure Constant Source. </summary>
+    /// <remarks>   2024-02-05. </remarks>
+    public void ConfigureConstantSource()
+    {
+        this.ResetKnownState();
+
+        // configure the measurement
+        _ = this.Session.WriteLine($"local m = {this.SMU}.measure");
+
+        if (this.AutoRange )
         {
-            string queryCommand;
-            if ( doPoll )
-            {
-                int cumulativeCount;
-                do
-                {
-                    queryReply = "";
-                    // read last buffer index
-                    // use END because plain old ACT? tops off at bufferSize when full
-                    queryCommand = ":TRACe:ACTual:END? \"" + bufferName + "\"";     
-                    _ = this._tcpSession.QueryLine( queryCommand, 256, ref queryReply, true );
-                    this._tcpSession.Flush();
-
-                    int readingBufferIndex = Convert.ToInt32( queryReply );
-                    if ( readingBufferIndex < previousReadingBufferIndex )
-                    {
-                        k++;                    // this indicates a buffer roll-over condition
-                        this.IsBufferRollover = true;
-                    }
-                    cumulativeCount = k * bufferSize + readingBufferIndex;
-                    previousReadingBufferIndex = readingBufferIndex;
-
-                } while ( (cumulativeCount - totalReadings) < chunkSize );
-            }
-
-            // Pulling the data back from the instrument means there's a bottleneck with the network...
-            if ( endIndex > bufferSize )
-                endIndex = bufferSize;
-
-            queryReply = "";
-            queryCommand = ":TRAC:DATA? " + Convert.ToString( startIndex ) + ", " + Convert.ToString( endIndex ) + ", \"" + bufferName + "\"";
-            // _ = this._tcpSession.QueryLine( queryCommand, 2, bytesRcvCnt, ref readingAmounts );
-            _ = this._tcpSession.QueryLine( queryCommand, 2, chunkSize, ref readingAmounts );
-            this._tcpSession.Flush();
-
-            // Generate the file name based on the system timestamp...
-            int writeCounter = totalReadings / bufferSize;
-            if ( writeCounter > lastCount )
-            {
-                // create a new file name...
-                timeStamp = DateTime.Now.ToString( "yyyy-MM-dd_hh-mm-ss" );
-
-                fileName = "DMM7510_StreamDigitized_" + unitId + "_" + timeStamp + ".csv";
-                fullFileName = Path.Combine( filePath, fileName );
-
-                lastCount++;
-            }
-
-            WriteToFile( fullFileName, readingAmounts );
-
-            totalReadings += chunkSize;
-            startIndex = (totalReadings % bufferSize) + 1;
-            endIndex = startIndex + (chunkSize - 1);
-
-            // Write to file in dh: this changed to 1 second intervals from 30s intervals
-            huh = bufferSize * (duration * 2) - chunkSize;
-        } while ( totalReadings < huh ); // (!(rcvBuffer.Contains("IDLE")));
-
-        savedReadingsCount = totalReadings;
-
-		stopWatch.Stop();
-	}
-
-    /// <summary>   Writes to file. </summary>
-    /// <remarks>   2022-11-14. </remarks>
-    /// <param name="fileName"> Filename of the file. </param>
-    /// <param name="values">   The values. </param>
-	private static void WriteToFile(String fileName, float[] values)
-	{
-		bool doAppend = true;
-        using StreamWriter writer = new ( fileName, doAppend );
-        foreach ( var value in values )
+            _ = this.Session.WriteLine($"m.autorangei = {this.SMU}.AUTORANGE_ON");
+            _ = this.Session.WriteLine($"m.autorangev = {this.SMU}.AUTORANGE_ON");
+        }
+        else
         {
-            writer.WriteLine( value );
+            _ = this.Session.WriteLine($"m.autorangei = {this.SMU}.AUTORANGE_OFF");
+            _ = this.Session.WriteLine($"m.rangei = {2 * this.CurrentLevel}");
+            _ = this.Session.WriteLine($"m.rangev = {2 * this.VoltageLevel}");
+        }
+        _ = this.Session.WriteLine($"m.nplc= {this.Aperture}");
+        _ = this.Session.WriteLine($"m.autozero= {this.SMU}.AUTOZERO_AUTO");
+        _ = this.Session.WriteLine($"m.count = 1");
+
+        // configure the source
+        _ = this.Session.WriteLine($"local s = {this.SMU}.source");
+
+        if ( this.SourceFunction == "VOLT")
+        {
+            _ = this.Session.WriteLine($"s.func = {this.SMU}.OUTPUT_DCVOLTS");
+            _ = this.Session.WriteLine($"s.limiti = {this.CurrentLevel}");
+        }
+        else
+        {
+            _ = this.Session.WriteLine($"s.func = {this.SMU}.OUTPUT_DCAMPS");
+            _ = this.Session.WriteLine($"s.limitv = {this.VoltageLevel}");
+        }
+        if (this.AutoRange)
+        {
+            _ = this.Session.WriteLine($"s.autorangei = {this.SMU}.AUTORANGE_ON");
+            _ = this.Session.WriteLine($"s.autorangev = {this.SMU}.AUTORANGE_ON");
+        }
+        else
+        {
+            _ = this.Session.WriteLine($"s.autorangei = {this.SMU}.AUTORANGE_OFF");
+            _ = this.Session.WriteLine($"s.rangei = {2 * this.CurrentLevel}");
+            _ = this.Session.WriteLine($"s.rangev = {2 * this.VoltageLevel}");
         }
 
+
+        _ = this.Session.WriteLine("*WAI");
+        Thread.Sleep(100);
     }
+
+
+    #endregion
+
+    #region " Source Measure " 
+
+    /// <summary>   Measure resistance. </summary>
+    /// <remarks>   2024-02-05. </remarks>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public bool MeasureResistance()
+    {
+        bool success = false;
+        _ = this.Session.WriteLine($"local s = {this.SMU}.source");
+        _ = this.Session.WriteLine($"local m = {this.SMU}.measure");
+        if (this.SourceFunction == "VOLT")
+        {
+            _ = this.Session.WriteLine("s.levelv = 0");
+            _ = this.Session.WriteLine($"s.output = {this.SMU}.OUTPUT_ON");
+            _ = this.Session.WriteLine($"s.levelv = {this.VoltageLevel}");
+        }
+        else
+        {
+            _ = this.Session.WriteLine("s.leveli = 0");
+            _ = this.Session.WriteLine($"s.output = {this.SMU}.OUTPUT_ON");
+            _ = this.Session.WriteLine($"s.leveli = {this.CurrentLevel}");
+        }
+        string currentVoltageReading = string.Empty;
+        int count= this.Session.QueryLine ( "_G.print(m.iv())",1024, ref currentVoltageReading, true);
+        if (this.SourceFunction == "VOLT")
+        {
+            _ = this.Session.WriteLine("s.levelv = 0");
+        }
+        else
+        {
+            _ = this.Session.WriteLine("s.leveli = 0");
+        }
+        _ = this.Session.WriteLine($"s.output = {this.SMU}.OUTPUT_OFF");
+
+        this.ClearReadings();
+        if ( count > 1 )
+        {
+            Queue<string> readingQueue = new(currentVoltageReading.Split(','));
+            if ( readingQueue.Count > 1 ) 
+            { 
+                this.CurrentReading = readingQueue.Dequeue();
+                if (double.TryParse(this.CurrentReading, out double v))
+                {
+                    this.CurrentValue = v;
+
+                    if (double.TryParse(this.CurrentReading, out v))
+                    {
+                        this.VoltageValue = v;
+                    }
+
+                    if (this.CurrentValue > 0)
+                    {
+                        this.Resistance = this.VoltageLevel / this.CurrentLevel;
+                        success = true;
+                    }
+                }
+            }
+        }
+        return success;
+    }
+
+    #endregion
+
 }

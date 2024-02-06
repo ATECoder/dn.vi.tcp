@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace cc.isr.Tcp.Tsp.K2600 {
+namespace cc.isr.Tcp.Tsp.K7510 {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace cc.isr.Tcp.Tsp.K2600 {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("cc.isr.Tcp.Tsp.K2600.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("cc.isr.Tcp.Tsp.K7510.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

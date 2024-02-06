@@ -1,4 +1,4 @@
-namespace cc.isr.Tcp.Tsp.K2600.Ohm;
+namespace cc.isr.Tcp.Tsp.K7510.Digitizer;
 
 internal static class Program
 {

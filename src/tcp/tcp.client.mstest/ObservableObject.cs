@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Keithley.Tcp.MSTest;
+namespace cc.isr.Tcp.Client.MSTest;
 
 /// <summary>   An observable object. </summary>
 /// <remarks>   2022-10-08. </remarks>
