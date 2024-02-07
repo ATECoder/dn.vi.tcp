@@ -1,9 +1,4 @@
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Threading;
 using cc.isr.Tcp.Client;
 
 namespace cc.isr.Tcp.Tsp.Device;
@@ -70,6 +65,16 @@ public partial class TspDevice : IDisposable
 
     #endregion
 
+    #region " Contants "
+
+    /// <summary>   (Immutable) the DC Voltage source function. </summary>
+    public const string DCVoltageSourceFunction = "OUTPUT_DCVOLTS";
+
+    /// <summary>   (Immutable) the DC Current source function. </summary>
+    public const string DCCurrentSourceFunction = "OUTPUT_DCAMPS";
+
+    #endregion
+
     #region " Settings "
 
     /// <summary>   Gets the aperture in power line cycles. </summary>
@@ -86,7 +91,7 @@ public partial class TspDevice : IDisposable
 
     /// <summary>   Gets the source function, e.g., current or voltage source. </summary>
     /// <value> The source function. </value>
-    public string SourceFunction { get; set; } = "VOLT";
+    public string SourceFunction { get; set; } = DCVoltageSourceFunction;
 
     /// <summary>   Gets or sets the source-measure unit. </summary>
     /// <value> The smu. </value>
@@ -204,14 +209,14 @@ public partial class TspDevice : IDisposable
         // configure the source
         _ = this.Session.WriteLine($"local s = {this.SMU}.source");
 
-        if ( this.SourceFunction == "VOLT")
+        if ( this.SourceFunction == TspDevice.DCVoltageSourceFunction)
         {
-            _ = this.Session.WriteLine($"s.func = {this.SMU}.OUTPUT_DCVOLTS");
+            _ = this.Session.WriteLine($"s.func = {this.SMU}.{TspDevice.DCVoltageSourceFunction}");
             _ = this.Session.WriteLine($"s.limiti = {this.CurrentLevel}");
         }
         else
         {
-            _ = this.Session.WriteLine($"s.func = {this.SMU}.OUTPUT_DCAMPS");
+            _ = this.Session.WriteLine($"s.func = {this.SMU}.{TspDevice.DCCurrentSourceFunction}");
             _ = this.Session.WriteLine($"s.limitv = {this.VoltageLevel}");
         }
         if (this.AutoRange)
@@ -244,7 +249,7 @@ public partial class TspDevice : IDisposable
         bool success = false;
         _ = this.Session.WriteLine($"local s = {this.SMU}.source");
         _ = this.Session.WriteLine($"local m = {this.SMU}.measure");
-        if (this.SourceFunction == "VOLT")
+        if (this.SourceFunction == TspDevice.DCVoltageSourceFunction)
         {
             _ = this.Session.WriteLine("s.levelv = 0");
             _ = this.Session.WriteLine($"s.output = {this.SMU}.OUTPUT_ON");
@@ -258,7 +263,7 @@ public partial class TspDevice : IDisposable
         }
         string currentVoltageReading = string.Empty;
         int count= this.Session.QueryLine ( "_G.print(m.iv())",1024, ref currentVoltageReading, true);
-        if (this.SourceFunction == "VOLT")
+        if (this.SourceFunction == TspDevice.DCVoltageSourceFunction)
         {
             _ = this.Session.WriteLine("s.levelv = 0");
         }

@@ -61,22 +61,12 @@ namespace cc.isr.Tcp.Tsp.K2600 {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Bitmap KeithleyLogo {
+        internal static System.Drawing.Icon isrlogo {
             get {
-                object obj = ResourceManager.GetObject("KeithleyLogo", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap TektronixLogo {
-            get {
-                object obj = ResourceManager.GetObject("TektronixLogo", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                object obj = ResourceManager.GetObject("isrlogo", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
     }

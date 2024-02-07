@@ -1,7 +1,4 @@
-using System;
 using System.Diagnostics;
-using System.IO;
-using System.Threading;
 using cc.isr.Tcp.Client;
 
 namespace cc.isr.Tcp.Tsp.Device;
@@ -25,7 +22,9 @@ public partial class DMM7510 : IDisposable
 	{
         this._tcpSession = new TcpSession( ipv4Address );
         this.SampleRate = sampleRate;
-		this.MeasurementFunction = measurementFunction == 0 ? "VOLT" : "CURR";
+		this.MeasurementFunction = measurementFunction == 0 
+            ? TspDevice.DCVoltageSourceFunction 
+            : TspDevice.DCCurrentSourceFunction;
         this.MeasurementRange = measurementRange;
 		this.BufferSize = bufferSize;
 	}

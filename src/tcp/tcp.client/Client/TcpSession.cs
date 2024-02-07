@@ -192,6 +192,10 @@ public partial class TcpSession(string ipv4Address, int portNumber = 5025) : IDi
         this._netStream?.Flush();
     }
 
+    /// <summary>   Gets a value indicating whether the connected. </summary>
+    /// <value> True if connected, false if not. </value>
+    public bool Connected => this._tcpClient?.Connected ?? false;
+
     #endregion
 
     #region " i/o "

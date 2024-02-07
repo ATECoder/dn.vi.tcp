@@ -1,5 +1,3 @@
-using Microsoft.ApplicationInsights;
-
 namespace cc.isr.Tcp.Tsp.Device.MSTest;
 
 /// <summary>   (Unit Test Class) a session tests. </summary>
@@ -73,7 +71,7 @@ public class TspDeviceTests
     public void DeviceShouldConfigureCurrentSource()
     {
         string ipv4Address = IPAddress;
-        TspDeviceTests.AssertDeviceShouldConfigureSource(ipv4Address, "CURR");
+        TspDeviceTests.AssertDeviceShouldConfigureSource(ipv4Address, cc.isr.Tcp.Tsp.Device.TspDevice.DCCurrentSourceFunction);
     }
 
     /// <summary>   (Unit Test Method) device should configure voltage source. </summary>
@@ -82,7 +80,7 @@ public class TspDeviceTests
     public void DeviceShouldConfigureVoltageSource()
     {
         string ipv4Address = IPAddress;
-        TspDeviceTests.AssertDeviceShouldConfigureSource(ipv4Address, "VOLT");
+        TspDeviceTests.AssertDeviceShouldConfigureSource(ipv4Address, cc.isr.Tcp.Tsp.Device.TspDevice.DCVoltageSourceFunction);
     }
 
     /// <summary>   Assert device should measure resistance. </summary>
@@ -110,14 +108,14 @@ public class TspDeviceTests
     public void DeviceShouldMeasureConstantCurrentResistance()
     {
         string ipv4Address = IPAddress;
-        TspDeviceTests.AssertDeviceShouldMeasureResistance(ipv4Address, "CURR");
+        TspDeviceTests.AssertDeviceShouldMeasureResistance(ipv4Address, cc.isr.Tcp.Tsp.Device.TspDevice.DCCurrentSourceFunction);
     }
 
     [TestMethod]
     public void DeviceShouldMeasureConstantVoltageResistance()
     {
         string ipv4Address = IPAddress;
-        TspDeviceTests.AssertDeviceShouldMeasureResistance(ipv4Address, "VOLT");
+        TspDeviceTests.AssertDeviceShouldMeasureResistance(ipv4Address, cc.isr.Tcp.Tsp.Device.TspDevice.DCVoltageSourceFunction);
     }
 
 }

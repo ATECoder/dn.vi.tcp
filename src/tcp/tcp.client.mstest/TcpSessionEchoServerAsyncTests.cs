@@ -1,7 +1,5 @@
 using System.ComponentModel;
 
-using cc.isr.Tcp.Client;
-
 namespace cc.isr.Tcp.Client.MSTest;
 
 [TestClass]
