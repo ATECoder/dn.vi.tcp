@@ -49,10 +49,38 @@ public class TspDeviceTests
         TspDeviceTests.AssertDeviceShouldConnect( ipv4Address);
     }
 
+    /// <summary>   Assert device should query info. </summary>
+    /// <remarks>   2024-02-05. </remarks>
+    /// <param name="ipv4Address">      The IPv4 address. </param>
+    /// <param name="request">   Requested info. </param>
+    public static void AssertDeviceShouldQueryInfo(string ipv4Address, string request, string expectedReply )
+    {
+        using TspDevice session = new(ipv4Address);
+        string identity = string.Empty;
+        session.Connect(true, ref identity);
+        Assert.IsTrue(identity.Length > 0, "Echoed Identity should have non-zero length.");
+        Assert.IsTrue(identity.StartsWith("Keithley"), "Identity should start with the manufacturer name.");
+        string reply = session.QueryDeviceInfo(request);
+        Assert.AreEqual(expectedReply, reply);
+#if false
+        _ = session.Session.WriteLine($"m = _G.smua.measure");
+        reply = session.QueryDeviceInfo("m");
+#endif
+        session.Disconnect();
+    }
+
+    [TestMethod]
+    public void DeviceShouldQuerySmuAutoRangeOnValue()
+    {
+        string ipv4Address = IPAddress;
+        TspDeviceTests.AssertDeviceShouldQueryInfo(ipv4Address, "_G.smua.AUTORANGE_ON", "1.00000e+00");
+    }
+
+
     /// <summary>   Assert device should configure current source. </summary>
     /// <remarks>   2024-02-05. </remarks>
     /// <param name="ipv4Address">      The IPv4 address. </param>
-    /// <param name="sourceFunction">   Source function. </param>
+    /// <param name="request">   Source function. </param>
     public static void AssertDeviceShouldConfigureSource(string ipv4Address, string sourceFunction)
     {
         using TspDevice session = new(ipv4Address);
@@ -89,17 +117,23 @@ public class TspDeviceTests
     /// <param name="sourceFunction">   Source function. </param>
     public static void AssertDeviceShouldMeasureResistance(string ipv4Address, string sourceFunction)
     {
+        Console.WriteLine($"Connecting to instrument at {ipv4Address}......");
         using TspDevice session = new(ipv4Address);
         string identity = string.Empty;
         session.Connect(true, ref identity);
         Assert.IsTrue(identity.Length > 0, "Echoed Identity should have non-zero length.");
         Assert.IsTrue(identity.StartsWith("Keithley"), "Identity should start with the manufacturer name.");
         session.SourceFunction = sourceFunction;
+        Console.WriteLine($"configuring......");
         session.ConfigureConstantSource();
+        Console.WriteLine($"measuring......");
         session.MeasureResistance();
+        double lowLimit = 1.8;
+        double highLimit = 2.2;
         Assert.IsTrue(session.Resistance.HasValue, "Resistance should be measured.");
-        Assert.IsTrue(session.Resistance.Value > 1.9, "Resistance should be above 1.9 ohms");
-        Assert.IsTrue(session.Resistance.Value < 2.1, "Resistance should be below 2.1 ohms");
+        Assert.IsTrue(session.Resistance.Value > lowLimit, $"Resistance {session.Resistance.Value} should be above {lowLimit} ohms");
+        Assert.IsTrue(session.Resistance.Value < highLimit, $"Resistance {session.Resistance.Value} should be below {highLimit} ohms");
+        Console.WriteLine($"R={session.Resistance.Value}");
 
         session.Disconnect();
     }

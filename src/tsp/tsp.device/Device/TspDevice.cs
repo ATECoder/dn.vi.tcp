@@ -50,7 +50,6 @@ public partial class TspDevice : IDisposable
     /// <param name="identity">     [in,out] The identity. </param>
     public void Connect( bool echoIdentity, ref string identity )
     {
-        Console.WriteLine( "Connected to instrument......" );
         this.Session.Connect(echoIdentity, "*IDN?", ref identity, true);
         this.Session.ReceiveTimeout = TimeSpan.FromMilliseconds( 3000 );
         this.Session.ReceiveBufferSize = 35565;
@@ -145,6 +144,26 @@ public partial class TspDevice : IDisposable
 
     #region " Basic operations " 
 
+    /// <summary>   Wait complete. </summary>
+    /// <remarks>   2024-02-05. </remarks>
+    /// <exception cref="ExternalException">    Thrown when an External error condition occurs. </exception>
+    /// <param name="delay">    The delay in milliseconds. </param>
+    public void WaitComplete( int delay)
+    {
+
+        this.ClearReadings();
+
+        _ = this.Session.WriteLine("_G.waitcomplete() _G.print([[1]])");
+        Thread.Sleep(delay);
+
+        string reply = string.Empty;
+        _ = this.Session.Read(1024, ref reply, true);
+
+        if (reply != "1")
+            throw new ExternalException($"Failed awaiting completion; Wait complete returned '{reply}' rather than '1'.");
+
+    }
+
     /// <summary>   Resets the known state. </summary>
     /// <remarks>   2024-02-05. </remarks>
     public void ResetKnownState()
@@ -163,7 +182,7 @@ public partial class TspDevice : IDisposable
         _ = this.Session.Read(1024, ref reply, true);
 
         if ( reply != "1") 
-            throw new ExternalException( $"Failed resetting know state; *OPC returned '{reply}' rather than '1'." );
+            throw new ExternalException( $"Failed resetting known state; Wait complete returned '{reply}' rather than '1'." );
 
     }
 
@@ -188,8 +207,11 @@ public partial class TspDevice : IDisposable
     {
         this.ResetKnownState();
 
+        // configure 4-wire sense
+        _ = this.Session.WriteLine($"{this.SMU}.sense = {this.SMU}.SENSE_REMOTE");
+
         // configure the measurement
-        _ = this.Session.WriteLine($"local m = {this.SMU}.measure");
+        _ = this.Session.WriteLine($"m = {this.SMU}.measure");
 
         if (this.AutoRange )
         {
@@ -207,7 +229,7 @@ public partial class TspDevice : IDisposable
         _ = this.Session.WriteLine($"m.count = 1");
 
         // configure the source
-        _ = this.Session.WriteLine($"local s = {this.SMU}.source");
+        _ = this.Session.WriteLine($"s = {this.SMU}.source");
 
         if ( this.SourceFunction == TspDevice.DCVoltageSourceFunction)
         {
@@ -232,8 +254,7 @@ public partial class TspDevice : IDisposable
         }
 
 
-        _ = this.Session.WriteLine("*WAI");
-        Thread.Sleep(100);
+        this.WaitComplete(100);
     }
 
 
@@ -247,36 +268,50 @@ public partial class TspDevice : IDisposable
     public bool MeasureResistance()
     {
         bool success = false;
-        _ = this.Session.WriteLine($"local s = {this.SMU}.source");
-        _ = this.Session.WriteLine($"local m = {this.SMU}.measure");
-        if (this.SourceFunction == TspDevice.DCVoltageSourceFunction)
-        {
-            _ = this.Session.WriteLine("s.levelv = 0");
-            _ = this.Session.WriteLine($"s.output = {this.SMU}.OUTPUT_ON");
-            _ = this.Session.WriteLine($"s.levelv = {this.VoltageLevel}");
-        }
-        else
-        {
-            _ = this.Session.WriteLine("s.leveli = 0");
-            _ = this.Session.WriteLine($"s.output = {this.SMU}.OUTPUT_ON");
-            _ = this.Session.WriteLine($"s.leveli = {this.CurrentLevel}");
-        }
+        int count = 0;
         string currentVoltageReading = string.Empty;
-        int count= this.Session.QueryLine ( "_G.print(m.iv())",1024, ref currentVoltageReading, true);
-        if (this.SourceFunction == TspDevice.DCVoltageSourceFunction)
+        try
         {
-            _ = this.Session.WriteLine("s.levelv = 0");
+            _ = this.Session.WriteLine($"s = {this.SMU}.source");
+            _ = this.Session.WriteLine($"m = {this.SMU}.measure");
+            if (this.SourceFunction == TspDevice.DCVoltageSourceFunction)
+            {
+                _ = this.Session.WriteLine("s.levelv = 0");
+                _ = this.Session.WriteLine($"s.output = {this.SMU}.OUTPUT_ON");
+                _ = this.Session.WriteLine($"s.levelv = {this.VoltageLevel}");
+            }
+            else
+            {
+                _ = this.Session.WriteLine("s.leveli = 0");
+                _ = this.Session.WriteLine($"s.output = {this.SMU}.OUTPUT_ON");
+                _ = this.Session.WriteLine($"s.leveli = {this.CurrentLevel}");
+            }
+            count = this.Session.QueryLine("_G.print(m.iv())", 1024, ref currentVoltageReading, true);
+            if (this.SourceFunction == TspDevice.DCVoltageSourceFunction)
+            {
+                _ = this.Session.WriteLine("s.levelv = 0");
+            }
+            else
+            {
+                _ = this.Session.WriteLine("s.leveli = 0");
+            }
         }
-        else
+        catch (Exception)
         {
-            _ = this.Session.WriteLine("s.leveli = 0");
+            throw;
         }
-        _ = this.Session.WriteLine($"s.output = {this.SMU}.OUTPUT_OFF");
+        finally
+        {
+            this.WaitComplete(10);
+            _ = this.Session.WriteLine($"s.output = {this.SMU}.OUTPUT_OFF");
+            this.ClearReadings();
+        }
 
         this.ClearReadings();
         if ( count > 1 )
         {
-            Queue<string> readingQueue = new(currentVoltageReading.Split(','));
+            char delimiter = '\t';
+            Queue<string> readingQueue = new(currentVoltageReading.Split(delimiter));
             if ( readingQueue.Count > 1 ) 
             { 
                 this.CurrentReading = readingQueue.Dequeue();
@@ -284,14 +319,15 @@ public partial class TspDevice : IDisposable
                 {
                     this.CurrentValue = v;
 
-                    if (double.TryParse(this.CurrentReading, out v))
+                    this.VoltageReading = readingQueue.Dequeue();
+                    if (double.TryParse(this.VoltageReading, out v))
                     {
                         this.VoltageValue = v;
                     }
 
                     if (this.CurrentValue > 0)
                     {
-                        this.Resistance = this.VoltageLevel / this.CurrentLevel;
+                        this.Resistance = this.VoltageValue / this.CurrentValue;
                         success = true;
                     }
                 }
