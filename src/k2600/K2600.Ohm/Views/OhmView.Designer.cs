@@ -88,7 +88,7 @@ partial class OhmView
         this.ApertureNumeric.DecimalPlaces = 2;
         this.ApertureNumeric.Font = new Font("Segoe UI", 9F);
         this.ApertureNumeric.Increment = new decimal(new int[] { 5, 0, 0, 131072 });
-        this.ApertureNumeric.Location = new Point(228, 57);
+        this.ApertureNumeric.Location = new Point(240, 57);
         this.ApertureNumeric.Margin = new Padding(4, 3, 4, 3);
         this.ApertureNumeric.Maximum = new decimal(new int[] { 5, 0, 0, 0 });
         this.ApertureNumeric.Minimum = new decimal(new int[] { 1, 0, 0, 65536 });
@@ -103,7 +103,7 @@ partial class OhmView
         this.ApertureNumericLabel.AutoSize = true;
         this.ApertureNumericLabel.Font = new Font("Segoe UI", 9F);
         this.ApertureNumericLabel.ForeColor = Color.Chartreuse;
-        this.ApertureNumericLabel.Location = new Point(173, 59);
+        this.ApertureNumericLabel.Location = new Point(182, 59);
         this.ApertureNumericLabel.Margin = new Padding(4, 0, 4, 0);
         this.ApertureNumericLabel.Name = "ApertureNumericLabel";
         this.ApertureNumericLabel.Size = new Size(56, 15);
@@ -153,7 +153,7 @@ partial class OhmView
         this.AutoRangeCheckBox.CheckAlign = ContentAlignment.MiddleRight;
         this.AutoRangeCheckBox.Checked = true;
         this.AutoRangeCheckBox.CheckState = CheckState.Checked;
-        this.AutoRangeCheckBox.Location = new Point(173, 86);
+        this.AutoRangeCheckBox.Location = new Point(180, 86);
         this.AutoRangeCheckBox.Name = "AutoRangeCheckBox";
         this.AutoRangeCheckBox.Size = new Size(89, 24);
         this.AutoRangeCheckBox.TabIndex = 12;
@@ -175,7 +175,7 @@ partial class OhmView
         // CurrentLevelUnitsLabel
         // 
         this.CurrentLevelUnitsLabel.AutoSize = true;
-        this.CurrentLevelUnitsLabel.Location = new Point(124, 89);
+        this.CurrentLevelUnitsLabel.Location = new Point(120, 89);
         this.CurrentLevelUnitsLabel.Margin = new Padding(4, 0, 4, 0);
         this.CurrentLevelUnitsLabel.Name = "CurrentLevelUnitsLabel";
         this.CurrentLevelUnitsLabel.Size = new Size(49, 15);
@@ -224,7 +224,7 @@ partial class OhmView
         this.ApertureUnitsLabel.AutoSize = true;
         this.ApertureUnitsLabel.Font = new Font("Segoe UI", 9F);
         this.ApertureUnitsLabel.ForeColor = Color.Chartreuse;
-        this.ApertureUnitsLabel.Location = new Point(283, 62);
+        this.ApertureUnitsLabel.Location = new Point(295, 62);
         this.ApertureUnitsLabel.Margin = new Padding(4, 0, 4, 0);
         this.ApertureUnitsLabel.Name = "ApertureUnitsLabel";
         this.ApertureUnitsLabel.Size = new Size(102, 15);
@@ -236,12 +236,12 @@ partial class OhmView
         this.VoltageLevelUnitsLabel.AutoSize = true;
         this.VoltageLevelUnitsLabel.Font = new Font("Segoe UI", 9F);
         this.VoltageLevelUnitsLabel.ForeColor = Color.Chartreuse;
-        this.VoltageLevelUnitsLabel.Location = new Point(125, 59);
+        this.VoltageLevelUnitsLabel.Location = new Point(121, 59);
         this.VoltageLevelUnitsLabel.Margin = new Padding(4, 0, 4, 0);
         this.VoltageLevelUnitsLabel.Name = "VoltageLevelUnitsLabel";
         this.VoltageLevelUnitsLabel.Size = new Size(27, 15);
         this.VoltageLevelUnitsLabel.TabIndex = 3;
-        this.VoltageLevelUnitsLabel.Text = cc.isr.Tcp.Tsp.Device.TspDevice.DCVoltageSourceFunction;
+        this.VoltageLevelUnitsLabel.Text = "Volt";
         // 
         // IPAddressTextBoxLabel
         // 
@@ -273,7 +273,6 @@ partial class OhmView
         this.MeasureButton.TabIndex = 14;
         this.MeasureButton.Text = "Measure";
         this.MeasureButton.UseVisualStyleBackColor = true;
-        this.MeasureButton.Click += this.MeasureButton_Click;
         // 
         // MeasurementGroupBox
         // 

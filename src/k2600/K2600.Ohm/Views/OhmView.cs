@@ -83,6 +83,8 @@ public partial class OhmView : Form
                 this.UserPromptLabel.Text = $"Connected; press '{this.ConfigureButton.Text}' to configure the measurement.";
                 Application.DoEvents();
             }
+            this.ToggleConnectionButton.Text = this.TspDevice.Session.Connected ? "Close connection" : "Open connection";
+
         }
         catch (Exception ex)
         {
@@ -128,6 +130,7 @@ public partial class OhmView : Form
                 this.TspDevice.SourceFunction = this.VoltageSourceOption.Checked 
                         ? TspDevice.DCVoltageSourceFunction 
                         : TspDevice.DCCurrentSourceFunction;
+                this.TspDevice.ConfigureConstantSource();
                 this.UserPromptLabel.Text = $"Configured; Press '{this.MeasureButton.Text}'.";
                 Application.DoEvents();
                 this.MeasureButton.Enabled = true;
@@ -168,18 +171,16 @@ public partial class OhmView : Form
             this.MeasureButton.Enabled = false;
             this.UserPromptLabel.Text = "";
             Application.DoEvents();
-            Stopwatch stopWatch = Stopwatch.StartNew();
 
             this.RunningStateLabel.Text = "Measuring...";
             Application.DoEvents();
 
             this.TspDevice?.MeasureResistance();
 
-            stopWatch.Stop();
-            this.DurationLabel.Text = $"{stopWatch.ElapsedMilliseconds} ms";
+            this.DurationLabel.Text = $"{this.TspDevice!.ReadingDuration.GetValueOrDefault().Milliseconds} ms";
             this.VoltageReadingLabel.Text = $"{this.TspDevice!.VoltageReading} Volt";
             this.CurrentReadingLabel.Text = $"{this.TspDevice!.CurrentReading} Ampere";
-            this.ResistanceReadingLabel.Text = $"{this.TspDevice.Resistance:0.0} Ohm";
+            this.ResistanceReadingLabel.Text = $"{this.TspDevice.Resistance:0.000} Ohm";
             this.UserPromptLabel.Text = "Measurement completed.";
             this.RunningStateLabel.Text = "Done";
             Application.DoEvents();

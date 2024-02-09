@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using cc.isr.Tcp.Client;
 
@@ -124,6 +125,10 @@ public partial class TspDevice : IDisposable
     /// <summary>   Gets or sets the calculated resistance. </summary>
     /// <value> The resistance. </value>
     public double? Resistance { get; private set; } = default;
+
+    /// <summary>   Gets or sets the duration of the reading. </summary>
+    /// <value> The reading duration. </value>
+    public TimeSpan? ReadingDuration { get; private set; } = default;
 
     #endregion
 
@@ -267,6 +272,7 @@ public partial class TspDevice : IDisposable
     /// <returns>   True if it succeeds, false if it fails. </returns>
     public bool MeasureResistance()
     {
+        Stopwatch stopWatch = Stopwatch.StartNew();
         bool success = false;
         int count = 0;
         string currentVoltageReading = string.Empty;
@@ -286,6 +292,7 @@ public partial class TspDevice : IDisposable
                 _ = this.Session.WriteLine($"s.output = {this.SMU}.OUTPUT_ON");
                 _ = this.Session.WriteLine($"s.leveli = {this.CurrentLevel}");
             }
+            stopWatch = Stopwatch.StartNew();
             count = this.Session.QueryLine("_G.print(m.iv())", 1024, ref currentVoltageReading, true);
             if (this.SourceFunction == TspDevice.DCVoltageSourceFunction)
             {
@@ -295,6 +302,8 @@ public partial class TspDevice : IDisposable
             {
                 _ = this.Session.WriteLine("s.leveli = 0");
             }
+            stopWatch.Stop();
+
         }
         catch (Exception)
         {
@@ -308,6 +317,7 @@ public partial class TspDevice : IDisposable
         }
 
         this.ClearReadings();
+        this.ReadingDuration = stopWatch.Elapsed;
         if ( count > 1 )
         {
             char delimiter = '\t';
