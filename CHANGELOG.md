@@ -2,6 +2,9 @@
 All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog].
 
+## [1.2.8931] - 2024-06-14 Preview 202304
+* Device.MSTest: Add a global suppression file.
+
 ## [1.2.8798] - 2023-02-02 Preview 202304
 * Update to .NET 8.0.
 
@@ -19,5 +22,5 @@ The format is based on [Keep a Changelog].
 
 &copy;  2022 Integrated Scientific Resources, Inc. All rights reserved.
 
-[1.2.8798]: https://github.com/ATECoder/dn.vi.tcp
+[1.2.8931]: https://github.com/ATECoder/dn.vi.tcp
 [Keep a Changelog]: (https://keepachangelog.com/en/1.0.0/)

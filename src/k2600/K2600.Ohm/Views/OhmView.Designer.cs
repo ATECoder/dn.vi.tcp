@@ -200,9 +200,9 @@ partial class OhmView
         this.CurrentSourceOption.Location = new Point(143, 23);
         this.CurrentSourceOption.Margin = new Padding(4, 3, 4, 3);
         this.CurrentSourceOption.Name = "CurrentSourceOption";
-        this.CurrentSourceOption.Size = new Size(104, 19);
+        this.CurrentSourceOption.Size = new Size(122, 19);
         this.CurrentSourceOption.TabIndex = 8;
-        this.CurrentSourceOption.Text = "Current Source";
+        this.CurrentSourceOption.Text = "Current Algorithm";
         this.CurrentSourceOption.UseVisualStyleBackColor = true;
         // 
         // VoltageSourceOption
@@ -213,10 +213,10 @@ partial class OhmView
         this.VoltageSourceOption.Location = new Point(8, 23);
         this.VoltageSourceOption.Margin = new Padding(4, 3, 4, 3);
         this.VoltageSourceOption.Name = "VoltageSourceOption";
-        this.VoltageSourceOption.Size = new Size(103, 19);
+        this.VoltageSourceOption.Size = new Size(106, 19);
         this.VoltageSourceOption.TabIndex = 7;
         this.VoltageSourceOption.TabStop = true;
-        this.VoltageSourceOption.Text = "Voltage Source";
+        this.VoltageSourceOption.Text = "New Algorithm";
         this.VoltageSourceOption.UseVisualStyleBackColor = true;
         // 
         // ApertureUnitsLabel
