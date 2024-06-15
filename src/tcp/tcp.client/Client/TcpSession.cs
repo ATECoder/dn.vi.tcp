@@ -9,7 +9,7 @@ namespace cc.isr.Tcp.Client;
 /// <remarks>   2022-11-14. </remarks>
 /// <param name="ipv4Address">  IPv4 Address in string format. </param>
 /// <param name="portNumber">   (Optional) The port number. </param>
-public partial class TcpSession(string ipv4Address, int portNumber = 5025) : IDisposable
+public partial class TcpSession( string ipv4Address, int portNumber = 5025 ) : IDisposable
 {
 
     /// <summary>
@@ -57,10 +57,9 @@ public partial class TcpSession(string ipv4Address, int portNumber = 5025) : IDi
     /// <value> The receive timeout. </value>
     public TimeSpan ReceiveTimeout
     {
-        get => TimeSpan.FromMilliseconds(this._tcpClient?.ReceiveTimeout ?? 0);
-        set
-        {
-            if (this._tcpClient != null)
+        get => TimeSpan.FromMilliseconds( this._tcpClient?.ReceiveTimeout ?? 0 );
+        set {
+            if ( this._tcpClient != null )
             {
                 this._tcpClient.ReceiveTimeout = value.Milliseconds;
             }
@@ -72,10 +71,10 @@ public partial class TcpSession(string ipv4Address, int portNumber = 5025) : IDi
     /// <value> The send timeout. </value>
     public TimeSpan SendTimeout
     {
-        get => TimeSpan.FromMilliseconds( this._tcpClient?.SendTimeout ?? 0) ;
-        set
-        {
-            if ( this._tcpClient != null ) {
+        get => TimeSpan.FromMilliseconds( this._tcpClient?.SendTimeout ?? 0 );
+        set {
+            if ( this._tcpClient != null )
+            {
                 this._tcpClient.SendTimeout = value.Milliseconds;
             }
         }
@@ -87,9 +86,8 @@ public partial class TcpSession(string ipv4Address, int portNumber = 5025) : IDi
     public int ReceiveBufferSize
     {
         get => this._tcpClient?.ReceiveBufferSize ?? 0;
-        set 
-        {
-            if (this._tcpClient != null)
+        set {
+            if ( this._tcpClient != null )
             {
                 this._tcpClient.ReceiveBufferSize = value;
             }
@@ -111,8 +109,8 @@ public partial class TcpSession(string ipv4Address, int portNumber = 5025) : IDi
     /// <returns>   An IAsyncResult. </returns>
     public IAsyncResult BeginConnect()
     {
-        this._tcpClient = new TcpClient( );
-        return  this._tcpClient.BeginConnect( this.IPv4Address, this.PortNumber, this.OnConnected, null );
+        this._tcpClient = new TcpClient();
+        return this._tcpClient.BeginConnect( this.IPv4Address, this.PortNumber, this.OnConnected, null );
     }
 
     /// <summary>   Await connect. </summary>
@@ -122,7 +120,7 @@ public partial class TcpSession(string ipv4Address, int portNumber = 5025) : IDi
     /// <returns>   True if it succeeds, false if it fails. </returns>
     public bool AwaitConnect( IAsyncResult asyncResult, TimeSpan timeout )
     {
-        var success = asyncResult.AsyncWaitHandle.WaitOne( timeout );
+        bool success = asyncResult.AsyncWaitHandle.WaitOne( timeout );
         if ( !success )
         {
             this._tcpClient?.Close();
@@ -134,7 +132,7 @@ public partial class TcpSession(string ipv4Address, int portNumber = 5025) : IDi
     /// <summary>   Asynchronous callback, called on completion of on connected. </summary>
     /// <remarks>   2022-11-16. </remarks>
     /// <param name="asyncResult">  The result of the asynchronous operation. </param>
-    private void OnConnected( IAsyncResult asyncResult  )
+    private void OnConnected( IAsyncResult asyncResult )
     {
         if ( asyncResult.IsCompleted )
         {
@@ -154,7 +152,7 @@ public partial class TcpSession(string ipv4Address, int portNumber = 5025) : IDi
         if ( echoIdentity )
         {
             string identity = "";
-            _ = this.QueryLine( queryMessage, 128, ref identity, false);
+            _ = this.QueryLine( queryMessage, 128, ref identity, false );
             System.Diagnostics.Debug.WriteLine( identity );
         }
     }
@@ -283,7 +281,7 @@ public partial class TcpSession(string ipv4Address, int portNumber = 5025) : IDi
     {
         byte[] buffer = new byte[byteCount];
         int receivedCount = this._netStream?.Read( buffer, 0, byteCount ) ?? 0;
-        reply = this.BuildReply(buffer, receivedCount, trimEnd);    
+        reply = this.BuildReply( buffer, receivedCount, trimEnd );
         return receivedCount;
     }
 
@@ -323,7 +321,7 @@ public partial class TcpSession(string ipv4Address, int portNumber = 5025) : IDi
     /// <returns>   The number of received bytes. </returns>
     public int Read( int offset, int count, ref float[] values )
     {
-        byte[] buffer = new byte[count * 4 + offset + 1];
+        byte[] buffer = new byte[(count * 4) + offset + 1];
         int receivedCount = this._netStream?.Read( buffer, 0, buffer.Length ) ?? 0;
         // Need to convert to the byte array into single
         Buffer.BlockCopy( buffer, offset, values, 0, values.Length * 4 );
@@ -384,16 +382,16 @@ public partial class TcpSession(string ipv4Address, int portNumber = 5025) : IDi
     public async Task<string> ReadWhileAvailableAsync( int byteCount, bool trimEnd, CancellationToken ct )
     {
         StringBuilder sb = new();
-        while ( this._netStream?.DataAvailable ?? false)
+        while ( this._netStream?.DataAvailable ?? false )
         {
-            var buffer = new byte[byteCount];
+            byte[] buffer = new byte[byteCount];
             int receivedCount = await this._netStream.ReadAsync( buffer, 0, byteCount, ct );
             if ( receivedCount > 0 ) _ = sb.Append( Encoding.ASCII.GetString( buffer, 0, receivedCount ) );
         }
-        int replyLength = sb.Length - ( trimEnd ? this.ReadTermination.Length : 0 );
+        int replyLength = sb.Length - (trimEnd ? this.ReadTermination.Length : 0);
         return replyLength > 0
             ? sb.ToString( 0, replyLength )
-            : String.Empty;
+            : string.Empty;
     }
 
     /// <summary>
@@ -407,10 +405,10 @@ public partial class TcpSession(string ipv4Address, int portNumber = 5025) : IDi
     /// <returns>   A reply. </returns>
     public async Task<string> ReadAsync( int byteCount, bool trimEnd, CancellationToken ct )
     {
-        var buffer = new byte[byteCount];
+        byte[] buffer = new byte[byteCount];
 
-        int receivedCount = (this._netStream != null) ? await this._netStream.ReadAsync(buffer, 0, byteCount, ct) : 0;
-        return  this.BuildReply( buffer, receivedCount, trimEnd );
+        int receivedCount = (this._netStream != null) ? await this._netStream.ReadAsync( buffer, 0, byteCount, ct ) : 0;
+        return this.BuildReply( buffer, receivedCount, trimEnd );
     }
 
     /// <summary>   Sends a message asynchronously reading any existing data into the orphan . </summary>
@@ -439,7 +437,7 @@ public partial class TcpSession(string ipv4Address, int portNumber = 5025) : IDi
     /// <returns>   The number of sent characters. </returns>
     public async Task<int> WriteLineAsync( string message, CancellationToken ct )
     {
-        return string.IsNullOrEmpty( message ) ? 0 : await this.WriteAsync( $"{message}{this.WriteTermination}" , ct );
+        return string.IsNullOrEmpty( message ) ? 0 : await this.WriteAsync( $"{message}{this.WriteTermination}", ct );
     }
 
     /// <summary>   Sends a query message with termination and reads the reply as a string. </summary>

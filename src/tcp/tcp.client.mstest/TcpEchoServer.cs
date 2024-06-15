@@ -3,19 +3,86 @@ using System.Net;
 
 namespace cc.isr.Tcp.Client.MSTest;
 
-
 /// <summary>   A TCP echo server. </summary>
 /// <remarks>   2022-11-16. </remarks>
-public class TcpEchoServer : ObservableObject
+public class TcpEchoServer : ObservableObject, IDisposable
 {
+
+    #region " Construction and Cleanup "
 
     public TcpEchoServer( string ipString = "127.0.0.1", int portNumber = 13000 )
     {
         this.Port = portNumber;
         this._ipv4Address = "";
         this._message = "";
-        this.IPv4Address =  ipString?? "127.0.0.1";
+        this.IPv4Address = ipString ?? "127.0.0.1";
     }
+
+    /// <summary>
+    /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged
+    /// resources.
+    /// </summary>
+    /// <remarks>
+    /// Takes account of and updates <see cref="IsDisposed"/>. Encloses <see cref="Dispose(bool)"/>
+    /// within a try...finally block. <para>
+    ///
+    /// Because this class is implementing <see cref="IDisposable"/> and is not sealed, then it
+    /// should include the call to <see cref="GC.SuppressFinalize(object)"/> even if it does not
+    /// include a user-defined finalizer. This is necessary to ensure proper semantics for derived
+    /// types that add a user-defined finalizer but only override the protected <see cref="Dispose(bool)"/>
+    /// method. </para> <para>
+    /// 
+    /// To this end, call <see cref="GC.SuppressFinalize(object)"/>, where <see langword="Object"/> = <see langword="this"/> in the <see langword="Finally"/> segment of
+    /// the <see langword="try"/>...<see langword="catch"/> clause. </para><para>
+    ///
+    /// If releasing unmanaged code or freeing large objects then override <see cref="object.Finalize()"/>. </para>
+    /// </remarks>
+    public void Dispose()
+    {
+        if ( this.IsDisposed ) { return; }
+        try
+        {
+            // Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+
+            this.Dispose( true );
+
+        }
+        catch { throw; }
+        finally
+        {
+            // this is included because this class is not sealed.
+
+            GC.SuppressFinalize( this );
+
+            // mark things as disposed.
+
+            this.IsDisposed = true;
+        }
+    }
+
+    /// <summary>   Gets or sets a value indicating whether this object is disposed. </summary>
+    /// <value> True if this object is disposed, false if not. </value>
+    public bool IsDisposed { get; private set; }
+
+    /// <summary>
+    /// Releases unmanaged, large objects and (optionally) managed resources used by this class.
+    /// </summary>
+    /// <param name="disposing">    True to release large objects and managed and unmanaged resources;
+    ///                             false to release only unmanaged resources and large objects. </param>
+    protected virtual void Dispose( bool disposing )
+    {
+        if ( disposing )
+        {
+            // dispose managed state (managed objects)
+            this._listener?.Dispose();
+        }
+
+        // free unmanaged resources and override finalizer
+
+        // set large fields to null
+    }
+
+    #endregion
 
     private bool _listening;
     /// <summary>
@@ -59,7 +126,7 @@ public class TcpEchoServer : ObservableObject
     /// The TCP client connected thread synchronization event that, when signaled, must be reset
     /// manually.
     /// </summary>
-    private static readonly ManualResetEvent _tcpClientConnected = new ( false );
+    private static readonly ManualResetEvent _tcpClientConnected = new( false );
 
     private TcpListener? _listener;
     /// <summary>   Starts listening for client connections. </summary>
@@ -161,7 +228,7 @@ public class TcpEchoServer : ObservableObject
         NetworkStream stream = client.GetStream();
 
         // Buffer for reading data
-        Byte[] receiveBuffer = new Byte[receivedBufferLength];
+        byte[] receiveBuffer = new byte[receivedBufferLength];
 
         int receivedCount;
 
@@ -173,7 +240,7 @@ public class TcpEchoServer : ObservableObject
             this.Message = $"Received: '{receivedChunk}'";
 
             // Process the data sent by the client.
-            receivedChunk = receivedChunk.ToUpper();
+            receivedChunk = receivedChunk.ToUpperInvariant();
 
             byte[] writingBuffer = System.Text.Encoding.ASCII.GetBytes( receivedChunk );
 
@@ -188,7 +255,8 @@ public class TcpEchoServer : ObservableObject
     /// <returns>   A Task. </returns>
     public async Task ListenAsync()
     {
-        await Task.Run( () => { this.Listen(); } );
+        await Task.Run( this.Listen );
+        // await Task.Run( () => { this.Listen(); } );
     }
 
     /// <summary>   Start listening for incoming connections. </summary>
@@ -198,7 +266,7 @@ public class TcpEchoServer : ObservableObject
         try
         {
 
-            TcpListener listener = new ( IPAddress.Parse( this.IPv4Address ), this.Port );
+            TcpListener listener = new( IPAddress.Parse( this.IPv4Address ), this.Port );
 
             try
             {

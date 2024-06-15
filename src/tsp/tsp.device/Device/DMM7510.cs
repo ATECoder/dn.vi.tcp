@@ -1,33 +1,23 @@
 using System.Diagnostics;
+
 using cc.isr.Tcp.Client;
 
 namespace cc.isr.Tcp.Tsp.Device;
 
 /// <summary>   A dmm 7510. </summary>
 /// <remarks>   2024-02-05. </remarks>
-public partial class DMM7510 : IDisposable
+/// <remarks>   Constructor. </remarks>
+/// <remarks>   2024-02-05. </remarks>
+/// <param name="ipv4Address">          The IPv4 address. </param>
+/// <param name="sampleRate">           The sample rate. </param>
+/// <param name="measurementFunction">  The measurement function. </param>
+/// <param name="measurementRange">     The measurement range. </param>
+/// <param name="bufferSize">           Size of the buffer. </param>
+public partial class DMM7510( string ipv4Address, int sampleRate, int measurementFunction,
+        float measurementRange, int bufferSize ) : IDisposable
 {
 
-    private readonly TcpSession _tcpSession;
-
-    /// <summary>   Constructor. </summary>
-    /// <remarks>   2024-02-05. </remarks>
-    /// <param name="ipv4Address">          The IPv4 address. </param>
-    /// <param name="sampleRate">           The sample rate. </param>
-    /// <param name="measurementFunction">  The measurement function. </param>
-    /// <param name="measurementRange">     The measurement range. </param>
-    /// <param name="bufferSize">           Size of the buffer. </param>
-	public DMM7510(string ipv4Address, int sampleRate, int measurementFunction,
-        Single measurementRange, int bufferSize)
-	{
-        this._tcpSession = new TcpSession( ipv4Address );
-        this.SampleRate = sampleRate;
-		this.MeasurementFunction = measurementFunction == 0 
-            ? TspDevice.DCVoltageSourceFunction 
-            : TspDevice.DCCurrentSourceFunction;
-        this.MeasurementRange = measurementRange;
-		this.BufferSize = bufferSize;
-	}
+    private readonly TcpSession _tcpSession = new( ipv4Address );
 
     /// <summary>
     /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged
@@ -54,7 +44,7 @@ public partial class DMM7510 : IDisposable
     public void Connect( bool echoIdentity, ref string identity )
     {
         Console.WriteLine( "Connected to instrument......" );
-        this._tcpSession.Connect(echoIdentity, "*IDN?", ref identity, true);
+        this._tcpSession.Connect( echoIdentity, "*IDN?", ref identity, true );
         this._tcpSession.ReceiveTimeout = TimeSpan.FromMilliseconds( 20000 );
         this._tcpSession.ReceiveBufferSize = 35565;
     }
@@ -63,22 +53,24 @@ public partial class DMM7510 : IDisposable
     /// <remarks>   2024-02-05. </remarks>
     public void Disconnect()
     {
-        this._tcpSession.Disconnect();  
+        this._tcpSession.Disconnect();
     }
 
     /// <summary>   Gets the sample rate. </summary>
     /// <value> The sample rate. </value>
-    public int SampleRate { get; private set; }
+    public int SampleRate { get; private set; } = sampleRate;
     /// <summary>   Gets the measurement function. </summary>
     /// <value> The measurement function. </value>
-    public string MeasurementFunction { get; private set; }
+    public string MeasurementFunction { get; private set; } = measurementFunction == 0
+            ? TspDevice.DCVoltageSourceFunction
+            : TspDevice.DCCurrentSourceFunction;
     /// <summary>   Gets the measurement range. </summary>
     /// <value> The measurement range. </value>
-    public Single MeasurementRange { get; private set; }
+    public float MeasurementRange { get; private set; } = measurementRange;
 
     /// <summary>   Gets the buffer size. </summary>
     /// <value> The size of the buffer. </value>
-    public int BufferSize { get; private set; }
+    public int BufferSize { get; private set; } = bufferSize;
 
     /// <summary>   Gets a value indicating whether this object is buffer rollover. </summary>
     /// <value> True if this object is buffer rollover, false if not. </value>
@@ -87,19 +79,19 @@ public partial class DMM7510 : IDisposable
     /// <summary>   Sets up the buffers. </summary>
     /// <remarks>   2024-02-05. </remarks>
 	public void Setup_Buffers()
-	{
+    {
         _ = this._tcpSession.WriteLine( "*RST" );
         _ = this._tcpSession.WriteLine( "TRAC:CLE \"defbuffer1\"" );
         _ = this._tcpSession.WriteLine( "TRAC:POIN " + Convert.ToString( this.BufferSize ) + ", \"defbuffer1\"" );
         _ = this._tcpSession.WriteLine( "TRAC:FILL:MODE CONT, \"defbuffer1\"" );
         _ = this._tcpSession.WriteLine( "*WAI" );
-		Thread.Sleep(100);
-	}
+        Thread.Sleep( 100 );
+    }
 
     /// <summary>   Sets up the dmm. </summary>
     /// <remarks>   2024-02-05. </remarks>
 	public void Setup_DMM()
-	{
+    {
         // Do setup...
         _ = this._tcpSession.WriteLine( ":SENS:DIG:FUNC \"" + this.MeasurementFunction + "\"" );
         _ = this._tcpSession.WriteLine( ":DIG:" + this.MeasurementFunction + ":RANG " + Convert.ToString( this.MeasurementRange ) );
@@ -107,25 +99,25 @@ public partial class DMM7510 : IDisposable
         _ = this._tcpSession.WriteLine( ":SENS:DIG:COUNt " + Convert.ToString( this.BufferSize ) );
         _ = this._tcpSession.WriteLine( ":SENS:DIG:" + this.MeasurementFunction + ":APER 5e-6" );        // was 1e-6
         _ = this._tcpSession.WriteLine( ":FORM:DATA SRE" );                                 // for single precision
-	}
+    }
 
     /// <summary>   Sets up the digitizing. </summary>
     /// <remarks>   2024-02-05. </remarks>
     /// <param name="captureMinutes">   The capture in minutes. </param>
-	public void Setup_Digitizing(int captureMinutes)
-	{
+	public void Setup_Digitizing( int captureMinutes )
+    {
         _ = this._tcpSession.WriteLine( ":TRIG:LOAD \"EMPTY\"" );
         _ = this._tcpSession.WriteLine( ":TRIG:BLOCk:DIG 1, \"defbuffer1\", " + Convert.ToString( this.BufferSize ) );
         _ = this._tcpSession.WriteLine( ":TRIG:BLOCk:BRANch:COUN 2, " + Convert.ToString( captureMinutes * 2 ) + ", 1" );
-	}
+    }
 
     /// <summary>   Trigger dmm. </summary>
     /// <remarks>   2024-02-05. </remarks>
 	public void Trigger_DMM()
-	{
+    {
         // Do Trigger...
         _ = this._tcpSession.WriteLine( "INIT" );
-	}
+    }
 
 
     /// <summary>   Extracts the buffer data. </summary>
@@ -138,17 +130,17 @@ public partial class DMM7510 : IDisposable
     /// <param name="stopWatch">            [in,out] The stop watch. </param>
     /// <param name="duration">             The duration in seconds. </param>
     /// <param name="savedReadingsCount">   [in,out] Number of saved readings. </param>
-	public void ExtractBufferData(string filePath, string unitId, String bufferName, int bufferSize,
-                                  int chunkSize, ref Stopwatch stopWatch, int duration, ref int savedReadingsCount)
-	{
+	public void ExtractBufferData( string filePath, string unitId, string bufferName, int bufferSize,
+                                  int chunkSize, ref Stopwatch stopWatch, int duration, ref int savedReadingsCount )
+    {
         int startIndex = 1;
-		int endIndex = chunkSize;
-		int totalReadings = 0;
+        int endIndex = chunkSize;
+        int totalReadings = 0;
         float[] readingAmounts = new float[chunkSize];
-		string timeStamp = DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss");
-		string fileName = "DMM7510_StreamDigitized_" + unitId + "_" + timeStamp + ".csv";
+        string timeStamp = DateTime.Now.ToString( "yyyy-MM-dd_hh-mm-ss" );
+        string fileName = "DMM7510_StreamDigitized_" + unitId + "_" + timeStamp + ".csv";
         string fullFileName = Path.Combine( filePath, fileName );
-        int lastCount = 0 ;
+        int lastCount = 0;
         int previousReadingBufferIndex = 0;
         int k = 0;
         bool doPoll = true;
@@ -166,7 +158,7 @@ public partial class DMM7510 : IDisposable
                     queryReply = "";
                     // read last buffer index
                     // use END because plain old ACT? tops off at bufferSize when full
-                    queryCommand = ":TRAC:ACT:END? \"" + bufferName + "\"";     
+                    queryCommand = ":TRAC:ACT:END? \"" + bufferName + "\"";
                     _ = this._tcpSession.QueryLine( queryCommand, 256, ref queryReply, true );
                     this._tcpSession.Flush();
 
@@ -176,7 +168,7 @@ public partial class DMM7510 : IDisposable
                         k++;                    // this indicates a buffer roll-over condition
                         this.IsBufferRollover = true;
                     }
-                    cumulativeCount = k * bufferSize + readingBufferIndex;
+                    cumulativeCount = (k * bufferSize) + readingBufferIndex;
                     previousReadingBufferIndex = readingBufferIndex;
 
                 } while ( (cumulativeCount - totalReadings) < chunkSize );
@@ -212,19 +204,19 @@ public partial class DMM7510 : IDisposable
             endIndex = startIndex + (chunkSize - 1);
 
             // Write to file in dh: this changed to 1 second intervals from 30s intervals
-            huh = bufferSize * (duration * 2) - chunkSize;
+            huh = (bufferSize * duration * 2) - chunkSize;
         } while ( totalReadings < huh ); // (!(rcvBuffer.Contains("IDLE")));
 
         savedReadingsCount = totalReadings;
 
-		stopWatch.Stop();
-	}
+        stopWatch.Stop();
+    }
 
-	private static void WriteToFile(String fileName, float[] values)
-	{
-		bool doAppend = true;
-        using StreamWriter writer = new ( fileName, doAppend );
-        foreach ( var value in values )
+    private static void WriteToFile( string fileName, float[] values )
+    {
+        bool doAppend = true;
+        using StreamWriter writer = new( fileName, doAppend );
+        foreach ( float value in values )
         {
             writer.WriteLine( value );
         }

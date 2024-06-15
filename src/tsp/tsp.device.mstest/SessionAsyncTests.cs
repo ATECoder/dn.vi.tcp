@@ -10,10 +10,12 @@ namespace cc.isr.Tcp.Tsp.Device.MSTest;
 public class SessionAsyncTests
 {
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "<Pending>" )]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private const string K7510IPAddress = "192.168.0.144";
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "<Pending>" )]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private const string K2600IPAddress = "192.168.0.150";
 
     private const string IPAddress = K2600IPAddress;
@@ -26,7 +28,7 @@ public class SessionAsyncTests
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private static int WriteLine( TcpSession session, string command )
     {
-        var task = session.WriteLineAsync( command, session.CancellationToken );
+        Task<int> task = session.WriteLineAsync( command, session.CancellationToken );
         task.Wait();
         return task.Result;
     }
@@ -39,7 +41,7 @@ public class SessionAsyncTests
     /// <returns>   The line. </returns>
     private static string QueryLine( TcpSession session, string command, TimeSpan readDelay, bool trimEnd )
     {
-        var task = session.QueryLineAsync( command, 1024, readDelay, trimEnd, session.CancellationToken );
+        Task<string> task = session.QueryLineAsync( command, 1024, readDelay, trimEnd, session.CancellationToken );
         task.Wait();
         return task.Result;
     }
@@ -51,7 +53,7 @@ public class SessionAsyncTests
     /// <param name="repeatCount">  Number of repeats. </param>
     private static void AssertIdentityShouldQuery( string ipv4Address, TimeSpan readDelay, int repeatCount )
     {
-        using TcpSession session = new ( ipv4Address );
+        using TcpSession session = new( ipv4Address );
         string identity = string.Empty;
         string command = "*IDN?";
         bool trimEnd = true;
@@ -61,7 +63,7 @@ public class SessionAsyncTests
         while ( repeatCount > 0 )
         {
             repeatCount--;
-            string response = QueryLine( session, command, readDelay, trimEnd ); 
+            string response = QueryLine( session, command, readDelay, trimEnd );
             Assert.AreEqual( identity, response, $"@count = {count - repeatCount}" );
         }
     }
@@ -74,7 +76,7 @@ public class SessionAsyncTests
         string ipv4Address = IPAddress;
         int count = 42;
         TimeSpan readDelay = TimeSpan.FromMilliseconds( 0 );
-        AssertIdentityShouldQuery(ipv4Address, readDelay, count );
+        AssertIdentityShouldQuery( ipv4Address, readDelay, count );
     }
 
     /// <summary>   (Unit Test Method) session TCP client should begin connect. </summary>
@@ -88,9 +90,9 @@ public class SessionAsyncTests
         Stopwatch sw = Stopwatch.StartNew();
         IAsyncResult asyncResult = session.BeginConnect();
         bool success = session.AwaitConnect( asyncResult, TimeSpan.FromMilliseconds( 100 ) );
-        Assert.IsTrue( success , $"connected to {ipv4Address} failed after {timeout.TotalMilliseconds:0}ms");
+        Assert.IsTrue( success, $"connected to {ipv4Address} failed after {timeout.TotalMilliseconds:0}ms" );
         sw.Stop();
         Console.WriteLine(
-            $"Connected in {sw.ElapsedTicks}/{TimeSpan.TicksPerMillisecond} {((double)sw.ElapsedTicks / TimeSpan.TicksPerMillisecond):0.0}ms" );
+            $"Connected in {sw.ElapsedTicks}/{TimeSpan.TicksPerMillisecond} {( double ) sw.ElapsedTicks / TimeSpan.TicksPerMillisecond:0.0}ms" );
     }
 }

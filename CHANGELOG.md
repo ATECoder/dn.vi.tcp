@@ -2,6 +2,10 @@
 All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog].
 
+## [1.2.8933] - 2024-06-15 Preview 202406
+* update editor config fixing code style and constants.
+* apply code analysis rules.
+
 ## [1.2.8932] - 2024-06-14 Preview 202406
 * Implement MS Test SDK.
 
@@ -25,5 +29,5 @@ The format is based on [Keep a Changelog].
 
 &copy;  2022 Integrated Scientific Resources, Inc. All rights reserved.
 
-[1.2.8932]: https://github.com/ATECoder/dn.vi.tcp
+[1.2.8933]: https://github.com/ATECoder/dn.vi.tcp
 [Keep a Changelog]: (https://keepachangelog.com/en/1.0.0/)

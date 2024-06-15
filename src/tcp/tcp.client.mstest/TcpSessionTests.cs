@@ -16,8 +16,6 @@ public class TcpSessionTests
         try
         {
             System.Diagnostics.Debug.WriteLine( $"{testContext.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType?.Name} Tester" );
-            _classTestContext = testContext;
-            System.Diagnostics.Debug.WriteLine( $"{_classTestContext.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType?.Name} Tester" );
             _server = new TcpEchoServer( _ipv4Address!, _portNumber!.Value );
             _server.PropertyChanged += OnServerPropertyChanged;
             Console.WriteLine( $"{nameof( TcpEchoServer )} is {_server.Listening:'running';'limbo';'idle'}" );
@@ -46,8 +44,6 @@ public class TcpSessionTests
     /// <value> The test context. </value>
     public TestContext? TestContext { get; set; }
 
-    private static TestContext? _classTestContext;
-
     /// <summary> Cleans up the test class after all tests in the class have run. </summary>
     /// <remarks> Use <see cref="CleanupTestClass"/> to run code after all tests in the class have run. </remarks>
     [ClassCleanup()]
@@ -55,7 +51,7 @@ public class TcpSessionTests
     {
         if ( _server is not null )
         {
-            if ( _server.Listening)
+            if ( _server.Listening )
             {
                 _server.Stop();
                 _ = (_listenTask?.Wait( 100 ));
@@ -86,6 +82,8 @@ public class TcpSessionTests
             case nameof( TcpEchoServer.Listening ):
                 Console.WriteLine( $"{args.PropertyName} set to {_server?.Listening}" );
                 break;
+            default:
+                break;
         }
     }
 
@@ -95,7 +93,7 @@ public class TcpSessionTests
     /// <param name="repeatCount">  Number of repeats. </param>
     private static void AssertIdentityShouldQuery( string ipv4Address, int? portNumber, int repeatCount )
     {
-        using TcpSession session = new ( ipv4Address, portNumber.GetValueOrDefault(13000) );
+        using TcpSession session = new( ipv4Address, portNumber.GetValueOrDefault( 13000 ) );
         string identity = string.Empty;
         string command = "*IDN?";
         bool trimEnd = true;
@@ -106,7 +104,7 @@ public class TcpSessionTests
         {
             repeatCount--;
             string response = string.Empty;
-            _ = session.QueryLine( command, 1024 , ref response, trimEnd ); 
+            _ = session.QueryLine( command, 1024, ref response, trimEnd );
             Assert.AreEqual( identity, response, $"@count = {count - repeatCount}" );
         }
     }
@@ -117,6 +115,6 @@ public class TcpSessionTests
     public void IdentityShouldQuery()
     {
         int count = 42;
-        AssertIdentityShouldQuery(_ipv4Address!, _portNumber, count );
+        AssertIdentityShouldQuery( _ipv4Address!, _portNumber, count );
     }
 }

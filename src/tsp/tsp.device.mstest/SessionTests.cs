@@ -8,10 +8,12 @@ namespace cc.isr.Tcp.Tsp.Device.MSTest;
 public class SessionTests
 {
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "<Pending>" )]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private const string K7510IPAddress = "192.168.0.144";
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "<Pending>" )]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private const string K2600IPAddress = "192.168.0.150";
 
     private const string IPAddress = K2600IPAddress;
@@ -22,7 +24,7 @@ public class SessionTests
     /// <param name="repeatCount">  Number of repeats. </param>
     private static void AssertIdentityShouldQuery( string ipv4Address, int repeatCount )
     {
-        using TcpSession session = new ( ipv4Address );
+        using TcpSession session = new( ipv4Address );
         string identity = string.Empty;
         string command = "*IDN?";
         bool trimEnd = true;
@@ -33,7 +35,7 @@ public class SessionTests
         {
             repeatCount--;
             string response = string.Empty;
-            _ = session.QueryLine( command, 1024, ref response, trimEnd ); 
+            _ = session.QueryLine( command, 1024, ref response, trimEnd );
             Assert.AreEqual( identity, response, $"@count = {count - repeatCount}" );
         }
     }

@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using cc.isr.Tcp.Tsp.Device;
 
 namespace cc.isr.Tcp.Tsp.K2600.Ohm.Views;
@@ -7,39 +6,39 @@ namespace cc.isr.Tcp.Tsp.K2600.Ohm.Views;
 /// <remarks>   2024-02-06. </remarks>
 public partial class OhmView : Form
 {
-	
-	public OhmView()
-	{
+
+    public OhmView()
+    {
         this.InitializeComponent();
         this.ToggleConnectionButton.Click += this.ToggleConnectionButton_Click;
         this.ConfigureButton.Click += this.ConfigureButton_Click;
         this.MeasureButton.Click += this.MeasureButton_Click;
 
-	}
+    }
 
     /// <summary>
     /// Clean up any resources being used.
     /// </summary>
     /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-    protected override void Dispose(bool disposing)
+    protected override void Dispose( bool disposing )
     {
-        if (disposing )
+        if ( disposing )
         {
             this.components?.Dispose();
             this.TspDevice?.Dispose();
         }
-        base.Dispose(disposing);
+        base.Dispose( disposing );
     }
 
     /// <summary>   Gets or sets the tsp device. </summary>
     /// <value> The tsp device. </value>
-    private TspDevice? TspDevice { get; set; }   
+    private TspDevice? TspDevice { get; set; }
 
     /// <summary>   Event handler. Called by OhmView for load events. </summary>
     /// <remarks>   2024-02-06. </remarks>
     /// <param name="sender">   Source of the event. </param>
     /// <param name="e">        Event information. </param>
-    private void OhmView_Load(object sender, EventArgs e)
+    private void OhmView_Load( object sender, EventArgs e )
     {
         this.VoltageSourceOption.Checked = true;
         this.RunningStateLabel.Text = string.Empty;
@@ -60,12 +59,12 @@ public partial class OhmView : Form
             this.MeasureButton.Enabled = false;
             this.UserPromptLabel.Text = "";
 
-            if (this.TspDevice == null || !this.TspDevice.Session.Connected)
+            if ( this.TspDevice == null || !this.TspDevice.Session.Connected )
             {
-                this.TspDevice = new(this.IPAddressTextBox.Text);
+                this.TspDevice = new( this.IPAddressTextBox.Text );
             }
 
-            if (this.TspDevice.Session.Connected)
+            if ( this.TspDevice.Session.Connected )
             {
                 this.UserPromptLabel.Text = "Disconnecting...";
                 this.TspDevice.Disconnect();
@@ -77,7 +76,7 @@ public partial class OhmView : Form
             {
                 this.UserPromptLabel.Text = "Connecting...";
                 string identity = string.Empty;
-                this.TspDevice.Connect(true, ref identity);
+                this.TspDevice.Connect( true, ref identity );
                 this.IdentityLabel.Text = identity;
                 this.ConfigureButton.Enabled = true;
                 this.UserPromptLabel.Text = $"Connected; press '{this.ConfigureButton.Text}' to configure the measurement.";
@@ -86,7 +85,7 @@ public partial class OhmView : Form
             this.ToggleConnectionButton.Text = this.TspDevice.Session.Connected ? "Close connection" : "Open connection";
 
         }
-        catch (Exception ex)
+        catch ( Exception ex )
         {
             this.UserPromptLabel.Text = $"Connection failed: {ex.Message}";
         }
@@ -101,7 +100,7 @@ public partial class OhmView : Form
     /// <remarks>   2024-02-06. </remarks>
     /// <param name="sender">   Source of the event. </param>
     /// <param name="e">        Event information. </param>
-    private void ToggleConnectionButton_Click(object? sender, EventArgs e)
+    private void ToggleConnectionButton_Click( object? sender, EventArgs e )
     {
         this.ToggleConnection();
     }
@@ -117,18 +116,18 @@ public partial class OhmView : Form
             this.MeasureButton.Enabled = false;
             this.UserPromptLabel.Text = "";
 
-            if (this.TspDevice == null || !this.TspDevice.Session.Connected)
+            if ( this.TspDevice == null || !this.TspDevice.Session.Connected )
                 this.ToggleConnection();
 
-            if (this.TspDevice != null && this.TspDevice.Session.Connected)
+            if ( this.TspDevice != null && this.TspDevice.Session.Connected )
             {
                 this.UserPromptLabel.Text = "Configuring...";
-                this.TspDevice.CurrentLevel = (double)this.CurrentLevelNumeric.Value;
-                this.TspDevice.VoltageLevel = (double)this.VoltageLevelNumeric.Value;
+                this.TspDevice.CurrentLevel = ( double ) this.CurrentLevelNumeric.Value;
+                this.TspDevice.VoltageLevel = ( double ) this.VoltageLevelNumeric.Value;
                 this.TspDevice.AutoRange = this.AutoRangeCheckBox.Checked;
-                this.TspDevice.Aperture = (double)this.ApertureNumeric.Value;
-                this.TspDevice.SourceFunction = this.VoltageSourceOption.Checked 
-                        ? TspDevice.DCVoltageSourceFunction 
+                this.TspDevice.Aperture = ( double ) this.ApertureNumeric.Value;
+                this.TspDevice.SourceFunction = this.VoltageSourceOption.Checked
+                        ? TspDevice.DCVoltageSourceFunction
                         : TspDevice.DCCurrentSourceFunction;
                 this.TspDevice.ConfigureConstantSource();
                 this.UserPromptLabel.Text = $"Configured; Press '{this.MeasureButton.Text}'.";
@@ -136,7 +135,7 @@ public partial class OhmView : Form
                 this.MeasureButton.Enabled = true;
             }
         }
-        catch (Exception ex)
+        catch ( Exception ex )
         {
             this.UserPromptLabel.Text = $"Configuration failed: {ex.Message}";
         }
@@ -152,7 +151,7 @@ public partial class OhmView : Form
     /// <remarks>   2024-02-06. </remarks>
     /// <param name="sender">   Source of the event. </param>
     /// <param name="e">        Event information. </param>
-    private void ConfigureButton_Click(object? sender, EventArgs e)
+    private void ConfigureButton_Click( object? sender, EventArgs e )
     {
         this.ConfigureConstantSourceOhm();
     }
@@ -161,8 +160,8 @@ public partial class OhmView : Form
     /// <summary>   Measures this object. </summary>
     /// <remarks>   2024-02-06. </remarks>
     private void Measure()
-	{
-        if (this.TspDevice == null || !this.TspDevice.Session.Connected) return;
+    {
+        if ( this.TspDevice == null || !this.TspDevice.Session.Connected ) return;
 
         try
         {
@@ -175,7 +174,7 @@ public partial class OhmView : Form
             this.RunningStateLabel.Text = "Measuring...";
             Application.DoEvents();
 
-            this.TspDevice?.MeasureResistance();
+            _ = (this.TspDevice?.MeasureResistance());
 
             this.DurationLabel.Text = $"{this.TspDevice!.ReadingDuration.GetValueOrDefault().Milliseconds} ms";
             this.VoltageReadingLabel.Text = $"{this.TspDevice!.VoltageReading} Volt";
@@ -186,7 +185,7 @@ public partial class OhmView : Form
             Application.DoEvents();
 
         }
-        catch (Exception ex)
+        catch ( Exception ex )
         {
             this.RunningStateLabel.Text = "Measurement failed";
             this.UserPromptLabel.Text = $"Measurement failed: {ex.Message}";
@@ -204,8 +203,8 @@ public partial class OhmView : Form
     /// <remarks>   2024-02-06. </remarks>
     /// <param name="sender">   Source of the event. </param>
     /// <param name="e">        Event information. </param>
-	private void MeasureButton_Click(object? sender, EventArgs e)
-	{
-		this.Measure();
-	}
+	private void MeasureButton_Click( object? sender, EventArgs e )
+    {
+        this.Measure();
+    }
 }
