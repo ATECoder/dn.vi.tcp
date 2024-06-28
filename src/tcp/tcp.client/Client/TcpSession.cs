@@ -211,7 +211,7 @@ public partial class TcpSession( string ipv4Address, int portNumber = 5025 ) : I
     /// <param name="buffer">           The buffer. </param>
     /// <param name="receivedCount">    Number of received. </param>
     /// <param name="trimEnd">          True to trim the <see cref="ReadTermination"/>. </param>
-    /// <returns>   A string. </returns>
+    /// <returns>   A <see cref="string" />. </returns>
     private string BuildReply( byte[] buffer, int receivedCount, bool trimEnd )
     {
         int replyLength = receivedCount - (trimEnd ? this.ReadTermination.Length : 0);

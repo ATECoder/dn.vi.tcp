@@ -115,7 +115,7 @@ public partial class Form1 : Form
 		TimeSpan ts1 = stopWatch.Elapsed;
 
 		// Format and display the TimeSpan value.
-		string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+		string elapsedTime = string.Format("{0:00}:{1:00}:{2:00}.{3:00}",
 			ts1.Hours, ts1.Minutes, ts1.Seconds,
 			ts1.Milliseconds / 10);
         this.runtimeLabel.Text = elapsedTime;

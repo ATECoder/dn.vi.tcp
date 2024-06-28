@@ -201,7 +201,7 @@ public partial class TcpSession : IDisposable
     /// <param name="buffer">           The buffer. </param>
     /// <param name="receivedCount">    Number of received. </param>
     /// <param name="trimEnd">          True to trim the <see cref="ReadTermination"/>. </param>
-    /// <returns>   A string. </returns>
+    /// <returns>   A <see cref="string" />. </returns>
     private string BuildReply( byte[] buffer, int receivedCount, bool trimEnd )
     {
         int replyLength = receivedCount - (trimEnd ? this.ReadTermination.Length : 0);
@@ -381,7 +381,7 @@ public partial class TcpSession : IDisposable
         int replyLength = sb.Length - ( trimEnd ? this.ReadTermination.Length : 0 );
         return replyLength > 0
             ? sb.ToString( 0, replyLength )
-            : String.Empty;
+            : string.Empty;
     }
 
     /// <summary>
