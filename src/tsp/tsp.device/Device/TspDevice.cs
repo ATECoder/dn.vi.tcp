@@ -13,9 +13,6 @@ namespace cc.isr.Tcp.Tsp.Device;
 ///                             throughout the class definition. </param>
 public partial class TspDevice( string ipv4Address ) : IDisposable
 {
-
-    #region " Construction and Cleanup "
-
     /// <summary>
     /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged
     /// resources.
