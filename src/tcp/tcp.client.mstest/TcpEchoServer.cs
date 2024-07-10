@@ -7,8 +7,7 @@ namespace cc.isr.Tcp.Client.MSTest;
 /// <remarks>   2022-11-16. </remarks>
 public class TcpEchoServer : ObservableObject, IDisposable
 {
-
-    #region " Construction and Cleanup "
+    #region " construction and cleanup "
 
     public TcpEchoServer( string ipString = "127.0.0.1", int portNumber = 13000 )
     {
