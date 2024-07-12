@@ -13,7 +13,7 @@ public class ObservableObject : INotifyPropertyChanged
     /// <summary>   Executes the 'property changed' action. </summary>
     /// <remarks>   2022-10-08. </remarks>
     /// <param name="propertyName"> Name of the property. </param>
-    protected virtual void OnPropertyChanged( string propertyName )
+    protected virtual void OnPropertyChanged( string? propertyName )
     {
         PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
     }

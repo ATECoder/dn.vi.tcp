@@ -55,8 +55,9 @@ namespace Keithley.Dmm7510.Digitizer {
             get {
                 return resourceCulture;
             }
-            set {
-                resourceCulture = value;
+            set
+            {
+                 resourceCulture = value;
             }
         }
         

@@ -58,8 +58,9 @@ public partial class TcpSession( string ipv4Address, int portNumber = 5025 ) : I
     public TimeSpan ReceiveTimeout
     {
         get => TimeSpan.FromMilliseconds( this._tcpClient?.ReceiveTimeout ?? 0 );
-        set {
-            if ( this._tcpClient != null )
+        set
+        {
+             if ( this._tcpClient is not null )
             {
                 this._tcpClient.ReceiveTimeout = value.Milliseconds;
             }
@@ -72,8 +73,9 @@ public partial class TcpSession( string ipv4Address, int portNumber = 5025 ) : I
     public TimeSpan SendTimeout
     {
         get => TimeSpan.FromMilliseconds( this._tcpClient?.SendTimeout ?? 0 );
-        set {
-            if ( this._tcpClient != null )
+        set
+        {
+             if ( this._tcpClient is not null )
             {
                 this._tcpClient.SendTimeout = value.Milliseconds;
             }
@@ -86,8 +88,9 @@ public partial class TcpSession( string ipv4Address, int portNumber = 5025 ) : I
     public int ReceiveBufferSize
     {
         get => this._tcpClient?.ReceiveBufferSize ?? 0;
-        set {
-            if ( this._tcpClient != null )
+        set
+        {
+             if ( this._tcpClient is not null )
             {
                 this._tcpClient.ReceiveBufferSize = value;
             }

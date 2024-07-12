@@ -55,8 +55,9 @@ namespace cc.isr.Tcp.Tsp.K7510 {
             get {
                 return resourceCulture;
             }
-            set {
-                resourceCulture = value;
+            set
+            {
+                 resourceCulture = value;
             }
         }
         
