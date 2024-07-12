@@ -1,5 +1,4 @@
 using System.Diagnostics;
-
 using cc.isr.Tcp.Client;
 
 namespace cc.isr.Tcp.Tsp.Device.MSTest;

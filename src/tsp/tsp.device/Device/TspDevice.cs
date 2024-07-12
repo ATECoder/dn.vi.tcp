@@ -1,6 +1,5 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-
 using cc.isr.Tcp.Client;
 
 namespace cc.isr.Tcp.Tsp.Device;
@@ -256,7 +255,6 @@ public partial class TspDevice( string ipv4Address ) : IDisposable
         this.WaitComplete( 100 );
     }
 
-
     #endregion
 
     #region " Source Measure " 
@@ -336,5 +334,4 @@ public partial class TspDevice( string ipv4Address ) : IDisposable
     }
 
     #endregion
-
 }

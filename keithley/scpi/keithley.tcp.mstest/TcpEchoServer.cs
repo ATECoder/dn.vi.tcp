@@ -3,7 +3,6 @@ using System.Net;
 
 namespace Keithley.Tcp.MSTest;
 
-
 /// <summary>   A TCP echo server. </summary>
 /// <remarks>   2022-11-16. </remarks>
 public class TcpEchoServer : ObservableObject

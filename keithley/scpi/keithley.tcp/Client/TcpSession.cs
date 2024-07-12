@@ -472,6 +472,5 @@ public partial class TcpSession : IDisposable
     /// <value> Any leftover message in the stream. </value>
     public string Orphan { get; private set; }
 
-
     #endregion
 }

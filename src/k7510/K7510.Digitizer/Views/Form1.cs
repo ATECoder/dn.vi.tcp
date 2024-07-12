@@ -1,5 +1,4 @@
 using System.Diagnostics;
-
 using cc.isr.Tcp.Tsp.Device;
 
 namespace cc.isr.Tcp.Tsp.K7510.Digitizer.Views;

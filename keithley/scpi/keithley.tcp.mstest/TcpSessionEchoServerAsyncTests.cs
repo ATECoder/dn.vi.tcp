@@ -1,5 +1,4 @@
 using System.ComponentModel;
-
 using Keithley.Tcp.Client;
 
 namespace Keithley.Tcp.MSTest;

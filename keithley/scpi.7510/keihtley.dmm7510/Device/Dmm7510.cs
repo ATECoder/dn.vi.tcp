@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
-
 using Keithley.Tcp.Client;
 
 namespace Keithley.Dmm7510.Device;

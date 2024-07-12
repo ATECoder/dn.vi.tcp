@@ -1,5 +1,4 @@
 using System.Diagnostics;
-
 using Keithley.Dmm7510.Device;
 
 namespace Keithley.Dmm7510.Digitizer.Views;
