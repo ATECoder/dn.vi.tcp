@@ -11,7 +11,6 @@ namespace cc.isr.Tcp.Client;
 /// <param name="portNumber">   (Optional) The port number. </param>
 public partial class TcpSession( string ipv4Address, int portNumber = 5025 ) : IDisposable
 {
-
     /// <summary>
     /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged
     /// resources.

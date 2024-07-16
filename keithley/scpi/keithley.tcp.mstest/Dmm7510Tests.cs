@@ -5,7 +5,6 @@ namespace Keithley.Tcp.MSTest;
 [TestClass]
 public class Dmm7510Tests
 {
-
     /// <summary>   Assert identity should query. </summary>
     /// <remarks>   2022-11-16. </remarks>
     /// <param name="ipv4Address">  The IPv4 address. </param>

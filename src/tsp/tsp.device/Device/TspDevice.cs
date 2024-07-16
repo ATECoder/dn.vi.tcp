@@ -106,7 +106,6 @@ public partial class TspDevice( string ipv4Address ) : IDisposable
     /// <value> The voltage reading. </value>
     public string VoltageReading { get; private set; } = string.Empty;
 
-
     /// <summary>   Gets or sets the current Value. </summary>
     /// <value> The current Value. </value>
     public double CurrentValue { get; private set; } = default;

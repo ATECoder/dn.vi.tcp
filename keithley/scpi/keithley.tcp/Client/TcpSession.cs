@@ -10,7 +10,6 @@ namespace Keithley.Tcp.Client;
 /// <remarks>   2022-11-14. </remarks>
 public partial class TcpSession : IDisposable
 {
-
     /// <summary>   Constructor. </summary>
     /// <remarks>   2022-11-14. </remarks>
     /// <param name="ipv4Address">  IPv4 Address in string format. </param>
