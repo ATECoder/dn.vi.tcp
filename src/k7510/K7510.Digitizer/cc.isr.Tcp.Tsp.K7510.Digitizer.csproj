@@ -13,7 +13,6 @@
     <ApplicationTitle>cc.isr.Tcp.Tsp.K7510.Digitizer</ApplicationTitle>
     <ApplicationId>cc.isr.Tcp.Tsp.K7510.Digitizer</ApplicationId>
 
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <GenerateAssemblyVersionAttribute>true</GenerateAssemblyVersionAttribute>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 

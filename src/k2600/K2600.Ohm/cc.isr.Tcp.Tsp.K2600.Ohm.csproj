@@ -13,7 +13,6 @@
     <ApplicationTitle>cc.isr.Tcp.Tsp.K2600.Ohm</ApplicationTitle>
     <ApplicationId>cc.isr.Tcp.Tsp.K2600.Ohm</ApplicationId>
 
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <GenerateAssemblyVersionAttribute>true</GenerateAssemblyVersionAttribute>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
