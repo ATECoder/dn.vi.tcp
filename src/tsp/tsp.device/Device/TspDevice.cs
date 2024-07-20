@@ -260,7 +260,7 @@ public partial class TspDevice( string ipv4Address ) : IDisposable
 
     /// <summary>   Measure resistance. </summary>
     /// <remarks>   2024-02-05. </remarks>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public bool MeasureResistance()
     {
         Stopwatch stopWatch = Stopwatch.StartNew();

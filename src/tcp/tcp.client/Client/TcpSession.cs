@@ -119,7 +119,7 @@ public partial class TcpSession( string ipv4Address, int portNumber = 5025 ) : I
     /// <remarks>   2022-11-16. </remarks>
     /// <param name="asyncResult">  The result of the asynchronous operation. </param>
     /// <param name="timeout">      The timeout. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public bool AwaitConnect( IAsyncResult asyncResult, TimeSpan timeout )
     {
         bool success = asyncResult.AsyncWaitHandle.WaitOne( timeout );

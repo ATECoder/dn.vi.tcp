@@ -24,7 +24,7 @@ public class ObservableObject : INotifyPropertyChanged
     /// <param name="backingField"> [in,out] The backing field. </param>
     /// <param name="value">        The value. </param>
     /// <param name="propertyName"> (Optional) Name of the property. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     protected virtual bool OnPropertyChanged<T>(ref T backingField, T value, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = "")
     {
         if (EqualityComparer<T>.Default.Equals(backingField, value))
