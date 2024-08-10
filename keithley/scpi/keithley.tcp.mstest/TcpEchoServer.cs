@@ -17,6 +17,7 @@ public class TcpEchoServer : ObservableObject
     }
 
     private bool _listening;
+
     /// <summary>
     /// Gets or sets a value indicating whether the listener is listening to incoming requests.
     /// </summary>
@@ -28,6 +29,7 @@ public class TcpEchoServer : ObservableObject
     }
 
     private int _port;
+
     /// <summary>   Gets or sets the port. </summary>
     /// <value> The port. </value>
     public int Port
@@ -37,6 +39,7 @@ public class TcpEchoServer : ObservableObject
     }
 
     private string _ipv4Address;
+
     /// <summary>   Gets or sets the IPv4 address. </summary>
     /// <value> The IPv4 address. </value>
     public string IPv4Address
@@ -46,6 +49,7 @@ public class TcpEchoServer : ObservableObject
     }
 
     private string _message;
+
     /// <summary>   Gets or sets the message. </summary>
     /// <value> The message. </value>
     public string Message
@@ -61,6 +65,7 @@ public class TcpEchoServer : ObservableObject
     private static readonly ManualResetEvent _tcpClientConnected = new ( false );
 
     private TcpListener? _listener;
+
     /// <summary>   Starts listening for client connections. </summary>
     /// <remarks>   2022-11-17. </remarks>
     public void Start()
@@ -109,7 +114,6 @@ public class TcpEchoServer : ObservableObject
         // Wait until a connection is made and processed before continuing.
         _ = _tcpClientConnected.WaitOne();
     }
-
 
     /// <summary>
     /// Asynchronous callback, called on accepting the TCP client connection. Processes the client

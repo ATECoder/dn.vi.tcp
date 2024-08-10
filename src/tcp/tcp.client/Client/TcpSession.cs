@@ -159,7 +159,6 @@ public partial class TcpSession( string ipv4Address, int portNumber = 5025 ) : I
         }
     }
 
-
     /// <summary>
     /// Opens a new session and returns the instrument identity.
     /// </summary>

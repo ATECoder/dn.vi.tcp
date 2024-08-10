@@ -156,7 +156,6 @@ public partial class OhmView : Form
         this.ConfigureConstantSourceOhm();
     }
 
-
     /// <summary>   Measures this object. </summary>
     /// <remarks>   2024-02-06. </remarks>
     private void Measure()

@@ -150,7 +150,6 @@ public partial class TcpSession : IDisposable
         }
     }
 
-
     /// <summary>
     /// Opens a new session and returns the instrument identity.
     /// </summary>

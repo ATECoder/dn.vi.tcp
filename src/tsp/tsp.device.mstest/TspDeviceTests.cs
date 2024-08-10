@@ -78,7 +78,6 @@ public class TspDeviceTests
         TspDeviceTests.AssertDeviceShouldQueryInfo( ipv4Address, "_G.smua.AUTORANGE_ON", "1.00000e+00" );
     }
 
-
     /// <summary>   Assert device should configure current source. </summary>
     /// <remarks>   2024-02-05. </remarks>
     /// <param name="ipv4Address">      The IPv4 address. </param>

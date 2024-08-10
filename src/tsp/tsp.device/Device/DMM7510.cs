@@ -58,11 +58,13 @@ public partial class DMM7510( string ipv4Address, int sampleRate, int measuremen
     /// <summary>   Gets the sample rate. </summary>
     /// <value> The sample rate. </value>
     public int SampleRate { get; private set; } = sampleRate;
+
     /// <summary>   Gets the measurement function. </summary>
     /// <value> The measurement function. </value>
     public string MeasurementFunction { get; private set; } = measurementFunction == 0
             ? TspDevice.DCVoltageSourceFunction
             : TspDevice.DCCurrentSourceFunction;
+
     /// <summary>   Gets the measurement range. </summary>
     /// <value> The measurement range. </value>
     public float MeasurementRange { get; private set; } = measurementRange;
@@ -117,7 +119,6 @@ public partial class DMM7510( string ipv4Address, int sampleRate, int measuremen
         // Do Trigger...
         _ = this._tcpSession.WriteLine( "INIT" );
     }
-
 
     /// <summary>   Extracts the buffer data. </summary>
     /// <remarks>   This needs to be fixed for seconds duration and lower sample rates. </remarks>

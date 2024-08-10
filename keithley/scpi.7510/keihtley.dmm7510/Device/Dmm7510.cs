@@ -89,7 +89,6 @@ public partial class DMM7510 : IDisposable
         _ = this._tcpSession.WriteLine( "INIT" );
 	}
 
-
     /// <summary>   Extracts the buffer data. </summary>
     /// <remarks>   This needs to be fixed for seconds duration and lower sample rates. </remarks>
     /// <param name="filePath">             Full pathname of the file. </param>
