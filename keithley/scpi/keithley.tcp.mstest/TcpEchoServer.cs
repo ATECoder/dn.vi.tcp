@@ -7,7 +7,6 @@ namespace Keithley.Tcp.MSTest;
 /// <remarks>   2022-11-16. </remarks>
 public class TcpEchoServer : ObservableObject
 {
-
     public TcpEchoServer( string ipString = "127.0.0.1", int portNumber = 13000 )
     {
         this.Port = portNumber;
@@ -155,7 +154,6 @@ public class TcpEchoServer : ObservableObject
     /// <param name="client">   The client. </param>
     private void ProcessClientRequest( TcpClient client )
     {
-
         this.Message = "processing request...";
 
         int receivedBufferLength = 256;
@@ -200,7 +198,6 @@ public class TcpEchoServer : ObservableObject
     {
         try
         {
-
             TcpListener listener = new ( IPAddress.Parse( this.IPv4Address ), this.Port );
 
             try

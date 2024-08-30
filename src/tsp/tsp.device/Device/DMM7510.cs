@@ -15,7 +15,6 @@ namespace cc.isr.Tcp.Tsp.Device;
 public partial class DMM7510( string ipv4Address, int sampleRate, int measurementFunction,
         float measurementRange, int bufferSize ) : IDisposable
 {
-
     private readonly TcpSession _tcpSession = new( ipv4Address );
 
     /// <summary>

@@ -8,7 +8,6 @@ namespace Keithley.Dmm7510.Device;
 
 public partial class DMM7510 : IDisposable
 {
-
     private readonly TcpSession _tcpSession;
 
 	public DMM7510(string ipv4Address, int sampleRate, int measurementFunction,

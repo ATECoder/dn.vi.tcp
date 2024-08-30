@@ -147,7 +147,6 @@ public partial class TspDevice( string ipv4Address ) : IDisposable
     /// <param name="delay">    The delay in milliseconds. </param>
     public void WaitComplete( int delay )
     {
-
         this.ClearReadings();
 
         _ = this.Session.WriteLine( "_G.waitcomplete() _G.print([[1]])" );
@@ -165,7 +164,6 @@ public partial class TspDevice( string ipv4Address ) : IDisposable
     /// <remarks>   2024-02-05. </remarks>
     public void ResetKnownState()
     {
-
         this.ClearReadings();
 
         // turn off prompts and error messages

@@ -5,7 +5,6 @@ namespace cc.isr.Tcp.Tsp.Device.MSTest;
 [TestClass]
 public class TspDeviceTests
 {
-
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "<Pending>" )]
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private const string K7510IPAddress = "192.168.0.144";

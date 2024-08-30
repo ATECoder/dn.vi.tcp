@@ -222,7 +222,6 @@ public class TcpEchoServer : ObservableObject, IDisposable
     /// <param name="client">   The client. </param>
     private void ProcessClientRequest( TcpClient client )
     {
-
         this.Message = "processing request...";
 
         int receivedBufferLength = 256;
@@ -268,7 +267,6 @@ public class TcpEchoServer : ObservableObject, IDisposable
     {
         try
         {
-
             TcpListener listener = new( IPAddress.Parse( this.IPv4Address ), this.Port );
 
             try

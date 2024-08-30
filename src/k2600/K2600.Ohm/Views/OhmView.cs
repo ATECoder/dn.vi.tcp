@@ -6,7 +6,6 @@ namespace cc.isr.Tcp.Tsp.K2600.Ohm.Views;
 /// <remarks>   2024-02-06. </remarks>
 public partial class OhmView : Form
 {
-
     public OhmView()
     {
         this.InitializeComponent();
