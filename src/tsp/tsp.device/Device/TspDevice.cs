@@ -12,6 +12,8 @@ namespace cc.isr.Tcp.Tsp.Device;
 ///                             throughout the class definition. </param>
 public partial class TspDevice( string ipv4Address ) : IDisposable
 {
+    #region " construction and cleanup "
+
     /// <summary>
     /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged
     /// resources.
@@ -61,10 +63,10 @@ public partial class TspDevice( string ipv4Address ) : IDisposable
     #region " Contants "
 
     /// <summary>   (Immutable) the DC Voltage source function. </summary>
-    public const string DCVoltageSourceFunction = "OUTPUT_DCVOLTS";
+    public const string DC_VOLTAGE_SOURCE_FUNCTION = "OUTPUT_DCVOLTS";
 
     /// <summary>   (Immutable) the DC Current source function. </summary>
-    public const string DCCurrentSourceFunction = "OUTPUT_DCAMPS";
+    public const string DC_CURRENT_SOURCE_FUNCTION = "OUTPUT_DCAMPS";
 
     #endregion
 
@@ -84,7 +86,7 @@ public partial class TspDevice( string ipv4Address ) : IDisposable
 
     /// <summary>   Gets the source function, e.g., current or voltage source. </summary>
     /// <value> The source function. </value>
-    public string SourceFunction { get; set; } = DCVoltageSourceFunction;
+    public string SourceFunction { get; set; } = DC_VOLTAGE_SOURCE_FUNCTION;
 
     /// <summary>   Gets or sets the source-measure unit. </summary>
     /// <value> The smu. </value>
@@ -226,14 +228,14 @@ public partial class TspDevice( string ipv4Address ) : IDisposable
         // configure the source
         _ = this.Session.WriteLine( $"s = {this.SMU}.source" );
 
-        if ( this.SourceFunction == TspDevice.DCVoltageSourceFunction )
+        if ( this.SourceFunction == TspDevice.DC_VOLTAGE_SOURCE_FUNCTION )
         {
-            _ = this.Session.WriteLine( $"s.func = {this.SMU}.{TspDevice.DCVoltageSourceFunction}" );
+            _ = this.Session.WriteLine( $"s.func = {this.SMU}.{TspDevice.DC_VOLTAGE_SOURCE_FUNCTION}" );
             _ = this.Session.WriteLine( $"s.limiti = {this.CurrentLevel}" );
         }
         else
         {
-            _ = this.Session.WriteLine( $"s.func = {this.SMU}.{TspDevice.DCCurrentSourceFunction}" );
+            _ = this.Session.WriteLine( $"s.func = {this.SMU}.{TspDevice.DC_CURRENT_SOURCE_FUNCTION}" );
             _ = this.Session.WriteLine( $"s.limitv = {this.VoltageLevel}" );
         }
         if ( this.AutoRange )
@@ -269,7 +271,7 @@ public partial class TspDevice( string ipv4Address ) : IDisposable
         {
             _ = this.Session.WriteLine( $"s = {this.SMU}.source" );
             _ = this.Session.WriteLine( $"m = {this.SMU}.measure" );
-            if ( this.SourceFunction == TspDevice.DCVoltageSourceFunction )
+            if ( this.SourceFunction == TspDevice.DC_VOLTAGE_SOURCE_FUNCTION )
             {
                 _ = this.Session.WriteLine( "s.levelv = 0" );
                 _ = this.Session.WriteLine( $"s.output = {this.SMU}.OUTPUT_ON" );
@@ -283,7 +285,7 @@ public partial class TspDevice( string ipv4Address ) : IDisposable
             }
             stopWatch = Stopwatch.StartNew();
             count = this.Session.QueryLine( "_G.print(m.iv())", 1024, ref currentVoltageReading, true );
-            _ = this.SourceFunction == TspDevice.DCVoltageSourceFunction
+            _ = this.SourceFunction == TspDevice.DC_VOLTAGE_SOURCE_FUNCTION
                 ? this.Session.WriteLine( "s.levelv = 0" )
                 : this.Session.WriteLine( "s.leveli = 0" );
             stopWatch.Stop();
@@ -319,11 +321,10 @@ public partial class TspDevice( string ipv4Address ) : IDisposable
                         this.VoltageValue = v;
                     }
 
+                    // allow negative resistance
+                    this.Resistance = this.VoltageValue / this.CurrentValue;
                     if ( this.CurrentValue > 0 )
-                    {
-                        this.Resistance = this.VoltageValue / this.CurrentValue;
                         success = true;
-                    }
                 }
             }
         }

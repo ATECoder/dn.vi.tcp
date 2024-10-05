@@ -61,8 +61,8 @@ public partial class DMM7510( string ipv4Address, int sampleRate, int measuremen
     /// <summary>   Gets the measurement function. </summary>
     /// <value> The measurement function. </value>
     public string MeasurementFunction { get; private set; } = measurementFunction == 0
-            ? TspDevice.DCVoltageSourceFunction
-            : TspDevice.DCCurrentSourceFunction;
+            ? TspDevice.DC_VOLTAGE_SOURCE_FUNCTION
+            : TspDevice.DC_CURRENT_SOURCE_FUNCTION;
 
     /// <summary>   Gets the measurement range. </summary>
     /// <value> The measurement range. </value>

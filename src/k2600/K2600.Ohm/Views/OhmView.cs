@@ -126,8 +126,8 @@ public partial class OhmView : Form
                 this.TspDevice.AutoRange = this.AutoRangeCheckBox.Checked;
                 this.TspDevice.Aperture = ( double ) this.ApertureNumeric.Value;
                 this.TspDevice.SourceFunction = this.VoltageSourceOption.Checked
-                        ? TspDevice.DCVoltageSourceFunction
-                        : TspDevice.DCCurrentSourceFunction;
+                        ? TspDevice.DC_VOLTAGE_SOURCE_FUNCTION
+                        : TspDevice.DC_CURRENT_SOURCE_FUNCTION;
                 this.TspDevice.ConfigureConstantSource();
                 this.UserPromptLabel.Text = $"Configured; Press '{this.MeasureButton.Text}'.";
                 Application.DoEvents();
@@ -172,12 +172,12 @@ public partial class OhmView : Form
             this.RunningStateLabel.Text = "Measuring...";
             Application.DoEvents();
 
-            _ = (this.TspDevice?.MeasureResistance());
+            _ = this.TspDevice.MeasureResistance();
 
             this.DurationLabel.Text = $"{this.TspDevice!.ReadingDuration.GetValueOrDefault().Milliseconds} ms";
-            this.VoltageReadingLabel.Text = $"{this.TspDevice!.VoltageReading} Volt";
-            this.CurrentReadingLabel.Text = $"{this.TspDevice!.CurrentReading} Ampere";
-            this.ResistanceReadingLabel.Text = $"{this.TspDevice.Resistance:0.000} Ohm";
+            this.VoltageReadingLabel.Text = $"{this.TspDevice.VoltageReading} Volt";
+            this.CurrentReadingLabel.Text = $"{this.TspDevice.CurrentReading} Ampere";
+            this.ResistanceReadingLabel.Text = $"{this.TspDevice.Resistance:0.##E+00} Ohm";
             this.UserPromptLabel.Text = "Measurement completed.";
             this.RunningStateLabel.Text = "Done";
             Application.DoEvents();
