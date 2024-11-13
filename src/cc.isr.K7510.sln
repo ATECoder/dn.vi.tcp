@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cc.isr.Tcp.Client", "tcp\tc
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "~items", "~items", "{7954DF8D-DC5C-49FD-946B-607B39B8F6CF}"
 	ProjectSection(SolutionItems) = preProject
-		..\CHANGELOG.md = ..\CHANGELOG.md
+		..\changelog.md = ..\changelog.md
 		items\version.build.bat = items\version.build.bat
 		items\version.build.props = items\version.build.props
 		items\version.build.tt = items\version.build.tt

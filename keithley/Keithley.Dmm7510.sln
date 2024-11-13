@@ -9,8 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Keithley.Dmm7510.Digitizer"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "`build", "`build", "{E0C815C2-F588-4370-A334-AB9199F0A3ED}"
 	ProjectSection(SolutionItems) = preProject
-		CHANGELOG.md = CHANGELOG.md
-		README.md = README.md
+		changelog.md = changelog.md
+		readme.md = readme.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Keithley.Tcp", "scpi\keithley.tcp\Keithley.Tcp.csproj", "{9719CCCE-20E2-4E88-933A-2422FAAB2496}"
