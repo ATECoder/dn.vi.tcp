@@ -19,6 +19,6 @@ All notable changes to these libraries will be documented in this file in a form
 
 &copy;  2022 Integrated Scientific Resources, Inc. All rights reserved.
 
-[1.2.8798]: https://github.com/ATECoder/dn.vi.tcp
+[1.2.8798]: https://github.com/atecoder/dn.vi.tcp
 [Keep a Change log]: https://keepachangelog.com/en/1.0.0/
 

@@ -15,4 +15,4 @@ For information on using [ISR's Tcp] see the repository [ISR's Tcp] projects.
 [ISR's Tcp] is released as open source under the MIT license.
 Bug reports and contributions are welcome at the [ISR's Tcp] repository.
 
-[ISR's Tcp]: https://github.com/ATECoder/dn.vi.tcp
+[ISR's Tcp]: https://github.com/atecoder/dn.vi.tcp

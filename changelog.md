@@ -29,5 +29,5 @@ The format is based on [Keep a Changelog].
 
 &copy;  2022 Integrated Scientific Resources, Inc. All rights reserved.
 
-[1.2.8933]: https://github.com/ATECoder/dn.vi.tcp
+[1.2.8933]: https://github.com/atecoder/dn.vi.tcp
 [Keep a Changelog]: https://keepachangelog.com/en/1.0.0/

@@ -15,4 +15,4 @@ For information on using [ISR's Tcp Tsp Device] see the repository [ISR's Tcp Ts
 [ISR's Tcp Tsp Device] is released as open source under the MIT license.
 Bug reports and contributions are welcome at the [ISR's Tcp] repository.
 
-[ISR's Tcp Tsp Device]: https://github.com/ATECoder/dn.vi.tcp/tsp/tsp.device
+[ISR's Tcp Tsp Device]: https://github.com/atecoder/dn.vi.tcp/tsp/tsp.device
