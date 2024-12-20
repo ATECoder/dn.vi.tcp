@@ -1,16 +1,16 @@
-### About
+# About
 
 [ISR's Tcp Tsp Device] is a control and communication library for LXI-based Test Scipt Processing (TSP) instruments. 
 
-#### History
+## History
 
-#### Standards
+## Standards
 
-#### How to Use
+## How to Use
 
 For information on using [ISR's Tcp Tsp Device] see the repository [ISR's Tcp Tsp Device] projects.
 
-#### Feedback
+## Feedback
 
 [ISR's Tcp Tsp Device] is released as open source under the MIT license.
 Bug reports and contributions are welcome at the [ISR's Tcp] repository.

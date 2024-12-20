@@ -1,8 +1,8 @@
-### Keithley DMM 7510
+# Keithley DMM 7510
 
 A fork of the Keithley [DMM7510 Digitizer Control Tool]
 
-### *** WARNING: Work in progress ***
+# *** WARNING: Work in progress ***
 
 - [Objectives](#Objectives)
 - [Supported .Net Releases](#Supported-.Net-Releases)
@@ -19,7 +19,7 @@ A fork of the Keithley [DMM7510 Digitizer Control Tool]
 - [Legal Notices](#Legal-Notices)
 
 <a name="objectives"></a>
-#### Objectives
+## Objectives
 
 The following objectives were met:
 * Refactor the original code to separate the instrument (DMM7510) form the TCP Client class;
@@ -29,15 +29,15 @@ The following objectives were met:
 * Add a TCP server for testing the TCP Client in the absence of an actual instrument.
  
 <a name="Supported-.Net-Releases"></a>
-#### Supported .NET Releases
+## Supported .NET Releases
 
 * .NET 7.0
 
 <a name="Source-Code"></a>
-#### Source Code
+## Source Code
 Clone the repository along with its requisite repositories to their respective relative path.
 
-##### Repositories
+### Repositories
 The repositories listed in [external repositories] are required:
 * [IDE Repository] - IDE support files.
 
@@ -54,7 +54,7 @@ Clone the repositories into the following folders (parents of the .git folder):
 where %dnlib% and %vslib% are  the root folders of the .NET libraries, e.g., %my%\lib\vs 
 and %my%\libraries\vs, respectively, and %my% is the root folder of the .NET solutions
 
-##### Global Configuration Files
+### Global Configuration Files
 ISR libraries use a global editor configuration file and a global test run settings file. 
 These files can be found in the [IDE Repository].
 
@@ -71,46 +71,46 @@ xcopy /Y %vslib%\core\ide\code\.runsettings %userprofile%\.runsettings
 ```
 where %userprofile% is the root user folder.
 
-##### Packages
+# Packages
 None
 
-<a name="FacilitatedBy"></a>
-#### Facilitated By
+<a name="Facilitated-By"></a>
+## Facilitated By
 * [Visual Studio]
 * [Atomineer Code Documentation]
 * [EW Software Spell Checker]
 * [Funduc Search and Replace]
 
 <a name="Repository-Owner"></a>
-#### Repository Owner
+## Repository Owner
 * [ATE Coder]
 
 <a name="Authors"></a>
-#### Authors
+# Authors
 * [Josh Brown]
 * [ATE Coder]  
 
 <a name="Acknowledgments"></a>
-#### Acknowledgments
+## Acknowledgments
 * [Its all a remix] -- we are but a spec on the shoulders of giants  
 * [John Simmons] - outlaw programmer  
 * [Stack overflow] - Joel Spolsky  
 * [.Net Foundation] - The .NET Foundation
 
 <a name="Open-Source"></a>
-#### Open source
+## Open source
 Open source used by this software is described and licensed at the
 following sites:  
 
 <a name="Closed-software"></a>
-#### Closed software
+## Closed software
 Closed software used by this software are described and licensed on the following sites:  
 [IVI Foundation]  
 [Test Script Builder]  
 [Keysight I/O Suite]  
 
 <a name="Resources"></a>
-#### Resources 
+## Resources 
 
 [Use sockets to send and receive data over TCP]  
 [DMM7510 Digitizer Control Tool]  
@@ -118,7 +118,7 @@ Closed software used by this software are described and licensed on the followin
 [Stopping a TCP Server]  
 
 <a name="Legal-Notices"></a>
-#### Legal Notices
+## Legal Notices
 
 Integrated Scientific Resources, Inc., and any contributors grant you a license to the documentation and other content in this repository under the [Creative Commons Attribution 4.0 International Public License](https://creativecommons.org/licenses/by/4.0/legalcode), see the [LICENSE](LICENSE) file, and grant you a license to any code in the repository under the [MIT License](https://opensource.org/licenses/MIT), see the [LICENSE-CODE](LICENSE-CODE) file.
 
