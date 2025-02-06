@@ -12,6 +12,8 @@
 
   </PropertyGroup>
 
+  <Import Project="..\tsp.device\version.build.props" />
+
   <ItemGroup>
     <ProjectReference Include="..\tsp.device\cc.isr.Tcp.Tsp.Device.csproj" />
   </ItemGroup>
