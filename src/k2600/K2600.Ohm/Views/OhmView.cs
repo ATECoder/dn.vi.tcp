@@ -201,7 +201,7 @@ public partial class OhmView : Form
     /// <remarks>   2024-02-06. </remarks>
     /// <param name="sender">   Source of the event. </param>
     /// <param name="e">        Event information. </param>
-	private void MeasureButton_Click( object? sender, EventArgs e )
+    private void MeasureButton_Click( object? sender, EventArgs e )
     {
         this.Measure();
     }

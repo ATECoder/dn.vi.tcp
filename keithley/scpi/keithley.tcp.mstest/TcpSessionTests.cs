@@ -109,7 +109,7 @@ public class TcpSessionTests
         {
             repeatCount--;
             string response = string.Empty;
-            _ = session.QueryLine( command, 1024 , ref response, trimEnd ); 
+            _ = session.QueryLine( command, 1024 , ref response, trimEnd );
             Assert.AreEqual( identity, response, $"@count = {count - repeatCount}" );
         }
     }

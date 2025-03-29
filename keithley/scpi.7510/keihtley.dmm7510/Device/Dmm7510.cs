@@ -10,15 +10,15 @@ public partial class DMM7510 : IDisposable
 {
     private readonly TcpSession _tcpSession;
 
-	public DMM7510(string ipv4Address, int sampleRate, int measurementFunction,
+    public DMM7510(string ipv4Address, int sampleRate, int measurementFunction,
         Single measurementRange, int bufferSize)
-	{
+    {
         this._tcpSession = new TcpSession( ipv4Address );
         this.SampleRate = sampleRate;
-		this.MeasurementFunction = measurementFunction == 0 ? "VOLT" : "CURR";
+        this.MeasurementFunction = measurementFunction == 0 ? "VOLT" : "CURR";
         this.MeasurementRange = measurementRange;
-		this.BufferSize = bufferSize;
-	}
+        this.BufferSize = bufferSize;
+    }
 
     public void Dispose()
     {
@@ -43,7 +43,7 @@ public partial class DMM7510 : IDisposable
 
     public void Disconnect()
     {
-        this._tcpSession.Disconnect();  
+        this._tcpSession.Disconnect();
     }
 
     public int SampleRate { get; private set; }
@@ -54,18 +54,18 @@ public partial class DMM7510 : IDisposable
 
     public bool IsBufferRollover { get; private set; }
 
-	public void Setup_Buffers()
-	{
+    public void Setup_Buffers()
+    {
         _ = this._tcpSession.WriteLine( "*RST" );
         _ = this._tcpSession.WriteLine( "TRAC:CLE \"defbuffer1\"" );
         _ = this._tcpSession.WriteLine( "TRAC:POIN " + Convert.ToString( this.BufferSize ) + ", \"defbuffer1\"" );
         _ = this._tcpSession.WriteLine( "TRAC:FILL:MODE CONT, \"defbuffer1\"" );
         _ = this._tcpSession.WriteLine( "*WAI" );
-		Thread.Sleep(100);
-	}
+        Thread.Sleep(100);
+    }
 
-	public void Setup_DMM()
-	{
+    public void Setup_DMM()
+    {
         // Do setup...
         _ = this._tcpSession.WriteLine( ":SENS:DIG:FUNC \"" + this.MeasurementFunction + "\"" );
         _ = this._tcpSession.WriteLine( ":DIG:" + this.MeasurementFunction + ":RANG " + Convert.ToString( this.MeasurementRange ) );
@@ -73,24 +73,24 @@ public partial class DMM7510 : IDisposable
         _ = this._tcpSession.WriteLine( ":SENS:DIG:COUNt " + Convert.ToString( this.BufferSize ) );
         _ = this._tcpSession.WriteLine( ":SENS:DIG:" + this.MeasurementFunction + ":APER 5e-6" );        // was 1e-6
         _ = this._tcpSession.WriteLine( ":FORM:DATA SRE" );                                 // for single precision
-	}
+    }
 
-	public void Setup_Digitizing(int captureMinutes)
-	{
+    public void Setup_Digitizing(int captureMinutes)
+    {
         _ = this._tcpSession.WriteLine( ":TRIGger:LOAD \"EMPTY\"" );
         _ = this._tcpSession.WriteLine( ":TRIGger:BLOCk:DIGitize 1, \"defbuffer1\", " + Convert.ToString( this.BufferSize ) );
         _ = this._tcpSession.WriteLine( ":TRIGger:BLOCk:BRANch:COUNter 2, " + Convert.ToString( captureMinutes * 2 ) + ", 1" );
-	}
+    }
 
-	public void Trigger_DMM()
-	{
+    public void Trigger_DMM()
+    {
         // Do Trigger...
         _ = this._tcpSession.WriteLine( "INIT" );
-	}
+    }
 
     /// <summary>   Extracts the buffer data. </summary>
     /// <remarks>   This needs to be fixed for seconds duration and lower sample rates. </remarks>
-    /// <param name="filePath">             Full pathname of the file. </param>
+    /// <param name="filePath">             full path name of the file. </param>
     /// <param name="unitId">               Identifier for the unit. </param>
     /// <param name="bufferName">           Name of the buffer. </param>
     /// <param name="bufferSize">           Size of the buffer. </param>
@@ -99,15 +99,15 @@ public partial class DMM7510 : IDisposable
     /// <param name="stopWatch">            [in,out] The stop watch. </param>
     /// <param name="duration">             The duration in seconds. </param>
     /// <param name="savedReadingsCount">   [in,out] Number of saved readings. </param>
-	public void ExtractBufferData(string filePath, string unitId, String bufferName, int bufferSize,
+    public void ExtractBufferData(string filePath, string unitId, String bufferName, int bufferSize,
                                   int chunkSize, ref Stopwatch stopWatch, int duration, ref int savedReadingsCount)
-	{
+    {
         int startIndex = 1;
-		int endIndex = chunkSize;
-		int totalReadings = 0;
+        int endIndex = chunkSize;
+        int totalReadings = 0;
         float[] readingAmounts = new float[chunkSize];
-		string timeStamp = DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss");
-		string fileName = "DMM7510_StreamDigitized_" + unitId + "_" + timeStamp + ".csv";
+        string timeStamp = DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss");
+        string fileName = "DMM7510_StreamDigitized_" + unitId + "_" + timeStamp + ".csv";
         string fullFileName = Path.Combine( filePath, fileName );
         int lastCount = 0 ;
         int previousReadingBufferIndex = 0;
@@ -127,7 +127,7 @@ public partial class DMM7510 : IDisposable
                     queryReply = "";
                     // read last buffer index
                     // use END because plain old ACT? tops off at bufferSize when full
-                    queryCommand = ":TRACe:ACTual:END? \"" + bufferName + "\"";     
+                    queryCommand = ":TRACe:ACTual:END? \"" + bufferName + "\"";
                     _ = this._tcpSession.QueryLine( queryCommand, 256, ref queryReply, true );
                     this._tcpSession.Flush();
 
@@ -178,16 +178,16 @@ public partial class DMM7510 : IDisposable
 
         savedReadingsCount = totalReadings;
 
-		stopWatch.Stop();
-	}
+        stopWatch.Stop();
+    }
 
     /// <summary>   Writes to file. </summary>
     /// <remarks>   2022-11-14. </remarks>
     /// <param name="fileName"> Filename of the file. </param>
     /// <param name="values">   The values. </param>
-	private static void WriteToFile(String fileName, float[] values)
-	{
-		bool doAppend = true;
+    private static void WriteToFile(String fileName, float[] values)
+    {
+        bool doAppend = true;
         using StreamWriter writer = new ( fileName, doAppend );
         foreach ( var value in values )
         {

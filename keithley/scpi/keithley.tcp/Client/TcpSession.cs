@@ -269,7 +269,7 @@ public partial class TcpSession : IDisposable
     {
         byte[] buffer = new byte[byteCount];
         int receivedCount = this._netStream.Read( buffer, 0, byteCount );
-        reply = this.BuildReply(buffer, receivedCount, trimEnd);    
+        reply = this.BuildReply(buffer, receivedCount, trimEnd);
         return receivedCount;
     }
 

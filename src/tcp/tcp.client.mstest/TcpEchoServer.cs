@@ -30,7 +30,7 @@ public class TcpEchoServer : ObservableObject, IDisposable
     /// include a user-defined finalizer. This is necessary to ensure proper semantics for derived
     /// types that add a user-defined finalizer but only override the protected <see cref="Dispose(bool)"/>
     /// method. </para> <para>
-    /// 
+    ///
     /// To this end, call <see cref="GC.SuppressFinalize(object)"/>, where <see langword="Object"/> = <see langword="this"/> in the <see langword="Finally"/> segment of
     /// the <see langword="try"/>...<see langword="catch"/> clause. </para><para>
     ///
@@ -193,11 +193,11 @@ public class TcpEchoServer : ObservableObject, IDisposable
         // Get the listener that handles the client request.
         TcpListener listener = ( TcpListener ) asyncResult.AsyncState!;
 
-        // check listener.Server.IsBound in the async callback and if it’s false, 
+        // check listener.Server.IsBound in the async callback and if it’s false,
         // just return. No need to call EndAcceptTcpClient and then catch the
-        // (expected and documented) exception. 
+        // (expected and documented) exception.
         // While the socket is listening IsBound is set to true;
-        // After you call close it's value will be false. 
+        // After you call close it's value will be false.
         if ( listener is not null && listener.Server.IsBound )
         {
             // End the operation.

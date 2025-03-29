@@ -55,9 +55,9 @@ partial class OhmView
         this.MeasurementGroupBox.SuspendLayout();
         this.InstrumentGroupBox.SuspendLayout();
         this.SuspendLayout();
-        // 
+        //
         // VoltageLevelNumeric
-        // 
+        //
         this.VoltageLevelNumeric.DecimalPlaces = 2;
         this.VoltageLevelNumeric.Font = new Font("Segoe UI", 9F);
         this.VoltageLevelNumeric.Increment = new decimal(new int[] { 1, 0, 0, 131072 });
@@ -69,9 +69,9 @@ partial class OhmView
         this.VoltageLevelNumeric.Size = new Size(56, 23);
         this.VoltageLevelNumeric.TabIndex = 2;
         this.VoltageLevelNumeric.Value = new decimal(new int[] { 1, 0, 0, 65536 });
-        // 
+        //
         // VoltageLevelNumericLabel
-        // 
+        //
         this.VoltageLevelNumericLabel.AutoSize = true;
         this.VoltageLevelNumericLabel.Font = new Font("Segoe UI", 9F);
         this.VoltageLevelNumericLabel.ForeColor = Color.Chartreuse;
@@ -82,9 +82,9 @@ partial class OhmView
         this.VoltageLevelNumericLabel.TabIndex = 3;
         this.VoltageLevelNumericLabel.Text = "Voltage:";
         this.VoltageLevelNumericLabel.TextAlign = ContentAlignment.TopRight;
-        // 
+        //
         // ApertureNumeric
-        // 
+        //
         this.ApertureNumeric.DecimalPlaces = 2;
         this.ApertureNumeric.Font = new Font("Segoe UI", 9F);
         this.ApertureNumeric.Increment = new decimal(new int[] { 5, 0, 0, 131072 });
@@ -97,9 +97,9 @@ partial class OhmView
         this.ApertureNumeric.TabIndex = 4;
         this.ApertureNumeric.TabStop = false;
         this.ApertureNumeric.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        // 
+        //
         // ApertureNumericLabel
-        // 
+        //
         this.ApertureNumericLabel.AutoSize = true;
         this.ApertureNumericLabel.Font = new Font("Segoe UI", 9F);
         this.ApertureNumericLabel.ForeColor = Color.Chartreuse;
@@ -110,9 +110,9 @@ partial class OhmView
         this.ApertureNumericLabel.TabIndex = 5;
         this.ApertureNumericLabel.Text = "Aperture:";
         this.ApertureNumericLabel.TextAlign = ContentAlignment.TopRight;
-        // 
+        //
         // OhmGroupBox
-        // 
+        //
         this.OhmGroupBox.Controls.Add(this.ConfigureButton);
         this.OhmGroupBox.Controls.Add(this.AutoRangeCheckBox);
         this.OhmGroupBox.Controls.Add(this.CurrentLevelNumeric);
@@ -136,9 +136,9 @@ partial class OhmView
         this.OhmGroupBox.TabIndex = 6;
         this.OhmGroupBox.TabStop = false;
         this.OhmGroupBox.Text = "Measurement Settings";
-        // 
+        //
         // ConfigureButton
-        // 
+        //
         this.ConfigureButton.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
         this.ConfigureButton.ForeColor = SystemColors.ControlText;
         this.ConfigureButton.Location = new Point(297, 16);
@@ -147,9 +147,9 @@ partial class OhmView
         this.ConfigureButton.TabIndex = 13;
         this.ConfigureButton.Text = "Apply";
         this.ConfigureButton.UseVisualStyleBackColor = true;
-        // 
+        //
         // AutoRangeCheckBox
-        // 
+        //
         this.AutoRangeCheckBox.CheckAlign = ContentAlignment.MiddleRight;
         this.AutoRangeCheckBox.Checked = true;
         this.AutoRangeCheckBox.CheckState = CheckState.Checked;
@@ -159,9 +159,9 @@ partial class OhmView
         this.AutoRangeCheckBox.TabIndex = 12;
         this.AutoRangeCheckBox.Text = "Auto Range";
         this.AutoRangeCheckBox.UseVisualStyleBackColor = true;
-        // 
+        //
         // CurrentLevelNumeric
-        // 
+        //
         this.CurrentLevelNumeric.DecimalPlaces = 3;
         this.CurrentLevelNumeric.Increment = new decimal(new int[] { 5, 0, 0, 196608 });
         this.CurrentLevelNumeric.Location = new Point(65, 86);
@@ -171,9 +171,9 @@ partial class OhmView
         this.CurrentLevelNumeric.Size = new Size(56, 23);
         this.CurrentLevelNumeric.TabIndex = 11;
         this.CurrentLevelNumeric.Value = new decimal(new int[] { 1, 0, 0, 131072 });
-        // 
+        //
         // CurrentLevelUnitsLabel
-        // 
+        //
         this.CurrentLevelUnitsLabel.AutoSize = true;
         this.CurrentLevelUnitsLabel.Location = new Point(120, 89);
         this.CurrentLevelUnitsLabel.Margin = new Padding(4, 0, 4, 0);
@@ -181,9 +181,9 @@ partial class OhmView
         this.CurrentLevelUnitsLabel.Size = new Size(49, 15);
         this.CurrentLevelUnitsLabel.TabIndex = 10;
         this.CurrentLevelUnitsLabel.Text = "Ampere";
-        // 
+        //
         // CurrentLevelNumericLabel
-        // 
+        //
         this.CurrentLevelNumericLabel.AutoSize = true;
         this.CurrentLevelNumericLabel.Location = new Point(9, 88);
         this.CurrentLevelNumericLabel.Margin = new Padding(4, 0, 4, 0);
@@ -192,9 +192,9 @@ partial class OhmView
         this.CurrentLevelNumericLabel.TabIndex = 9;
         this.CurrentLevelNumericLabel.Text = "Current:";
         this.CurrentLevelNumericLabel.TextAlign = ContentAlignment.TopRight;
-        // 
+        //
         // CurrentSourceOption
-        // 
+        //
         this.CurrentSourceOption.AutoSize = true;
         this.CurrentSourceOption.CheckAlign = ContentAlignment.MiddleRight;
         this.CurrentSourceOption.Location = new Point(143, 23);
@@ -204,9 +204,9 @@ partial class OhmView
         this.CurrentSourceOption.TabIndex = 8;
         this.CurrentSourceOption.Text = "Current Algorithm";
         this.CurrentSourceOption.UseVisualStyleBackColor = true;
-        // 
+        //
         // VoltageSourceOption
-        // 
+        //
         this.VoltageSourceOption.AutoSize = true;
         this.VoltageSourceOption.CheckAlign = ContentAlignment.MiddleRight;
         this.VoltageSourceOption.Checked = true;
@@ -218,9 +218,9 @@ partial class OhmView
         this.VoltageSourceOption.TabStop = true;
         this.VoltageSourceOption.Text = "New Algorithm";
         this.VoltageSourceOption.UseVisualStyleBackColor = true;
-        // 
+        //
         // ApertureUnitsLabel
-        // 
+        //
         this.ApertureUnitsLabel.AutoSize = true;
         this.ApertureUnitsLabel.Font = new Font("Segoe UI", 9F);
         this.ApertureUnitsLabel.ForeColor = Color.Chartreuse;
@@ -230,9 +230,9 @@ partial class OhmView
         this.ApertureUnitsLabel.Size = new Size(102, 15);
         this.ApertureUnitsLabel.TabIndex = 5;
         this.ApertureUnitsLabel.Text = "Power Line Cycles";
-        // 
+        //
         // VoltageLevelUnitsLabel
-        // 
+        //
         this.VoltageLevelUnitsLabel.AutoSize = true;
         this.VoltageLevelUnitsLabel.Font = new Font("Segoe UI", 9F);
         this.VoltageLevelUnitsLabel.ForeColor = Color.Chartreuse;
@@ -242,9 +242,9 @@ partial class OhmView
         this.VoltageLevelUnitsLabel.Size = new Size(27, 15);
         this.VoltageLevelUnitsLabel.TabIndex = 3;
         this.VoltageLevelUnitsLabel.Text = "Volt";
-        // 
+        //
         // IPAddressTextBoxLabel
-        // 
+        //
         this.IPAddressTextBoxLabel.AutoSize = true;
         this.IPAddressTextBoxLabel.Location = new Point(4, 26);
         this.IPAddressTextBoxLabel.Margin = new Padding(4, 0, 4, 0);
@@ -252,18 +252,18 @@ partial class OhmView
         this.IPAddressTextBoxLabel.Size = new Size(65, 15);
         this.IPAddressTextBoxLabel.TabIndex = 6;
         this.IPAddressTextBoxLabel.Text = "IP Address:";
-        // 
+        //
         // IPAddressTextBox
-        // 
+        //
         this.IPAddressTextBox.Location = new Point(72, 22);
         this.IPAddressTextBox.Margin = new Padding(4, 3, 4, 3);
         this.IPAddressTextBox.Name = "IPAddressTextBox";
         this.IPAddressTextBox.Size = new Size(116, 23);
         this.IPAddressTextBox.TabIndex = 0;
         this.IPAddressTextBox.Text = "192.168.0.150";
-        // 
+        //
         // MeasureButton
-        // 
+        //
         this.MeasureButton.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
         this.MeasureButton.ForeColor = SystemColors.ControlText;
         this.MeasureButton.Location = new Point(297, 16);
@@ -273,9 +273,9 @@ partial class OhmView
         this.MeasureButton.TabIndex = 14;
         this.MeasureButton.Text = "Measure";
         this.MeasureButton.UseVisualStyleBackColor = true;
-        // 
+        //
         // MeasurementGroupBox
-        // 
+        //
         this.MeasurementGroupBox.Controls.Add(this.RunningStateLabel);
         this.MeasurementGroupBox.Controls.Add(this.ResistanceReadingLabelLabel);
         this.MeasurementGroupBox.Controls.Add(this.CurrentReadingLabelLabel);
@@ -296,9 +296,9 @@ partial class OhmView
         this.MeasurementGroupBox.TabIndex = 11;
         this.MeasurementGroupBox.TabStop = false;
         this.MeasurementGroupBox.Text = "Measurement";
-        // 
+        //
         // RunningStateLabel
-        // 
+        //
         this.RunningStateLabel.AutoSize = true;
         this.RunningStateLabel.Font = new Font("Segoe UI", 15.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
         this.RunningStateLabel.ForeColor = SystemColors.ActiveCaption;
@@ -308,9 +308,9 @@ partial class OhmView
         this.RunningStateLabel.Size = new Size(104, 30);
         this.RunningStateLabel.TabIndex = 15;
         this.RunningStateLabel.Text = "Running...";
-        // 
+        //
         // ResistanceReadingLabelLabel
-        // 
+        //
         this.ResistanceReadingLabelLabel.Location = new Point(9, 90);
         this.ResistanceReadingLabelLabel.Margin = new Padding(4, 0, 4, 0);
         this.ResistanceReadingLabelLabel.Name = "ResistanceReadingLabelLabel";
@@ -318,9 +318,9 @@ partial class OhmView
         this.ResistanceReadingLabelLabel.TabIndex = 6;
         this.ResistanceReadingLabelLabel.Text = "Resistance:";
         this.ResistanceReadingLabelLabel.TextAlign = ContentAlignment.TopRight;
-        // 
+        //
         // CurrentReadingLabelLabel
-        // 
+        //
         this.CurrentReadingLabelLabel.Location = new Point(9, 68);
         this.CurrentReadingLabelLabel.Margin = new Padding(4, 0, 4, 0);
         this.CurrentReadingLabelLabel.Name = "CurrentReadingLabelLabel";
@@ -328,9 +328,9 @@ partial class OhmView
         this.CurrentReadingLabelLabel.TabIndex = 6;
         this.CurrentReadingLabelLabel.Text = "Current:";
         this.CurrentReadingLabelLabel.TextAlign = ContentAlignment.TopRight;
-        // 
+        //
         // VoltageReadingLabelLabel
-        // 
+        //
         this.VoltageReadingLabelLabel.Location = new Point(9, 46);
         this.VoltageReadingLabelLabel.Margin = new Padding(4, 0, 4, 0);
         this.VoltageReadingLabelLabel.Name = "VoltageReadingLabelLabel";
@@ -338,9 +338,9 @@ partial class OhmView
         this.VoltageReadingLabelLabel.TabIndex = 6;
         this.VoltageReadingLabelLabel.Text = "Voltage:";
         this.VoltageReadingLabelLabel.TextAlign = ContentAlignment.TopRight;
-        // 
+        //
         // DurationLabelLabel
-        // 
+        //
         this.DurationLabelLabel.Location = new Point(12, 24);
         this.DurationLabelLabel.Margin = new Padding(4, 0, 4, 0);
         this.DurationLabelLabel.Name = "DurationLabelLabel";
@@ -348,41 +348,41 @@ partial class OhmView
         this.DurationLabelLabel.TabIndex = 6;
         this.DurationLabelLabel.Text = "Duration:";
         this.DurationLabelLabel.TextAlign = ContentAlignment.TopRight;
-        // 
+        //
         // ResistanceReadingLabel
-        // 
+        //
         this.ResistanceReadingLabel.Location = new Point(80, 90);
         this.ResistanceReadingLabel.Margin = new Padding(4, 3, 4, 3);
         this.ResistanceReadingLabel.Name = "ResistanceReadingLabel";
         this.ResistanceReadingLabel.Size = new Size(116, 13);
         this.ResistanceReadingLabel.TabIndex = 0;
-        // 
+        //
         // CurrentReadingLabel
-        // 
+        //
         this.CurrentReadingLabel.Location = new Point(80, 68);
         this.CurrentReadingLabel.Margin = new Padding(4, 3, 4, 3);
         this.CurrentReadingLabel.Name = "CurrentReadingLabel";
         this.CurrentReadingLabel.Size = new Size(116, 13);
         this.CurrentReadingLabel.TabIndex = 0;
-        // 
+        //
         // VoltageReadingLabel
-        // 
+        //
         this.VoltageReadingLabel.Location = new Point(80, 46);
         this.VoltageReadingLabel.Margin = new Padding(4, 3, 4, 3);
         this.VoltageReadingLabel.Name = "VoltageReadingLabel";
         this.VoltageReadingLabel.Size = new Size(116, 13);
         this.VoltageReadingLabel.TabIndex = 0;
-        // 
+        //
         // DurationLabel
-        // 
+        //
         this.DurationLabel.Location = new Point(80, 24);
         this.DurationLabel.Margin = new Padding(4, 3, 4, 3);
         this.DurationLabel.Name = "DurationLabel";
         this.DurationLabel.Size = new Size(116, 13);
         this.DurationLabel.TabIndex = 0;
-        // 
+        //
         // IdentityLabelLabel
-        // 
+        //
         this.IdentityLabelLabel.AutoSize = true;
         this.IdentityLabelLabel.Location = new Point(7, 53);
         this.IdentityLabelLabel.Margin = new Padding(4, 0, 4, 0);
@@ -390,17 +390,17 @@ partial class OhmView
         this.IdentityLabelLabel.Size = new Size(55, 15);
         this.IdentityLabelLabel.TabIndex = 10;
         this.IdentityLabelLabel.Text = "ID String:";
-        // 
+        //
         // IdentityLabel
-        // 
+        //
         this.IdentityLabel.Location = new Point(70, 55);
         this.IdentityLabel.Margin = new Padding(4, 3, 4, 3);
         this.IdentityLabel.Name = "IdentityLabel";
         this.IdentityLabel.Size = new Size(328, 33);
         this.IdentityLabel.TabIndex = 9;
-        // 
+        //
         // InstrumentGroupBox
-        // 
+        //
         this.InstrumentGroupBox.Controls.Add(this.ToggleConnectionButton);
         this.InstrumentGroupBox.Controls.Add(this.IdentityLabel);
         this.InstrumentGroupBox.Controls.Add(this.IdentityLabelLabel);
@@ -413,9 +413,9 @@ partial class OhmView
         this.InstrumentGroupBox.TabIndex = 17;
         this.InstrumentGroupBox.TabStop = false;
         this.InstrumentGroupBox.Text = "Instrument Settings";
-        // 
+        //
         // ToggleConnectionButton
-        // 
+        //
         this.ToggleConnectionButton.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
         this.ToggleConnectionButton.ForeColor = SystemColors.ControlText;
         this.ToggleConnectionButton.Location = new Point(205, 16);
@@ -424,18 +424,18 @@ partial class OhmView
         this.ToggleConnectionButton.TabIndex = 11;
         this.ToggleConnectionButton.Text = "Open Connection";
         this.ToggleConnectionButton.UseVisualStyleBackColor = true;
-        // 
+        //
         // UserPromptLabel
-        // 
+        //
         this.UserPromptLabel.ForeColor = SystemColors.Info;
         this.UserPromptLabel.Location = new Point(18, 390);
         this.UserPromptLabel.Name = "UserPromptLabel";
         this.UserPromptLabel.Size = new Size(408, 78);
         this.UserPromptLabel.TabIndex = 18;
         this.UserPromptLabel.Text = "Press 'Open Connection' to connect to the instrument over LAN.";
-        // 
+        //
         // OhmView
-        // 
+        //
         this.AutoScaleDimensions = new SizeF(7F, 15F);
         this.AutoScaleMode = AutoScaleMode.Font;
         this.BackColor = Color.FromArgb(64, 64, 64);

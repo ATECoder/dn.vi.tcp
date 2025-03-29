@@ -98,7 +98,7 @@ public partial class TspDevice( string ipv4Address ) : IDisposable
 
     #endregion
 
-    #region " Readings " 
+    #region " Readings "
 
     /// <summary>   Gets or sets the current reading. </summary>
     /// <value> The current reading. </value>
@@ -126,7 +126,7 @@ public partial class TspDevice( string ipv4Address ) : IDisposable
 
     #endregion
 
-    #region " Query Device " 
+    #region " Query Device "
 
     /// <summary>   Queries device information. </summary>
     /// <remarks>   2024-02-05. </remarks>
@@ -141,7 +141,7 @@ public partial class TspDevice( string ipv4Address ) : IDisposable
 
     #endregion
 
-    #region " Basic operations " 
+    #region " Basic operations "
 
     /// <summary>   Wait complete. </summary>
     /// <remarks>   2024-02-05. </remarks>
@@ -185,7 +185,7 @@ public partial class TspDevice( string ipv4Address ) : IDisposable
 
     #endregion
 
-    #region " Configure and Measure Ohm " 
+    #region " Configure and Measure Ohm "
 
     /// <summary>   Clears the readings. </summary>
     /// <remarks>   2024-02-05. </remarks>
@@ -256,7 +256,7 @@ public partial class TspDevice( string ipv4Address ) : IDisposable
 
     #endregion
 
-    #region " Source Measure " 
+    #region " Source Measure "
 
     /// <summary>   Measure resistance. </summary>
     /// <remarks>   2024-02-05. </remarks>

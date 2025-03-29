@@ -49,7 +49,7 @@ public class Dmm7510AsyncTests
         while ( repeatCount > 0 )
         {
             repeatCount--;
-            string response = QueryLine( session, command, readDelay, trimEnd ); 
+            string response = QueryLine( session, command, readDelay, trimEnd );
             Assert.AreEqual( identity, response, $"@count = {count - repeatCount}" );
         }
     }

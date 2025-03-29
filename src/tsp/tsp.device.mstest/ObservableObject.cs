@@ -5,7 +5,7 @@ namespace cc.isr.Tcp.Tsp.Device.MSTest;
 
 /// <summary>   An observable object. </summary>
 /// <remarks>   2022-10-08. </remarks>
-public class ObservableObject : INotifyPropertyChanged
+public class ObservableObject : System.ComponentModel.INotifyPropertyChanged
 {
     /// <summary>   Occurs when a property value changes. </summary>
     public event PropertyChangedEventHandler? PropertyChanged;

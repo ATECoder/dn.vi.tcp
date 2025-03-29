@@ -78,7 +78,7 @@ public partial class DMM7510( string ipv4Address, int sampleRate, int measuremen
 
     /// <summary>   Sets up the buffers. </summary>
     /// <remarks>   2024-02-05. </remarks>
-	public void Setup_Buffers()
+    public void Setup_Buffers()
     {
         _ = this._tcpSession.WriteLine( "*RST" );
         _ = this._tcpSession.WriteLine( "TRAC:CLE \"defbuffer1\"" );
@@ -90,7 +90,7 @@ public partial class DMM7510( string ipv4Address, int sampleRate, int measuremen
 
     /// <summary>   Sets up the dmm. </summary>
     /// <remarks>   2024-02-05. </remarks>
-	public void Setup_DMM()
+    public void Setup_DMM()
     {
         // Do setup...
         _ = this._tcpSession.WriteLine( ":SENS:DIG:FUNC \"" + this.MeasurementFunction + "\"" );
@@ -104,7 +104,7 @@ public partial class DMM7510( string ipv4Address, int sampleRate, int measuremen
     /// <summary>   Sets up the digitizing. </summary>
     /// <remarks>   2024-02-05. </remarks>
     /// <param name="captureMinutes">   The capture in minutes. </param>
-	public void Setup_Digitizing( int captureMinutes )
+    public void Setup_Digitizing( int captureMinutes )
     {
         _ = this._tcpSession.WriteLine( ":TRIG:LOAD \"EMPTY\"" );
         _ = this._tcpSession.WriteLine( ":TRIG:BLOCk:DIG 1, \"defbuffer1\", " + Convert.ToString( this.BufferSize ) );
@@ -113,7 +113,7 @@ public partial class DMM7510( string ipv4Address, int sampleRate, int measuremen
 
     /// <summary>   Trigger dmm. </summary>
     /// <remarks>   2024-02-05. </remarks>
-	public void Trigger_DMM()
+    public void Trigger_DMM()
     {
         // Do Trigger...
         _ = this._tcpSession.WriteLine( "INIT" );
@@ -121,7 +121,7 @@ public partial class DMM7510( string ipv4Address, int sampleRate, int measuremen
 
     /// <summary>   Extracts the buffer data. </summary>
     /// <remarks>   This needs to be fixed for seconds duration and lower sample rates. </remarks>
-    /// <param name="filePath">             Full pathname of the file. </param>
+    /// <param name="filePath">             full path name of the file. </param>
     /// <param name="unitId">               Identifier for the unit. </param>
     /// <param name="bufferName">           Name of the buffer. </param>
     /// <param name="bufferSize">           Size of the buffer. </param>
@@ -129,7 +129,7 @@ public partial class DMM7510( string ipv4Address, int sampleRate, int measuremen
     /// <param name="stopWatch">            [in,out] The stop watch. </param>
     /// <param name="duration">             The duration in seconds. </param>
     /// <param name="savedReadingsCount">   [in,out] Number of saved readings. </param>
-	public void ExtractBufferData( string filePath, string unitId, string bufferName, int bufferSize,
+    public void ExtractBufferData( string filePath, string unitId, string bufferName, int bufferSize,
                                   int chunkSize, ref Stopwatch stopWatch, int duration, ref int savedReadingsCount )
     {
         int startIndex = 1;
