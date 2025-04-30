@@ -2,6 +2,18 @@
 All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog].
 
+[1.2.9251]: https://github.com/atecoder/dn.vi.tcp
+
+## [1.2.9251] - 2025-03-29
+- Serilog Settings
+  - Set log level to warning.
+- Tests
+  - Remove Console.WriteLine( $"@{methodFullName}" );
+  - Replace with $"{methodFullName} initializing" );
+  - Reduce reporting of test class initialization.
+  - Output the name of the assembly under test.
+- Fix incorrect new line escape character.
+
 ## [1.2.8933] - 2024-06-15 Preview 202406
 * update editor config fixing code style and constants.
 * apply code analysis rules.
@@ -29,5 +41,4 @@ The format is based on [Keep a Changelog].
 
 &copy;  2022 Integrated Scientific Resources, Inc. All rights reserved.
 
-[1.2.8933]: https://github.com/atecoder/dn.vi.tcp
 [Keep a Changelog]: https://keepachangelog.com/en/1.0.0/

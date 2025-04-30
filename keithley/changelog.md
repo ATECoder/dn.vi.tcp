@@ -1,6 +1,8 @@
 # Changelog
 All notable changes to these libraries will be documented in this file in a format based on [Keep a Change log]
 
+[1.2.8798]: https://github.com/atecoder/dn.vi.tcp
+
 ## [1.2.8798] - 2023-02-02 Preview 202304
 * Update to .NET 8.0.
 
@@ -19,6 +21,4 @@ All notable changes to these libraries will be documented in this file in a form
 
 &copy;  2022 Integrated Scientific Resources, Inc. All rights reserved.
 
-[1.2.8798]: https://github.com/atecoder/dn.vi.tcp
-[Keep a Change log]: https://keepachangelog.com/en/1.0.0/
-
+[Keep a Changelog]: https://keepachangelog.com/en/1.0.0/
