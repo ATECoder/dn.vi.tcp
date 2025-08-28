@@ -2,10 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>preview</LangVersion>
+
     <!-- Assembly Info -->
     <RootNamespace>Keithley.Tcp</RootNamespace>
 
-    <LangVersion>latest</LangVersion>
     <ApplicationTitle>keithley.Tcp</ApplicationTitle>
     <ApplicationId>com.keithley.Tcp</ApplicationId>
 

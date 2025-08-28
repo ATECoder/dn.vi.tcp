@@ -2,7 +2,15 @@
 All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog].
 
-[1.2.9251]: https://github.com/atecoder/dn.vi.tcp
+[1.2.9371]: https://github.com/atecoder/dn.vi.tcp
+
+## [1.2.9371] - 2025-08-28
+- Update MSTest SDK to 3.10.3
+- Use preview in net standard classes.
+- use isr.cc as company name in the Serilog settings generator.
+- Turn off source version in MS Test, Demo and Console projects.
+- Remove incorrect Generate Assembly Version Attribute project settings.
+- Use file version rather than product version when building the Product folder name because starting with .NET 8 the product version includes the source code commit information, which is not necessary for defining the product folder for settings and logging.
 
 ## [1.2.9251] - 2025-03-29
 - Serilog Settings
