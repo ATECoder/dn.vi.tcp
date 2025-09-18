@@ -1,13 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <LangVersion>preview</LangVersion>
 
-    <PropertyGroup>
-        <OutputType>WinExe</OutputType>
-        <TargetFramework>net9.0-windows</TargetFramework>
-        <Nullable>enable</Nullable>
-        <UseWindowsForms>true</UseWindowsForms>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <RootNamespace>Keithley.Dmm7510.Digitizer</RootNamespace>
-        <LangVersion>latest</LangVersion>
+    <UseWindowsForms>true</UseWindowsForms>
+
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <!-- Assembly Info -->
+    <RootNamespace>Keithley.Dmm7510.Digitizer</RootNamespace>
     <ApplicationTitle>keithley.Dmm7510.Digitizer</ApplicationTitle>
     <ApplicationId>com.keithley.Dmm7510.Digitizer</ApplicationId>
 
@@ -17,24 +19,23 @@
 
   </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\keihtley.dmm7510\Keithley.Dmm7510.csproj" />
-    </ItemGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="..\keihtley.dmm7510\Keithley.Dmm7510.csproj" />
+  </ItemGroup>
   
-    <ItemGroup>
+  <ItemGroup>
     <Compile Update="Resources.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    </ItemGroup>
+  </ItemGroup>
 
-    <ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Update="Resources.resx">
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    </ItemGroup>
+  </ItemGroup>
 
 </Project>

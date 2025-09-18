@@ -1,14 +1,17 @@
 <Project Sdk="MSTest.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
+    <LangVersion>preview</LangVersion>
+
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
-    <IsPackable>false</IsPackable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Assembly Info -->
     <RootNamespace>cc.isr.Tcp.Client.MSTest</RootNamespace>
+
+    <IsPackable>false</IsPackable>
 
   </PropertyGroup>
 
@@ -18,8 +21,4 @@
     <ProjectReference Include="..\tcp.client\cc.isr.Tcp.Client.csproj" />
   </ItemGroup>
   
-  <ItemGroup>
-    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
-  </ItemGroup>  
-
 </Project>

@@ -8,13 +8,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
     <!-- Assembly Info -->
     <RootNamespace>cc.isr.Tcp.Tsp</RootNamespace>
     <AssemblyName>cc.isr.Tcp.Tsp.Device</AssemblyName>
     <ApplicationTitle>cc.isr.Tcp.Tsp.Device</ApplicationTitle>
     <ApplicationId>cc.isr.Tcp.Tsp.Device</ApplicationId>
-
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Coding -->
     <OptionExplicit>On</OptionExplicit>

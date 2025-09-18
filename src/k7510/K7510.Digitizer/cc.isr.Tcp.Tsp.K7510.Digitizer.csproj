@@ -2,18 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>net9.0-windows</TargetFramework>
+    <LangVersion>preview</LangVersion>
+
     <OutputType>WinExe</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
-    <LangVersion>latest</LangVersion>
 
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
 	
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <!-- Assembly Info -->
     <RootNamespace>cc.isr.Tcp.Tsp.K7510</RootNamespace>
     <ApplicationTitle>cc.isr.Tcp.Tsp.K7510.Digitizer</ApplicationTitle>
     <ApplicationId>cc.isr.Tcp.Tsp.K7510.Digitizer</ApplicationId>
-
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Coding -->
     <OptionExplicit>On</OptionExplicit>
