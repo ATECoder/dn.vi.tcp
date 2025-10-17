@@ -1,7 +1,26 @@
 # Changelog
 All notable changes to these libraries will be documented in this file in a format based on [Keep a Change log]
 
-[1.2.8798]: https://github.com/atecoder/dn.vi.tcp
+[1.2.9421]: https://github.com/atecoder/dn.vi.tcp
+
+
+## [1.2.9421] - 2025-10-17
+- Update packages:
+  - .NET Test SDK to 4.0.1.
+  - Microsoft Extensions to 9.0.10.
+  - XUnit from 3.1.4 to 3.1.5.
+  - Fluent Assertions from 8.6.0 to 8.7.1. 
+  - Microsoft.Net.Test.SDK from 17.14.1 to 18.0.0.
+  - BenchmarkDotNet from 0.14.0 to 0.15.4.
+- Test projects
+  - Use [TestMethod( DisplayName = "...']
+  - Change [ClassCleanup( ClassCleanupBehavior.EndOfClass )] to [ClassCleanup]
+  - Add parallelize to the assembly attributes.
+  - change Assert...( ..., format, args ); to Assert...(... string.Format( System.Globalization.CultureInfo.CurrentCulture, format, args ) );
+  - Use Assert.HasCount<T> in place of Assert.AreEquals( count, [T].Length ).
+- directory.build.props
+  - update packages.
+  - point to the current repository.
 
 ## [1.2.8798] - 2023-02-02 Preview 202304
 * Update to .NET 8.0.

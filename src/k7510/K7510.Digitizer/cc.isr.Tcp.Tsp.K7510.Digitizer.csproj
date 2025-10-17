@@ -33,8 +33,6 @@
 
   </PropertyGroup>
 
-  <Import Project="..\..\tsp\tsp.device\version.build.props" />
-
   <ItemGroup>
     <ProjectReference Include="..\..\tsp\tsp.device\cc.isr.Tcp.Tsp.Device.csproj" />
   </ItemGroup>
@@ -61,5 +59,7 @@
   <ItemGroup>
     <None Update="..\..\items\ms-icon-70x70.png" Link="Resources\ms-icon-70x70.png" />
   </ItemGroup>
+
+  <Import Project="..\..\tsp\tsp.device\version.build.props" />
 
 </Project>

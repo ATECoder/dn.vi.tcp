@@ -33,8 +33,6 @@
 
   </PropertyGroup>
 
-  <Import Project="..\..\tsp\tsp.device\version.build.props" />
-
   <ItemGroup>
     <ProjectReference Include="..\..\tsp\tsp.device\cc.isr.Tcp.Tsp.Device.csproj" />
   </ItemGroup>
@@ -57,5 +55,7 @@
   <ItemGroup>
     <None Include="readme.md" Pack="true" PackagePath="" />
   </ItemGroup>
+
+  <Import Project="..\..\tsp\tsp.device\version.build.props" />
 
 </Project>

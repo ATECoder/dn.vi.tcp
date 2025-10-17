@@ -15,10 +15,10 @@
 
   </PropertyGroup>
 
-  <Import Project="..\tcp.client\version.build.props" />
-
   <ItemGroup>
     <ProjectReference Include="..\tcp.client\cc.isr.Tcp.Client.csproj" />
   </ItemGroup>
   
+  <Import Project="..\tcp.client\version.build.props" />
+
 </Project>
